@@ -1,0 +1,22 @@
+{
+  "name": "vue-eslint-parser-template-tokenizer-pug",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.11.0",
+    "eslint-config-standard": "^17.0.0-1",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0"
+  },
+  "dependencies": {
+    "pug-lexer": "^5.0.1",
+    "pug-walk": "^2.0.0"
+  }
+}
