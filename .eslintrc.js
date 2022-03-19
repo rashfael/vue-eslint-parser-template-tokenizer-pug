@@ -11,7 +11,7 @@ module.exports = {
 		'arrow-parens': 0,
 		'generator-star-spacing': 0,
 		'no-debugger': 'off',
-		indent: [2, 'tab', {SwitchCase: 1}],
+		indent: [2, 'tab', { SwitchCase: 1 }],
 		'no-tabs': 0,
 		'comma-dangle': 0,
 		curly: 0,
