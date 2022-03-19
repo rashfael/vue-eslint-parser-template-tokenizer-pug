@@ -4,9 +4,27 @@ const pugWalk = require('pug-walk')
 
 const DUMMY_PARENT = Object.freeze({})
 
+const LEXER_TOKEN_MAP = {
+	tag: 'PugTag',
+	':': 'PugBlockExpansion', // might mean something else?
+	'start-attributes': 'PugStartAttributes',
+	'end-attributes': 'PugEndAttributes',
+	attribute: 'PugAttribute',
+	indent: 'PugIndent',
+	outdent: 'PugOutdent',
+	newline: 'PugNewline',
+	eos: 'PugEndOfSource',
+	id: 'PugId',
+	class: 'PugClass',
+	text: 'PugText',
+	comment: 'HTMLComment'
+}
+
 module.exports = class PugTokenizer {
 	constructor (text, code, { startingLine, startingColumn }) {
-		this.code = code
+		this.text = code
+		this.expressionEnabled = true
+		this.namespace = 'http://www.w3.org/1999/xhtml'
 		const lexer = new Lexer(text, {
 			filename: '',
 			startingLine,
@@ -19,71 +37,121 @@ module.exports = class PugTokenizer {
 			this.lineToOffset.push(lastOffset)
 			lastOffset += line.length + 1 // add \n again
 		}
+		this.tokens = []
+		this.comments = []
+		this.errors = []
+		this.htmlTokens = []
 
-		this.tokens = lexer.getTokens()
-		const ast = pugParse(this.tokens.slice())
+		try {
+			const lexerTokens = lexer.getTokens()
+			lexerTokens.forEach(this.convertLexerToken.bind(this))
+			const ast = pugParse(lexerTokens)
 
-		const htmlTokens = []
-		const before = (node) => {
-			switch (node.type) {
-				case 'Tag':
-					htmlTokens.push(
-						this.createTokenFromPugNode(
-							node,
-							'StartTag',
-							{
-								name: node.name,
-								rawName: node.name, // TODO öh?
-								selfClosing: node.selfClosing,
-								attributes: node.attrs.map(this.createAttributeToken.bind(this))
-							}
-						)
-					)
-					break
-				case 'Block':
-					break
-				default:
-					console.warn('UNHANDLED BEFORE NODE', node)
-					break
-			}
-			return true
+			pugWalk(ast, this.before.bind(this), this.after.bind(this))
+		} catch (error) {
+			if (!error.code.startsWith('PUG:')) throw error
+			this.errors.push({
+				code: error.code,
+				message: error.msg,
+				index: this.lineToOffset[error.line - 1] + error.column - 1,
+				lineNumber: error.line,
+				column: error.column - 1
+			})
 		}
-
-		const after = (node) => {
-			switch (node.type) {
-				case 'Tag':
-					if (!node.selfClosing) {
-						htmlTokens.push(
-							this.createTokenFromPugNode(
-								node,
-								'EndTag',
-								{
-									name: node.name
-								}, {
-									start: node.loc.end,
-									end: node.loc.end,
-								},
-							),
-						)
-					}
-					break
-				case 'Block':
-					break
-				default:
-					console.warn('UNHANDLED AFTER NODE', node)
-					break
-			}
-		}
-
-		pugWalk(ast, before, after)
-		this.htmlTokenIterator = htmlTokens[Symbol.iterator]()
-		// for (const token of htmlTokens) {
-		// 	console.log(code.substring(token.range[0], token.range[1]), JSON.stringify(token))
+		this.htmlTokenIterator = this.htmlTokens[Symbol.iterator]()
+		// for (const token of this.htmlTokens) {
+		// 	console.log(code.substring(token.range[0], token.range[1]), JSON.stringify(token, (key, value) => {
+		// 		if (key === 'parent') return
+		// 		return value
+		// 	}))
 		// }
 	}
 
 	nextToken () {
 		return this.htmlTokenIterator.next().value
+	}
+
+	before (node) {
+		switch (node.type) {
+			case 'Tag':
+				console.log(node.attrs)
+				this.htmlTokens.push(
+					this.createTokenFromPugNode(
+						node,
+						'StartTag',
+						{
+							name: node.name,
+							rawName: node.name, // TODO öh?
+							selfClosing: node.selfClosing,
+							attributes: node.attrs.map(this.createAttributeToken.bind(this))
+						}
+					)
+				)
+				break
+			case 'Text':
+				this.htmlTokens.push(
+					this.createTokenFromPugNode(
+						node,
+						'Text',
+						{
+							name: node.name
+						}
+					)
+				)
+				break
+			case 'Comment':
+			case 'Block':
+				break
+			default:
+				console.log('UNHANDLED BEFORE NODE', node)
+				break
+		}
+		return true
+	}
+
+	after (node) {
+		switch (node.type) {
+			case 'Tag':
+				if (!node.selfClosing) {
+					this.htmlTokens.push(
+						this.createTokenFromPugNode(
+							node,
+							'EndTag',
+							{
+								name: node.name
+							}, {
+								start: node.loc.end,
+								end: node.loc.end,
+							},
+						),
+					)
+				}
+				break
+			case 'Text':
+			case 'Comment':
+			case 'Block':
+				break
+			default:
+				console.log('UNHANDLED AFTER NODE', node)
+				break
+		}
+	}
+
+	convertLexerToken (token) {
+		if (!LEXER_TOKEN_MAP[token.type]) {
+			console.log('UNHANDLED TOKEN TYPE', token)
+		}
+		const tok = this.createTokenFromPugNode(token, LEXER_TOKEN_MAP[token.type], { value: token.val })
+		// newlines having no width bricks the parser
+		if (token.type === 'newline') {
+			tok.range[0] -= 1
+			tok.value = '\n'
+		}
+		if (token.type === 'comment') {
+			this.comments.push(tok)
+		} else {
+			this.tokens.push(tok)
+		}
 	}
 
 	createTokenFromPugNode (
@@ -110,6 +178,7 @@ module.exports = class PugTokenizer {
 	}
 
 	createAttributeToken (attr) {
+		// TODO generate distint lexer tokens? HTMLAssociation
 		const attribute = this.createTokenFromPugNode(attr, 'VAttribute', {
 			parent: DUMMY_PARENT,
 			directive: false
@@ -131,14 +200,24 @@ module.exports = class PugTokenizer {
 					attr.name.length
 			},
 		})
+		// ignore =
+		// unquoted values are parsed as js by pug
 
 		if (typeof attr.val === 'string') {
 			attribute.value = this.createTokenFromPugNode(attr, 'VLiteral', {
 				parent: attribute,
-				value: attr.val
-			}) // add loc
+				value: attr.val.replace(/^['"`](.*)['"`]$/s, '$1')
+			}, {
+				// include quotes in loc
+				start: {
+					line: attr.loc.start.line,
+					column: attr.loc.start.column +
+					attr.name.length + 1 +
+					attr.val.includes('\n') // WHY?!
+				},
+				end: attr.loc.end,
+			})
 		}
-
 		return attribute
 	}
 
