@@ -278,21 +278,21 @@ div(@click='afterSpace')
       ],
       options: ['never']
     },
-    {
-      filename: 'test.vue',
-      code: `<template lang="pug">
-| \r\n
-div\r\n@click="foo()"
-</template>`,
-      output: `<template lang="pug">
-| \r\n
-div\r\n@click="foo"
-</template>`,
-      errors: [
-        "Method calls without arguments inside of 'v-on' directives must not have parentheses."
-      ],
-      options: ['never']
-    },
+//     {
+//       filename: 'test.vue',
+//       code: `<template lang="pug">
+// | \r\n
+// div\r\n@click="foo()"
+// </template>`,
+//       output: `<template lang="pug">
+// | \r\n
+// div\r\n@click="foo"
+// </template>`,
+//       errors: [
+//         "Method calls without arguments inside of 'v-on' directives must not have parentheses."
+//       ],
+//       options: ['never']
+//     },
     {
       filename: 'test.vue',
       code: `
