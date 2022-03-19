@@ -317,17 +317,6 @@ tester.run('attributes-order', rule, {
     },
     {
       filename: 'test.vue',
-      code: `<template lang="pug">#uniqueID(v-cloak)</template>`,
-      output: `<template lang="pug">#uniqueID(v-cloak)</template>`,
-      errors: [
-        {
-          message: 'Attribute "v-cloak" should go before "id".',
-          type: 'VAttribute'
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
       code: `<template lang="pug">div(model="baz", v-model="toggle", propOne="bar", :id="foo")</template>`,
       output: `<template lang="pug">div(v-model="toggle", model="baz", :id="foo", propOne="bar")</template>`,
       errors: [
@@ -411,7 +400,7 @@ tester.run('attributes-order', rule, {
     {
       filename: 'test.vue',
       code: `<template lang="pug">#uniqueID(v-if="!visible", v-for="item in items", v-once, is="header", v-on:click="functionCall", ref="header", :prop="headerData", v-text="textContent", myProp="prop")</template>`,
-      output: `<template lang="pug">#uniqueID(v-for="item in items", v-if="!visible", is="header", v-once, ref="header", v-on:click="functionCall", :prop="headerData", v-text="textContent", myProp="prop")</template>`,
+      output: `<template lang="pug">#uniqueID(v-for="item in items", v-if="!visible", is="header", v-once, ref="header", v-on:click="functionCall", :prop="headerData", myProp="prop", v-text="textContent")</template>`,
       errors: [
         {
           message: 'Attribute "v-for" should go before "v-if".',
@@ -427,10 +416,6 @@ tester.run('attributes-order', rule, {
         },
         {
           message: 'Attribute ":prop" should go before "v-on:click".',
-          type: 'VAttribute'
-        },
-        {
-          message: 'Attribute "id" should go before "v-text".',
           type: 'VAttribute'
         },
         {
@@ -459,7 +444,7 @@ tester.run('attributes-order', rule, {
           ]
         }
       ],
-      output: `<template lang="pug">#uniqueID(v-if="!visible", v-for="item in items", is="header", v-once, v-on:click="functionCall", ref="header", :prop="headerData", v-text="textContent", myProp="prop")</template>`,
+      output: `<template lang="pug">#uniqueID(v-if="!visible", v-for="item in items", is="header", v-once, v-on:click="functionCall", ref="header", :prop="headerData", myProp="prop", v-text="textContent")</template>`,
       errors: [
         {
           message: 'Attribute "is" should go before "v-once".',
@@ -474,36 +459,7 @@ tester.run('attributes-order', rule, {
           type: 'VAttribute'
         },
         {
-          message: 'Attribute "id" should go before "v-text".',
-          type: 'VAttribute'
-        },
-        {
           message: 'Attribute "myProp" should go before "v-text".',
-          type: 'VAttribute'
-        }
-      ]
-    },
-    {
-      code: `<template lang="pug">.content(v-if="!visible", v-model="foo", v-text="textContent")</template>`,
-      options: [
-        {
-          order: [
-            'CONDITIONALS',
-            'LIST_RENDERING',
-            'RENDER_MODIFIERS',
-            'DEFINITION',
-            'EVENTS',
-            'UNIQUE',
-            ['TWO_WAY_BINDING', 'OTHER_ATTR'],
-            'CONTENT',
-            'GLOBAL'
-          ]
-        }
-      ],
-      output: `<template lang="pug">.content(v-if="!visible", v-model="foo", v-text="textContent")</template>`,
-      errors: [
-        {
-          message: 'Attribute "v-if" should go before "class".',
           type: 'VAttribute'
         }
       ]
@@ -587,17 +543,6 @@ tester.run('attributes-order', rule, {
         {
           message: 'Attribute "v-on:click" should go before "v-text".',
           type: 'VAttribute'
-        }
-      ]
-    },
-    {
-      filename: 'test.vue',
-      code: `<template lang="pug">.bar(:class="foo")</template>`,
-      options: [{ alphabetical: true }],
-      output: `<template lang="pug">.bar(:class="foo")</template>`,
-      errors: [
-        {
-          message: 'Attribute "class" should go before ":class".'
         }
       ]
     },

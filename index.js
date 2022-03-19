@@ -62,8 +62,10 @@ module.exports = class PugTokenizer {
 		// for (const token of this.htmlTokens) {
 		// 	console.log(code.substring(token.range[0], token.range[1]), JSON.stringify(token, (key, value) => {
 		// 		if (key === 'parent') return
+		// 		if (key === 'loc') return value.start.line + ':' + value.start.column + '-' + value.end.line + ':' + value.end.column
+		// 		if (key === 'range') return value[0] + '-' + value[1]
 		// 		return value
-		// 	}))
+		// 	}, 2))
 		// }
 	}
 
@@ -74,7 +76,6 @@ module.exports = class PugTokenizer {
 	before (node) {
 		switch (node.type) {
 			case 'Tag':
-				console.log(node.attrs)
 				this.htmlTokens.push(
 					this.createTokenFromPugNode(
 						node,

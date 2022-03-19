@@ -1120,22 +1120,6 @@ Parser.prototype = {
 				case 'id':
 				case 'class':
 					var tok = this.advance()
-					if (tok.type === 'id') {
-						if (attributeNames.indexOf('id') !== -1) {
-							this.error(
-								'DUPLICATE_ID',
-								'Duplicate attribute "id" is not allowed.',
-								tok,
-							)
-						}
-						attributeNames.push('id')
-					}
-					tag.attrs.push({
-						name: tok.type,
-						val: "'" + tok.val + "'",
-						loc: tok.loc,
-						mustEscape: false,
-					})
 					continue
 				case 'start-attributes':
 					if (seenAttrs) {
