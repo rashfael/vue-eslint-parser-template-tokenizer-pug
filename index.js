@@ -49,7 +49,7 @@ module.exports = class PugTokenizer {
 
 			pugWalk(ast, this.before.bind(this), this.after.bind(this))
 		} catch (error) {
-			if (!error.code.startsWith('PUG:')) throw error
+			if (!error.code?.startsWith('PUG:')) throw error
 			this.errors.push({
 				code: error.code,
 				message: error.msg,
@@ -141,6 +141,50 @@ module.exports = class PugTokenizer {
 	convertLexerToken (token) {
 		if (!LEXER_TOKEN_MAP[token.type]) {
 			console.log('UNHANDLED TOKEN TYPE', token)
+		}
+		if (token.type === 'attribute') {
+			this.tokens.push(this.createTokenFromPugNode(token, 'PugIdentifier', {
+				value: token.name
+			}, {
+				start: {
+					line: token.loc.start.line,
+					column: token.loc.start.column
+				},
+				end: {
+					line: token.loc.start.line,
+					column:
+						token.loc.start.column +
+						token.name.length
+				},
+			}))
+			this.tokens.push(this.createTokenFromPugNode(token, 'PugAssociation', {
+				value: '='
+			}, {
+				start: {
+					line: token.loc.start.line,
+					column: token.loc.start.column + token.name.length
+				},
+				end: {
+					line: token.loc.start.line,
+					column:
+						token.loc.start.column +
+						token.name.length + 1
+				},
+			}))
+			if (typeof token.val === 'string') {
+				this.tokens.push(this.createTokenFromPugNode(token, 'PugLiteral', {
+					value: token.val.replace(/^['"`](.*)['"`]$/s, '$1')
+				}, {
+					start: {
+						line: token.loc.start.line,
+						column: token.loc.start.column +
+						token.name.length + 1 +
+						token.val.includes('\n') // WHY?!
+					},
+					end: token.loc.end,
+				}))
+			}
+			return
 		}
 		const tok = this.createTokenFromPugNode(token, LEXER_TOKEN_MAP[token.type], { value: token.val })
 		// newlines having no width bricks the parser
