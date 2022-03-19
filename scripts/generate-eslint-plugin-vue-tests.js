@@ -13,17 +13,71 @@ function getHeader (testname) {
 
 const IGNORE_TESTS = [
 	'array-bracket-newline',
+	'comment-directive', // invalid syntax breaks the autoconverter
+	'html-closing-bracket-spacing',
+	'html-closing-bracket-newline',
 	'html-comment-content-newline',
 	'html-comment-content-spacing',
 	'html-comment-indent',
+	'html-end-tags',
 	'html-indent',
+	'html-self-closing',
 	'multiline-html-element-content-newline',
 	'no-irregular-whitespace', // will probably die horribly
 	'no-parsing-error', // need to do own pug parser tests
 
-	// tests without templates
+	// tests without template content rules
+	'block-lang',
 	'no-restricted-call-after-await',
 	'script-indent',
+	'component-api-style',
+	'component-definition-name-casing',
+	'component-options-name-casing',
+	'component-tags-order',
+	'experimental-script-setup-vars',
+	'jsx-uses-vars',
+	'multi-word-component-names',
+	'name-property-casing',
+	'new-line-between-multi-line-property',
+	'next-tick-style',
+	'no-arrow-functions-in-watch',
+	'no-async-in-computed-properties',
+	'no-boolean-default',
+	'no-computed-properties-in-data',
+	'no-deprecated-data-object-declaration',
+	'no-deprecated-destroyed-lifecycle',
+	'no-deprecated-events-api',
+	'no-deprecated-vue-config-keycodes',
+	'no-dupe-keys',
+	'no-empty-component-block',
+	'no-export-in-script-setup',
+	'no-expose-after-await',
+	'no-invalid-model-keys',
+	'no-lifecycle-after-await',
+	'no-multiple-slot-args',
+	'no-potential-component-option-typo',
+	'no-ref-as-operand',
+	'no-reserved-props',
+	'no-restricted-block',
+	'no-restricted-component-options',
+	'no-restricted-props',
+	'no-setup-props-destructure',
+	'no-shared-component-data',
+	'no-side-effects-in-computed-properties',
+	'one-component-per-file',
+	'prefer-import-from-vue',
+	'prop-name-casing',
+	'require-direct-export',
+	'require-expose',
+	'require-name-property',
+	'require-prop-type-constructor',
+	'require-render-return',
+	'require-slots-as-functions',
+	'return-in-computed-property',
+	'return-in-emits-validator',
+	'valid-define-emits',
+	'valid-define-props',
+	'valid-next-tick',
 ]
 
 const ruleTests = fs.readdirSync(SOURCE_BASE_PATH).filter(file => file.endsWith('.js')).map(file => file.replace('.js', '')).filter(file => !IGNORE_TESTS.includes(file))
@@ -87,14 +141,16 @@ for (const testname of ruleTests) {
 		.replace('const rule = ', 'const path = require(\'path\')\nconst rule = ')
 		.replaceAll('require(\'../../../lib', 'require(\'../../fixtures/eslint-plugin-vue/lib')
 		.replace('require(\'../../eslint-compat', 'require(\'../../fixtures/eslint-plugin-vue/tests/eslint-compat')
-		.replaceAll(/parserOptions: {(.*)}/g, 'parserOptions: { $1, templateTokenizer: { pug: path.resolve(__dirname, \'../../../\')}}')
+		.replaceAll(/parserOptions: {(.*?)}/gs, 'parserOptions: { $1, templateTokenizer: { pug: path.resolve(__dirname, \'../../../\')}}')
 		// .replaceAll(/(code|output): ''|^(?!.*\/\/)(.*?)(code|output):\s*(['"`])(.*?[^\\])\4/gs, (match, bad, lineStart, attribute, quotes, code) => {
 		// 	if (!code) return match
 		// 	return `${lineStart}${attribute}: \`${convertCode(code)}\``
 		// })
 		// try to get simple test cases
-		.replaceAll(/^(?!.*\/\/)(.*?)(['"`])(<template>[^'"`](.|\n)*?[^\\])\2/gm, (match, lineStart, quotes, code) => {
+		.replaceAll(/^(?!.*[^:]\/\/)(.*?)(['"`])(\s*?<template>[^'"`](.|\n)*?[^\\])\2/gm, (match, lineStart, quotes, code) => {
 			return `${lineStart}\`${convertCode(code)}\``
 		})
+		// try to catch stragglers with other tags befor template
+		.replaceAll(/^ *<template>.*?<\/template>/gms, match => convertCode(match))
 	fs.writeFileSync(target, getHeader(testname) + test)
 }
