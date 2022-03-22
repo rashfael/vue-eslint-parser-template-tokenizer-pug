@@ -189,8 +189,7 @@ div
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 table
   tr(is="my-row", :some-prop.sync="somePropValue", :some-other-prop.sync="someOtherPropValue")
     td
@@ -198,8 +197,7 @@ table
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 table
   tr(:is="my-row", :some-prop.sync="somePropValue", :some-other-prop.sync="someOtherPropValue")
     td
@@ -207,8 +205,7 @@ table
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 table
   tr(v-bind:is="myRow", :some-prop.sync="somePropValue", :some-other-prop.sync="someOtherPropValue")
     td

@@ -21,8 +21,7 @@ tester.run('no-useless-template-attributes', rule, {
   valid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 template(v-if="foo") ...
 template(v-else-if="bar") ...
 template(v-else) ...
@@ -30,42 +29,36 @@ template(v-else) ...
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">template(v-for="e in list") ...</template>`
+      code: `<template lang="pug">template(v-for="e in list") ...</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">template(v-slot) ...</template>`
+      code: `<template lang="pug">template(v-slot) ...</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 CoolButton
   template(slot="foo") ...
 </template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 CoolButton
   template(slot-scope="foo") ...
 </template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 CoolButton
   template(scope="foo") ...
 </template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 // ignore
 template(foo="a") ...
 template(:foo="a") ...
@@ -75,8 +68,7 @@ template(v-unknown="a") ...
     // not template
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 .heading(v-if="foo") ...
 div(v-for="i in foo", :bar="i") ...
 div(v-slot:foo="foo", ref="input") ...
@@ -87,8 +79,7 @@ div(v-if="foo", @click="click") ...
   invalid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 // ✓ GOOD
 template(v-if="foo") ...
 template(v-if="foo") ...

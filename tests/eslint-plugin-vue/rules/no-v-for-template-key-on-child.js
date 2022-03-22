@@ -69,8 +69,7 @@ div
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div
   template(v-for="x in list")
     Foo(v-if="a", :key="x")
@@ -78,8 +77,7 @@ div
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div
   template(v-for="x in list")
     Foo(v-if="a", :key="x.key1")
@@ -165,8 +163,7 @@ div
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div
   template(v-for="x in list")
     Foo(v-if="a", :key="x.key1")

@@ -112,8 +112,7 @@ MyComponent
     },
     // svg
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 svg
   MyComponent(v-slot="slotProps")
     MyChildComponent(:thing="slotProps.thing")

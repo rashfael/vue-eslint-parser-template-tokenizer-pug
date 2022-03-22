@@ -132,8 +132,7 @@ div(v-for="d in f")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(v-for="i in 5")
   div(v-for="j in 5")
 </template>
@@ -149,8 +148,7 @@ div(v-for="i in 5")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(v-for="i in 5")
   div(v-for="j in 5")
 </template>
@@ -160,8 +158,7 @@ div(v-for="i in 5")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(v-for="i in 5")
   div(v-for="j in 5")
 </template>
@@ -421,8 +418,7 @@ div(v-for="f in c")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(v-for="i in 5")
   div(v-for="j in 5")
 </template>
@@ -444,8 +440,7 @@ div(v-for="i in 5")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(v-for="i in 5")
   div(v-for="j in 5")
 </template>
@@ -461,8 +456,7 @@ div(v-for="i in 5")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(v-for="i in 5")
   div(v-for="j in 5")
 </template>

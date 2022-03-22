@@ -46,10 +46,10 @@ module.exports = class PugTokenizer {
 			const lexerTokens = lexer.getTokens()
 			lexerTokens.forEach(this.convertLexerToken.bind(this))
 			const ast = pugParse(lexerTokens)
-
 			pugWalk(ast, this.before.bind(this), this.after.bind(this))
 		} catch (error) {
 			if (!error.code?.startsWith('PUG:')) throw error
+			console.log(error)
 			this.errors.push({
 				code: error.code,
 				message: error.msg,
@@ -95,7 +95,7 @@ module.exports = class PugTokenizer {
 						node,
 						'Text',
 						{
-							name: node.name
+							value: node.val
 						}
 					)
 				)
@@ -143,7 +143,7 @@ module.exports = class PugTokenizer {
 			console.log('UNHANDLED TOKEN TYPE', token)
 		}
 		if (token.type === 'attribute') {
-			this.tokens.push(this.createTokenFromPugNode(token, 'PugIdentifier', {
+			const identifier = this.createTokenFromPugNode(token, 'PugIdentifier', {
 				value: token.name
 			}, {
 				start: {
@@ -156,7 +156,10 @@ module.exports = class PugTokenizer {
 						token.loc.start.column +
 						token.name.length
 				},
-			}))
+			})
+			// include , in the range
+			// if (this.text[identifier.range[1]] === ',') identifier.range[1] += 1
+			this.tokens.push(identifier)
 			this.tokens.push(this.createTokenFromPugNode(token, 'PugAssociation', {
 				value: '='
 			}, {
@@ -172,17 +175,22 @@ module.exports = class PugTokenizer {
 				},
 			}))
 			if (typeof token.val === 'string') {
-				this.tokens.push(this.createTokenFromPugNode(token, 'PugLiteral', {
-					value: token.val.replace(/^['"`](.*)['"`]$/s, '$1')
+				const value = token.val.replace(/^['"`](.*)['"`]$/s, '$1')
+				const offset = this.text.indexOf(value, identifier.range[1])
+				const { line, column } = this.getLocFromOffset(offset)
+				const literal = this.createTokenFromPugNode(token, 'PugLiteral', {
+					value,
 				}, {
 					start: {
-						line: token.loc.start.line,
-						column: token.loc.start.column +
-						token.name.length + 1 +
-						token.val.includes('\n') // WHY?!
+						line,
+						column: column +
+							token.val.includes('\n') // WHY?!
 					},
 					end: token.loc.end,
-				}))
+				})
+				// include , in the range
+				// if (this.text[literal.range[1]] === ',') literal.range[1] += 1
+				this.tokens.push(literal)
 			}
 			return
 		}
@@ -229,6 +237,9 @@ module.exports = class PugTokenizer {
 			directive: false
 		})
 
+		// include , in the range
+		// if (this.text[attribute.range[1]] === ',') attribute.range[1] += 1
+
 		attribute.key = this.createTokenFromPugNode(attr, 'VIdentifier', {
 			parent: attribute,
 			name: attr.name,
@@ -249,16 +260,18 @@ module.exports = class PugTokenizer {
 		// unquoted values are parsed as js by pug
 
 		if (typeof attr.val === 'string') {
+			const value = attr.val.replace(/^['"`](.*)['"`]$/s, '$1')
+			const offset = this.text.indexOf(value, attribute.key.range[1])
+			const { line, column } = this.getLocFromOffset(offset)
 			attribute.value = this.createTokenFromPugNode(attr, 'VLiteral', {
 				parent: attribute,
-				value: attr.val.replace(/^['"`](.*)['"`]$/s, '$1')
+				value
 			}, {
 				// include quotes in loc
 				start: {
-					line: attr.loc.start.line,
-					column: attr.loc.start.column +
-					attr.name.length + 1 +
-					attr.val.includes('\n') // WHY?!
+					line,
+					column: column +
+						attr.val.includes('\n') // WHY?!
 				},
 				end: attr.loc.end,
 			})
@@ -271,5 +284,14 @@ module.exports = class PugTokenizer {
 			this.lineToOffset[loc.start.line - 1] + loc.start.column - 1,
 			this.lineToOffset[loc.end.line - 1] + loc.end.column - 1,
 		]
+	}
+
+	getLocFromOffset (offset) {
+		const line = this.text.slice(0, offset).split('\n').length
+		const column = offset - this.lineToOffset[line - 1]
+		return {
+			line,
+			column,
+		}
 	}
 }

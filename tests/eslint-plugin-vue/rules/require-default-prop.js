@@ -287,8 +287,7 @@ ruleTester.run('require-default-prop', rule, {
     {
       // https://github.com/vuejs/eslint-plugin-vue/issues/1591
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div {{ required }}
 
   | {{ optional }}

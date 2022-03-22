@@ -22,13 +22,11 @@ tester.run('quote-props', rule, {
   valid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:style="{'height': '100vh'}")</template>`
+      code: `<template lang="pug">div(:style="{'height': '100vh'}")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:style="{height: '100vh'}")</template>`,
+      code: `<template lang="pug">div(:style="{height: '100vh'}")</template>`,
       options: ['as-needed']
     }
   ],
@@ -69,13 +67,11 @@ tester.run('quote-props', rule, {
 //     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:style="{'height': '100vh'}")
 div(:style='{"height": "100vh"}')
 </template>`,
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 div(:style="{height: '100vh'}")
 div(:style='{height: "100vh"}')
 </template>`,
@@ -95,9 +91,8 @@ div(:style='{height: "100vh"}')
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">| {{ ({foo:42}).foo }}</template>`,
-      output: `
+      code: `<template lang="pug">| {{ ({foo:42}).foo }}</template>`,
+      output: `<template
       <template lang="pug">| {{ ({&quot;foo&quot;:42}).foo }}</template>`,
       errors: [
         {

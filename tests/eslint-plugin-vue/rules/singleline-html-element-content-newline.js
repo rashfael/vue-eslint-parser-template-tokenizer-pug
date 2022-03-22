@@ -26,90 +26,70 @@ const tester = new RuleTester({
 
 tester.run('singleline-html-element-content-newline', rule, {
   valid: [
-    `
-      <template lang="pug">slot(name="panel")</template>`,
-    `
-      <template lang="pug">.panel content</template>`,
-    `
-      <template lang="pug">
+    `<template lang="pug">slot(name="panel")</template>`,
+    `<template lang="pug">.panel content</template>`,
+    `<template lang="pug">
 .panel
   div
 </template>`,
-    `
-      <template lang="pug">
+    `<template lang="pug">
 .panel
   // comment
 </template>`,
-    `
-      <template lang="pug">div content</template>`,
-    `
-      <template lang="pug">
+    `<template lang="pug">div content</template>`,
+    `<template lang="pug">
 div
   div
 </template>`,
-    `
-      <template lang="pug">
+    `<template lang="pug">
 div
   // comment
 </template>`,
-    `
-      <template lang="pug">a(href="/") Home</template>`,
-    `
-      <template lang="pug">
+    `<template lang="pug">a(href="/") Home</template>`,
+    `<template lang="pug">
 form
   label(for="test") Home
   input#test(name="test")
 </template>`,
 
     // ignoreWhenNoAttributes: true
-    `
-      <template lang="pug">div singleline content</template>`,
-    `
-      <template lang="pug">
+    `<template lang="pug">div singleline content</template>`,
+    `<template lang="pug">
 tr
   td singleline
   td children
 </template>`,
-    `
-      <template lang="pug">
+    `<template lang="pug">
 div
   // singleline comment
 </template>`,
-    `
-      <template lang="pug">div singleline element</template>`,
-    `
-      <template lang="pug">div</template>`,
-    `
-      <template lang="pug">div</template>`,
+    `<template lang="pug">div singleline element</template>`,
+    `<template lang="pug">div</template>`,
+    `<template lang="pug">div</template>`,
 
     // ignoreWhenNoAttributes: false
     {
-      code: `
-      <template lang="pug">div content</template>`,
+      code: `<template lang="pug">div content</template>`,
       options: [{ ignoreWhenNoAttributes: false }]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div
   div
 </template>`,
       options: [{ ignoreWhenNoAttributes: false }]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div
   // comment
 </template>`,
       options: [{ ignoreWhenNoAttributes: false }]
     },
     // self closing
-    `
-      <template lang="pug">self-closing</template>`,
+    `<template lang="pug">self-closing</template>`,
     // ignores
-    `
-      <template lang="pug">
+    `<template lang="pug">
 pre content
 pre(attr) content
 pre
@@ -161,10 +141,8 @@ ignore-tag
       ]
     },
     // not target
-    `
-      <template lang="pug">div content</template>`,
-    `
-      <template lang="pug">div content</template>`,
+    `<template lang="pug">div content</template>`,
+    `<template lang="pug">div content</template>`,
     // Ignore if no closing brackets
 //     `<!-- CONVERT ERROR -->Unexpected EOF in tag.
 // <!-- CONVERT ERROR -->Duplicate attribute.      <template>

@@ -183,8 +183,7 @@ div
     },
     // svg
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 svg
   MyComponent(v-model="slotProps")
 </template>`

@@ -21,25 +21,21 @@ tester.run('no-v-text-v-html-on-component', rule, {
   valid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-text="content")</template>`
+      code: `<template lang="pug">div(v-text="content")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-html="content")</template>`
+      code: `<template lang="pug">div(v-html="content")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComponent(v-if="content")</template>`
+      code: `<template lang="pug">MyComponent(v-if="content")</template>`
     }
   ],
   invalid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComponent(v-text="content")</template>`,
+      code: `<template lang="pug">MyComponent(v-text="content")</template>`,
       errors: [
         {
           message: "Using v-text on component may break component's content.",
@@ -50,8 +46,7 @@ tester.run('no-v-text-v-html-on-component', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComponent(v-html="content")</template>`,
+      code: `<template lang="pug">MyComponent(v-html="content")</template>`,
       errors: [
         {
           message: "Using v-html on component may break component's content.",
@@ -62,8 +57,7 @@ tester.run('no-v-text-v-html-on-component', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">component(:is="component", v-text="content")</template>`,
+      code: `<template lang="pug">component(:is="component", v-text="content")</template>`,
       errors: [
         {
           message: "Using v-text on component may break component's content.",
@@ -74,8 +68,7 @@ tester.run('no-v-text-v-html-on-component', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">component(:is="component", v-html="content")</template>`,
+      code: `<template lang="pug">component(:is="component", v-html="content")</template>`,
       errors: [
         {
           message: "Using v-html on component may break component's content.",
@@ -86,8 +79,7 @@ tester.run('no-v-text-v-html-on-component', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:is="component", v-text="content")</template>`,
+      code: `<template lang="pug">div(:is="component", v-text="content")</template>`,
       errors: [
         {
           message: "Using v-text on component may break component's content.",
@@ -98,8 +90,7 @@ tester.run('no-v-text-v-html-on-component', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:is="component", v-html="content")</template>`,
+      code: `<template lang="pug">div(:is="component", v-html="content")</template>`,
       errors: [
         {
           message: "Using v-html on component may break component's content.",

@@ -1083,8 +1083,7 @@ tester.run('no-use-computed-property-like-method', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 | {{x()}}
 
 | {{y()}}

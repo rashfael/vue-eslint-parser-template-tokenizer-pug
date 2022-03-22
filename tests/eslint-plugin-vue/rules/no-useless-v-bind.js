@@ -27,8 +27,7 @@ const tester = new RuleTester({
 
 tester.run('no-useless-v-bind', rule, {
   valid: [
-    `
-    <template lang="pug">
+    `<template lang="pug">
 #foo
 #foo
 #foo
@@ -40,8 +39,7 @@ div(:id="{")
 div(:id="null")
 </template>`,
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:id="'comment'/*comment*/")
 div(:id="'comment'//comment
 ")
@@ -49,8 +47,7 @@ div(:id="'comment'//comment
       options: [{ ignoreIncludesComment: true }]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:id="'\\n'")
 div(:id="'\\r'")
 </template>`,
@@ -59,13 +56,11 @@ div(:id="'\\r'")
   ],
   invalid: [
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:id="'foo'")
 div(v-bind:id="'foo'")
 </template>`,
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 #foo
 #foo
 </template>`,
@@ -87,8 +82,7 @@ div(v-bind:id="'foo'")
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:id="'comment'/*comment*/")
 div(:id="'comment'//comment
 ")
@@ -100,8 +94,7 @@ div(:id="'comment'//comment
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:id="'\\n'")
 div(:id="'\\r'")
 </template>`,

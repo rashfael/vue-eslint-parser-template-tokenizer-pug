@@ -26,8 +26,7 @@ const tester = new RuleTester({
 
 tester.run('no-useless-mustaches', rule, {
   valid: [
-    `
-    <template lang="pug">
+    `<template lang="pug">
 | foo &apos;foo&apos;
 | {{ foo }}
 
@@ -42,8 +41,7 @@ tester.run('no-useless-mustaches', rule, {
 | {{ null }}
 </template>`,
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 | {{ &apos;comment&apos;/*comment*/ }}
 
 | {{ &apos;comment&apos;//comment
@@ -52,8 +50,7 @@ tester.run('no-useless-mustaches', rule, {
       options: [{ ignoreIncludesComment: true }]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 | {{ &apos;\\n&apos; }}
 
 | {{ &apos;\\r&apos; }}
@@ -63,9 +60,8 @@ tester.run('no-useless-mustaches', rule, {
   ],
   invalid: [
     {
-      code: `
-      <template lang="pug">| {{ &apos;foo&apos; }}</template>`,
-      output: `
+      code: `<template lang="pug">| {{ &apos;foo&apos; }}</template>`,
+      output: `<template
       <template lang="pug">| foo</template>`,
       errors: [
         {
@@ -78,8 +74,7 @@ tester.run('no-useless-mustaches', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 | {{ &apos;comment&apos;/*comment*/ }}
 
 | {{ &apos;comment&apos;//comment
@@ -92,8 +87,7 @@ tester.run('no-useless-mustaches', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 | {{ &apos;\\n&apos; }}
 
 | {{ &apos;\\r&apos; }}
@@ -105,8 +99,7 @@ tester.run('no-useless-mustaches', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 | {{ &apos;&amp;quot;&apos; }}
 
 | {{ \`&amp;quot;&amp;apos;\` }}
@@ -125,8 +118,7 @@ tester.run('no-useless-mustaches', rule, {
 
 | {{ \`foo\` }}
 </template>`,
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 | &quot; &quot;&apos; \\ \\r
 | {{ &apos;\\&apos; }}
 | foo
@@ -144,8 +136,7 @@ tester.run('no-useless-mustaches', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 | {{ &amp;apos;msg&amp;apos; }}
 
 | {{ &amp;quot;msg&amp;quot; }}
@@ -164,8 +155,7 @@ tester.run('no-useless-mustaches', rule, {
 
 | {{ &quot;no semi&amp;#34 }}
 </template>`,
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 | msg msg msg msg msg msg &lt;msg&gt; I&apos;m
 | {{ &quot;no semi&amp;#34 }}
 </template>`,
@@ -182,8 +172,7 @@ tester.run('no-useless-mustaches', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 | {{ &apos;I\\&apos;m&apos; }}
 
 | {{ &quot;\\&quot;Happy\\&quot;&quot; }}
@@ -192,8 +181,7 @@ tester.run('no-useless-mustaches', rule, {
 
 | {{ &quot;\\\\&quot; }}
 </template>`,
-      output: `
-      <template lang="pug">| I&apos;m &quot;Happy&quot; backtick \` and dollar \$ \\</template>`,
+      output: `<template lang="pug">| I&apos;m &quot;Happy&quot; backtick \` and dollar \$ \\</template>`,
       errors: [
         'Unexpected mustache interpolation with a string literal value.',
         'Unexpected mustache interpolation with a string literal value.',
@@ -202,8 +190,7 @@ tester.run('no-useless-mustaches', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 | {{ \`foo
 | bar\` }}
 </template>`,
@@ -211,8 +198,7 @@ tester.run('no-useless-mustaches', rule, {
       errors: ['Unexpected mustache interpolation with a string literal value.']
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 | {{ &apos;space &apos; }}
 
 | {{ &apos; space&apos; }}

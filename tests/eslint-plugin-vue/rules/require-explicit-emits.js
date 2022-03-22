@@ -21,8 +21,7 @@ tester.run('require-explicit-emits', rule, {
   valid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('welcome')")</template>
+      code: `<template lang="pug">div(@click="\$emit('welcome')")</template>
       <script>
       export default {
         emits: ['welcome']
@@ -31,8 +30,7 @@ tester.run('require-explicit-emits', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('welcome')")</template>
+      code: `<template lang="pug">div(@click="\$emit('welcome')")</template>
       <script>
       export default {
         emits: {welcome:null}
@@ -41,8 +39,7 @@ tester.run('require-explicit-emits', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('welcome')")</template>
+      code: `<template lang="pug">div(@click="\$emit('welcome')")</template>
       <script>
       export default {
         emits: {welcome(){}}
@@ -136,8 +133,7 @@ tester.run('require-explicit-emits', rule, {
     // quoted
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('welcome')")</template>
+      code: `<template lang="pug">div(@click="\$emit('welcome')")</template>
       <script>
       export default {
         'emits': ['welcome']
@@ -147,8 +143,7 @@ tester.run('require-explicit-emits', rule, {
     // unknown
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="emit('foo')")</template>
+      code: `<template lang="pug">div(@click="emit('foo')")</template>
       <script>
       export default {
         emits: ['welcome']
@@ -157,8 +152,7 @@ tester.run('require-explicit-emits', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       </script>`
     },
@@ -246,8 +240,7 @@ tester.run('require-explicit-emits', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(@click="\$emit(foo)")
 div(@click="\$emit()")
 div(@click="\$emit(1)")
@@ -360,8 +353,7 @@ div(@click="\$emit(/regex/)")
     // allowProps
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">button(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">button(@click="\$emit('foo')")</template>
       <script>
       export default {
         props: ['onFoo'],
@@ -379,24 +371,21 @@ div(@click="\$emit(/regex/)")
     // <script setup>
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script setup>
       defineEmits(['foo'])
       </script>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script setup>
       defineEmits({foo:null})
       </script>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script setup lang="ts">
       defineEmits<{
         (e: 'foo'): void
@@ -406,8 +395,7 @@ div(@click="\$emit(/regex/)")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script setup lang="ts">
       defineEmits<(e: 'foo') => void>()
       </script>`,
@@ -415,8 +403,7 @@ div(@click="\$emit(/regex/)")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(@click="\$emit('foo')")
 div(@click="\$emit('bar')")
 </template>
@@ -429,8 +416,7 @@ div(@click="\$emit('bar')")
     // unknown emits definition
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         emits: unknown,
@@ -447,8 +433,7 @@ div(@click="\$emit('bar')")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script setup>
       const emit = defineEmits(unknown)
       emit('bar')
@@ -456,8 +441,7 @@ div(@click="\$emit('bar')")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         emits: {...foo}
@@ -466,8 +450,7 @@ div(@click="\$emit('bar')")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         emits: [foo]
@@ -476,8 +459,7 @@ div(@click="\$emit('bar')")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         emits: [...foo]
@@ -488,8 +470,7 @@ div(@click="\$emit('bar')")
     // unknown props definition
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">button(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">button(@click="\$emit('foo')")</template>
       <script>
       export default {
         props: unknown,
@@ -505,8 +486,7 @@ div(@click="\$emit('bar')")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script setup>
       defineProps(unknown)
       </script>`,
@@ -514,8 +494,7 @@ div(@click="\$emit('bar')")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">button(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">button(@click="\$emit('foo')")</template>
       <script>
       export default {
         props: [foo],
@@ -525,8 +504,7 @@ div(@click="\$emit('bar')")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">button(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">button(@click="\$emit('foo')")</template>
       <script>
       export default {
         props: [...foo],
@@ -538,8 +516,7 @@ div(@click="\$emit('bar')")
   invalid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
       }
@@ -554,8 +531,7 @@ div(@click="\$emit('bar')")
           suggestions: [
             {
               desc: 'Add the `emits` option with array syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
 emits: ['foo']
@@ -564,8 +540,7 @@ emits: ['foo']
             },
             {
               desc: 'Add the `emits` option with object syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
 emits: {'foo': null}
@@ -578,8 +553,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         emits: ['welcome'],
@@ -595,8 +569,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "foo" to `emits` option.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         emits: ['welcome', 'foo'],
@@ -609,8 +582,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         emits: {welcome:null}
@@ -626,8 +598,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "foo" to `emits` option.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         emits: {welcome:null, 'foo': null}
@@ -640,8 +611,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         emits: {welcome(){}}
@@ -657,8 +627,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "foo" to `emits` option.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         emits: {welcome(){}, 'foo': null}
@@ -891,8 +860,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       // @vue/component
       const Foo = {}
@@ -905,8 +873,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the `emits` option with array syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       // @vue/component
       const Foo = {
@@ -917,8 +884,7 @@ emits: ['foo']
             },
             {
               desc: 'Add the `emits` option with object syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       // @vue/component
       const Foo = {
@@ -933,8 +899,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       // @vue/component
       const Foo = {emits:{}}
@@ -949,8 +914,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "foo" to `emits` option.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       // @vue/component
       const Foo = {emits:{}}
@@ -965,8 +929,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       // @vue/component
       const Foo = {emits: {}}
@@ -984,8 +947,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "foo" to `emits` option.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       // @vue/component
       const Foo = {emits: {}}
@@ -1000,8 +962,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         components: {
@@ -1026,8 +987,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "foo" to `emits` option.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         components: {
@@ -1054,8 +1014,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "bar" to `emits` option.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         components: {
@@ -1082,8 +1041,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "foo" to `emits` option.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         components: {
@@ -1108,8 +1066,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         components: {
@@ -1138,8 +1095,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "foo" to `emits` option.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         components: {
@@ -1170,8 +1126,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "bar" to `emits` option.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         components: {
@@ -1202,8 +1157,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "foo" to `emits` option.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         components: {
@@ -1232,8 +1186,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         emits: []
@@ -1246,8 +1199,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "foo" to `emits` option.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         emits: ['foo']
@@ -1260,8 +1212,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         name: '',
@@ -1275,8 +1226,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the `emits` option with array syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         name: '',
@@ -1287,8 +1237,7 @@ emits: ['foo']
             },
             {
               desc: 'Add the `emits` option with object syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         name: '',
@@ -1303,8 +1252,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         name: '',
@@ -1318,8 +1266,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the `emits` option with array syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         name: '',
@@ -1330,8 +1277,7 @@ emits: ['foo'],
             },
             {
               desc: 'Add the `emits` option with object syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         name: '',
@@ -1346,8 +1292,7 @@ emits: {'foo': null},
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         name: '',
@@ -1360,8 +1305,7 @@ emits: {'foo': null},
           suggestions: [
             {
               desc: 'Add the `emits` option with array syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         name: '',
@@ -1371,8 +1315,7 @@ emits: ['foo'],
             },
             {
               desc: 'Add the `emits` option with object syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         name: '',
@@ -1386,8 +1329,7 @@ emits: {'foo': null},
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         name: ''
@@ -1400,8 +1342,7 @@ emits: {'foo': null},
           suggestions: [
             {
               desc: 'Add the `emits` option with array syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         name: '',
@@ -1411,8 +1352,7 @@ emits: ['foo']
             },
             {
               desc: 'Add the `emits` option with object syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         name: '',
@@ -1426,8 +1366,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         ...foo
@@ -1440,8 +1379,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the `emits` option with array syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         ...foo,
@@ -1451,8 +1389,7 @@ emits: ['foo']
             },
             {
               desc: 'Add the `emits` option with object syntax and define "foo" event.',
-              output: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+              output: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script>
       export default {
         ...foo,
@@ -1504,8 +1441,7 @@ emits: {'foo': null}
     // allowProps
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">button(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">button(@click="\$emit('foo')")</template>
       <script>
       export default {
         props: ['foo'],
@@ -1537,8 +1473,7 @@ emits: {'foo': null}
     // <script setup>
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('bar')")</template>
+      code: `<template lang="pug">div(@click="\$emit('bar')")</template>
       <script setup>
       defineEmits(['foo'])
       </script>`,
@@ -1550,8 +1485,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "bar" to `defineEmits`.',
-              output: `
-      <template lang="pug">div(@click="\$emit('bar')")</template>
+              output: `<template lang="pug">div(@click="\$emit('bar')")</template>
       <script setup>
       defineEmits(['foo', 'bar'])
       </script>`
@@ -1562,8 +1496,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('bar')")</template>
+      code: `<template lang="pug">div(@click="\$emit('bar')")</template>
       <script setup>
       defineEmits({foo:null})
       </script>`,
@@ -1575,8 +1508,7 @@ emits: {'foo': null}
           suggestions: [
             {
               desc: 'Add the "bar" to `defineEmits`.',
-              output: `
-      <template lang="pug">div(@click="\$emit('bar')")</template>
+              output: `<template lang="pug">div(@click="\$emit('bar')")</template>
       <script setup>
       defineEmits({foo:null, 'bar': null})
       </script>`
@@ -1587,8 +1519,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('bar')")</template>
+      code: `<template lang="pug">div(@click="\$emit('bar')")</template>
       <script setup lang="ts">
       defineEmits<{
         (e: 'foo'): void
@@ -1605,8 +1536,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('bar')")</template>
+      code: `<template lang="pug">div(@click="\$emit('bar')")</template>
       <script setup lang="ts">
       defineEmits<(e: 'foo') => void>()
       </script>`,
@@ -1621,8 +1551,7 @@ emits: {'foo': null}
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="\$emit('foo')")</template>
+      code: `<template lang="pug">div(@click="\$emit('foo')")</template>
       <script setup>
       </script>`,
       errors: [

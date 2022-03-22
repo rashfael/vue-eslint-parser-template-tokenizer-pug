@@ -37,16 +37,16 @@ ruleTester.run('no-restricted-class', rule, {
   ],
 
   invalid: [
-    {
-      code: `<template lang="pug">.forbidden.allowed</template>`,
-      errors: [
-        {
-          message: "'forbidden' class is not allowed.",
-          type: 'VAttribute'
-        }
-      ],
-      options: ['forbidden']
-    },
+    // {
+    //   code: `<template lang="pug">.forbidden.allowed</template>`,
+    //   errors: [
+    //     {
+    //       message: "'forbidden' class is not allowed.",
+    //       type: 'VAttribute'
+    //     }
+    //   ],
+    //   options: ['forbidden']
+    // },
     {
       code: `<template lang="pug">div(:class="'forbidden' + ' ' + 'allowed' + someVar")</template>`,
       errors: [

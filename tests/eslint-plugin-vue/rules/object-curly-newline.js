@@ -15,50 +15,41 @@ const tester = new RuleTester({
 
 tester.run('object-curly-newline', rule, {
   valid: [
-    `
-    <template lang="pug">div(:foo="{a: 1}")</template>`,
+    `<template lang="pug">div(:foo="{a: 1}")</template>`,
     {
-      code: `
-      <template lang="pug">div(:foo="{a: 1}")</template>`,
+      code: `<template lang="pug">div(:foo="{a: 1}")</template>`,
       options: ['never']
     },
-    `
-    <template lang="pug">
+    `<template lang="pug">
 div(:foo="{
   a: 1
 }")
 </template>`,
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:foo="{
   a: 1
 }")
 </template>`,
       options: ['always']
     },
-    `
-    <template lang="pug">div(:[{a:1}]="value")</template>`,
+    `<template lang="pug">div(:[{a:1}]="value")</template>`,
     {
-      code: `
-      <template lang="pug">div(:[{a:1}]="value")</template>`,
+      code: `<template lang="pug">div(:[{a:1}]="value")</template>`,
       options: ['always']
     },
     {
-      code: `
-      <template lang="pug">div(:[{a:1}]="value")</template>`,
+      code: `<template lang="pug">div(:[{a:1}]="value")</template>`,
       options: ['never']
     }
   ],
   invalid: [
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:foo="{a: 1
 }")
 </template>`,
-      output: `
-      <template lang="pug">div(:foo="{a: 1}")</template>`,
+      output: `<template lang="pug">div(:foo="{a: 1}")</template>`,
       errors: [
         {
           message: 'Unexpected line break before this closing brace.',
@@ -68,13 +59,11 @@ div(:foo="{a: 1
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:foo="{
 a: 1}")
 </template>`,
-      output: `
-      <template lang="pug">div(:foo="{a: 1}")</template>`,
+      output: `<template lang="pug">div(:foo="{a: 1}")</template>`,
       errors: [
         {
           message: 'Unexpected line break after this opening brace.',
@@ -84,9 +73,8 @@ a: 1}")
       ]
     },
     {
-      code: `
-      <template lang="pug">div(:foo="{a: 1}")</template>`,
-      output: `
+      code: `<template lang="pug">div(:foo="{a: 1}")</template>`,
+      output: `<template
       <template lang="pug">
 div(:foo="{
 a: 1
@@ -99,14 +87,12 @@ a: 1
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:foo="{
   a: 1
 }")
 </template>`,
-      output: `
-      <template lang="pug">div(:foo="{a: 1}")</template>`,
+      output: `<template lang="pug">div(:foo="{a: 1}")</template>`,
       options: ['never'],
       errors: [
         'Unexpected line break after this opening brace.',

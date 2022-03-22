@@ -327,8 +327,7 @@ div
 
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div
   component(:is="dynamicComponent")
 </template>
@@ -368,8 +367,7 @@ div
     },
     {
       filename: 'test.vue',
-      code: `
-      <template src="./test.html" />
+      code: `<template src="./test.html" />
       <script>
         export default {
           components: {
@@ -380,8 +378,7 @@ div
     },
     {
       filename: 'test.vue',
-      code: `
-      <template src="./test.html"></template>
+      code: `<template src="./test.html"></template>
       <script>
         export default {
           components: {
@@ -394,20 +391,17 @@ div
     // empty `:is`
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">component(:is="")</template>`
+      code: `<template lang="pug">component(:is="")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">component(:is)</template>`
+      code: `<template lang="pug">component(:is)</template>`
     },
 
     // computed properties
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div</template>
+      code: `<template lang="pug">div</template>
       <script>
         export default {
           components: {
@@ -418,8 +412,7 @@ div
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div</template>
+      code: `<template lang="pug">div</template>
       <script>
         export default {
           components: {
@@ -430,8 +423,7 @@ div
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">foo</template>
+      code: `<template lang="pug">foo</template>
       <script>
         export default {
           components: {
@@ -537,8 +529,7 @@ div
     // Setting: ignoreWhenBindingPresent
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div
   component(:is="dynamicComponent")
 </template>
@@ -574,8 +565,7 @@ div
     // empty `:is`
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">component(:is="")</template>
+      code: `<template lang="pug">component(:is="")</template>
       <script>
         export default {
           components: {
@@ -592,8 +582,7 @@ div
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">component(:is)</template>
+      code: `<template lang="pug">component(:is)</template>
       <script>
         export default {
           components: {
@@ -612,8 +601,7 @@ div
     // computed properties
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div</template>
+      code: `<template lang="pug">div</template>
       <script>
         export default {
           components: {

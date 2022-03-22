@@ -22,8 +22,7 @@ const tester = new RuleTester({
 tester.run('no-unsupported-features', rule, {
   valid: [
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 VList
   template(v-slot:name)
     a(:[href]="'/xxx'")
@@ -33,15 +32,13 @@ VList
   ],
   invalid: [
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 VList
   template(v-slot:name)
     a(:[href]="'/xxx'")
 </template>`,
       options: [{ version: '^2.5.0' }],
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 VList
   template(slot="name")
     a(:[href]="'/xxx'")

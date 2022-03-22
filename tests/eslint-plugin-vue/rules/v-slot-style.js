@@ -24,8 +24,7 @@ const tester = new RuleTester({
 
 tester.run('v-slot-style', rule, {
   valid: [
-    `
-      <template lang="pug">
+    `<template lang="pug">
 my-component(v-slot="data")
   template(#default)
   template(#foo)

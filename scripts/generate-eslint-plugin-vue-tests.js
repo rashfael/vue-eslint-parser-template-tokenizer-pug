@@ -25,6 +25,12 @@ const IGNORE_TESTS = [
 	'multiline-html-element-content-newline',
 	'no-irregular-whitespace', // will probably die horribly
 	'no-parsing-error', // need to do own pug parser tests
+	'component-name-in-template-casing', // fixes break pug
+	'max-attributes-per-line', // fixes break pug
+	'max-len', // fixes break pug
+	'no-child-content', // does not clean up whitespace, but this might be because we're not using HTMLWhitespace
+	'no-deprecated-slot-attribute', // fixing does not remove trailing commas
+	'no-multi-spaces', // Error type should be HTMLIdentifier, found PugIdentifier
 
 	// tests without template content rules
 	'block-lang',

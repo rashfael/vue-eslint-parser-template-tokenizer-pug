@@ -15,18 +15,14 @@ const tester = new RuleTester({
 
 tester.run('template-curly-spacing', rule, {
   valid: [
-    `
-    <template lang="pug">div(:class="[\`foo-\${bar}\`]")</template>`,
-    `
-    <template lang="pug">div(:[\`foo\${bar}\`]="value")</template>`,
+    `<template lang="pug">div(:class="[\`foo-\${bar}\`]")</template>`,
+    `<template lang="pug">div(:[\`foo\${bar}\`]="value")</template>`,
     {
-      code: `
-      <template lang="pug">div(:class="[\`foo-\${ bar }\`]")</template>`,
+      code: `<template lang="pug">div(:class="[\`foo-\${ bar }\`]")</template>`,
       options: ['always']
     },
     {
-      code: `
-      <template lang="pug">div(:[\`foo\${bar}\`]="value")</template>`,
+      code: `<template lang="pug">div(:[\`foo\${bar}\`]="value")</template>`,
       options: ['always']
     },
 
@@ -42,9 +38,8 @@ tester.run('template-curly-spacing', rule, {
   ],
   invalid: [
     {
-      code: `
-      <template lang="pug">div(:class="[\`foo-\${ bar }\`]")</template>`,
-      output: `
+      code: `<template lang="pug">div(:class="[\`foo-\${ bar }\`]")</template>`,
+      output: `<template
       <template lang="pug">div(:class="[\`foo-\${bar}\`]")</template>`,
       errors: [
         {
@@ -58,11 +53,9 @@ tester.run('template-curly-spacing', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">div(:class="[\`foo-\${bar}\`]")</template>`,
+      code: `<template lang="pug">div(:class="[\`foo-\${bar}\`]")</template>`,
       options: ['always'],
-      output: `
-      <template lang="pug">div(:class="[\`foo-\${ bar }\`]")</template>`,
+      output: `<template lang="pug">div(:class="[\`foo-\${ bar }\`]")</template>`,
       errors: [
         {
           message: "Expected space(s) after '${'.",

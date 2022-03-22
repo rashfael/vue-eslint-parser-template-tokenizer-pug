@@ -751,7 +751,7 @@ Parser.prototype = {
 		let attrs = []
 
 		if (this.peek().type === 'start-attributes') {
-			attrs = this.attrs()
+			attrs = this.attrs().attrs
 		}
 
 		if (this.peek().type === 'text') {
@@ -1131,7 +1131,9 @@ Parser.prototype = {
 						)
 					}
 					seenAttrs = true
-					tag.attrs = tag.attrs.concat(this.attrs(attributeNames))
+					const {attrs, end} = this.attrs(attributeNames)
+					tag.attrs = tag.attrs.concat(attrs)
+					tag.loc.end = end.loc.end
 					continue
 				case '&attributes':
 					var tok = this.advance()
@@ -1236,15 +1238,15 @@ Parser.prototype = {
 		let tok = this.advance()
 		while (tok.type === 'attribute') {
 			if (tok.name !== 'class' && attributeNames) {
-				if (attributeNames.indexOf(tok.name) !== -1) {
-					this.error(
-						'DUPLICATE_ATTRIBUTE',
-						'Duplicate attribute "' +
-							tok.name +
-							'" is not allowed.',
-						tok,
-					)
-				}
+				// if (attributeNames.indexOf(tok.name) !== -1) {
+				// 	this.error(
+				// 		'DUPLICATE_ATTRIBUTE',
+				// 		'Duplicate attribute "' +
+				// 			tok.name +
+				// 			'" is not allowed.',
+				// 		tok,
+				// 	)
+				// }
 				attributeNames.push(tok.name)
 			}
 			attrs.push({
@@ -1256,7 +1258,9 @@ Parser.prototype = {
 			tok = this.advance()
 		}
 		this.tokens.defer(tok)
-		this.expect('end-attributes')
-		return attrs
+		return {
+			attrs,
+			end: this.expect('end-attributes')
+		}
 	},
 }

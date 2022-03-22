@@ -30,8 +30,7 @@ tester.run('object-curly-spacing', rule, {
       options: ['always']
     },
     {
-      code: `
-      <template lang="pug">div(v-bind="{foo: {bar: 'baz'} }") Hello World</template>`,
+      code: `<template lang="pug">div(v-bind="{foo: {bar: 'baz'} }") Hello World</template>`,
       options: [
         'never',
         {
@@ -111,16 +110,14 @@ tester.run('object-curly-spacing', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">div(v-bind="{ foo: { bar: 'baz' }}") Hello World</template>`,
+      code: `<template lang="pug">div(v-bind="{ foo: { bar: 'baz' }}") Hello World</template>`,
       options: [
         'never',
         {
           objectsInObjects: true
         }
       ],
-      output: `
-      <template lang="pug">div(v-bind="{foo: {bar: 'baz'} }") Hello World</template>`,
+      output: `<template lang="pug">div(v-bind="{foo: {bar: 'baz'} }") Hello World</template>`,
       errors: [
         "There should be no space after '{'.",
         "There should be no space after '{'.",
@@ -129,11 +126,9 @@ tester.run('object-curly-spacing', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">div(v-bind="{ foo: { bar: 'baz' }}") Hello World</template>`,
+      code: `<template lang="pug">div(v-bind="{ foo: { bar: 'baz' }}") Hello World</template>`,
       options: ['never'],
-      output: `
-      <template lang="pug">div(v-bind="{foo: {bar: 'baz'}}") Hello World</template>`,
+      output: `<template lang="pug">div(v-bind="{foo: {bar: 'baz'}}") Hello World</template>`,
       errors: [
         "There should be no space after '{'.",
         "There should be no space after '{'.",

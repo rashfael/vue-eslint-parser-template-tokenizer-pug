@@ -84,8 +84,7 @@ tester.run('valid-v-memo', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(v-memo="{x}")
 div(v-memo="a ? {b}: c+d")
 div(v-memo="(a,{b},c(),d+1)")

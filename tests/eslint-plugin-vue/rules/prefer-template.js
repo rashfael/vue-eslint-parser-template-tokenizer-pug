@@ -16,10 +16,8 @@ const tester = new RuleTester({
 
 tester.run('prefer-template', rule, {
   valid: [
-    `
-    <template lang="pug">div(:class="[\`foo-\${bar}\`]")</template>`,
-    `
-    <template lang="pug">div(:[\`foo\${bar}\`]="value")</template>`,
+    `<template lang="pug">div(:class="[\`foo-\${bar}\`]")</template>`,
+    `<template lang="pug">div(:[\`foo\${bar}\`]="value")</template>`,
     // CSS vars injection
     `
     <style>
@@ -30,9 +28,8 @@ tester.run('prefer-template', rule, {
   ],
   invalid: [
     {
-      code: `
-      <template lang="pug">div(:class="['foo-' + bar]")</template>`,
-      output: `
+      code: `<template lang="pug">div(:class="['foo-' + bar]")</template>`,
+      output: `<template
       <template lang="pug">div(:class="[\`foo-\${  bar}\`]")</template>`,
       errors: [
         {

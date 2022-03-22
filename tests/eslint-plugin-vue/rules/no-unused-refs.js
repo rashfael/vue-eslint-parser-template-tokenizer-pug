@@ -21,8 +21,7 @@ tester.run('no-unused-refs', rule, {
   valid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 // ✓ GOOD
 input(ref="foo")
 </template>
@@ -36,29 +35,25 @@ input(ref="foo")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 input(ref="foo")
 button(@click="alert(\$refs.foo.value)") Click Me
 </template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 input(:ref="e=>foo=e")
 button(@click="alert(\$refs.foo.value)") Click Me
 </template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input#foo</template>`
+      code: `<template lang="pug">input#foo</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 input(ref="a")
 input(ref="b")
 input(ref="c")
@@ -81,8 +76,7 @@ input(ref="f")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 input(ref="a")
 input(ref="b")
 input(ref="c")
@@ -105,8 +99,7 @@ input(ref="e")
     // has unknown
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 input(ref="foo")
 input(ref="bar")
 </template>
@@ -120,8 +113,7 @@ input(ref="bar")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 input(ref="x")
 button(@click="alert(\$refs[foo].value)") Click Me
 input(ref="y")
@@ -130,8 +122,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 input(ref="x")
 button(@click="alert(\$refs[foo].value)") Click Me
 input(ref="y")
@@ -141,8 +132,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="x")</template>
+      code: `<template lang="pug">input(ref="x")</template>
       <script>
       export default {
         mounted() {
@@ -153,8 +143,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="x")</template>
+      code: `<template lang="pug">input(ref="x")</template>
       <script>
       export default {
         mounted() {
@@ -165,8 +154,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="x")</template>
+      code: `<template lang="pug">input(ref="x")</template>
       <script>
       export default {
         mounted() {
@@ -177,8 +165,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="x")</template>
+      code: `<template lang="pug">input(ref="x")</template>
       <script>
       export default {
         mounted() {
@@ -189,8 +176,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="x")</template>
+      code: `<template lang="pug">input(ref="x")</template>
       <script>
       export default {
         mounted() {
@@ -201,8 +187,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="x")</template>
+      code: `<template lang="pug">input(ref="x")</template>
       <script>
       export default {
         mounted() {
@@ -213,8 +198,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="x")</template>
+      code: `<template lang="pug">input(ref="x")</template>
       <script>
       export default {
         mounted() {
@@ -225,8 +209,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="x")</template>
+      code: `<template lang="pug">input(ref="x")</template>
       <script>
       export default {
         mounted() {
@@ -237,8 +220,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="x")</template>
+      code: `<template lang="pug">input(ref="x")</template>
       <script>
       export default {
         methods: {
@@ -251,8 +233,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="x")</template>
+      code: `<template lang="pug">input(ref="x")</template>
       <script>
       import {ref} from 'vue'
       export default {
@@ -267,8 +248,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="x")</template>
+      code: `<template lang="pug">input(ref="x")</template>
       <script setup>
       import {ref} from 'vue'
       const x = ref(null)
@@ -279,8 +259,7 @@ input(ref="z")
   invalid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="foo")</template>`,
+      code: `<template lang="pug">input(ref="foo")</template>`,
       errors: [
         {
           message: "'foo' is defined as ref, but never used.",
@@ -290,8 +269,7 @@ input(ref="z")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 // ✓ GOOD
 input(ref="foo")
 // ✗ BAD (bar is not used)
@@ -313,8 +291,7 @@ input(ref="bar")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 input(ref="x")
 button(@click="alert(\$refs.foo.value)") Click Me
 </template>`,
@@ -327,8 +304,7 @@ button(@click="alert(\$refs.foo.value)") Click Me
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 button(@click="alert(\$refs.foo.value)") Click Me
 input(ref="x")
 </template>`,
@@ -343,8 +319,7 @@ input(ref="x")
     // illegal use
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(ref="x")</template>
+      code: `<template lang="pug">input(ref="x")</template>
       <script>
       export default {
         mounted() {

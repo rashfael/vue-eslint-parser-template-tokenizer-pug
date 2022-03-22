@@ -27,13 +27,11 @@ tester.run('attributes-order', rule, {
     {
       // https://github.com/vuejs/eslint-plugin-vue/issues/1433
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(ref="ref", v-model="model", v-bind="object", @click="handleClick")</template>`
+      code: `<template lang="pug">div(ref="ref", v-model="model", v-bind="object", @click="handleClick")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-bind="object", ref="ref", v-model="model", @click="handleClick")</template>`
+      code: `<template lang="pug">div(v-bind="object", ref="ref", v-model="model", @click="handleClick")</template>`
     },
     {
       filename: 'test.vue',
@@ -256,49 +254,41 @@ tester.run('attributes-order', rule, {
     // v-bind="..."
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-bind:id="a", v-bind="b")</template>`,
+      code: `<template lang="pug">div(v-bind:id="a", v-bind="b")</template>`,
       options: [{ alphabetical: true }]
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-bind="b", v-bind:id="a")</template>`,
+      code: `<template lang="pug">div(v-bind="b", v-bind:id="a")</template>`,
       options: [{ alphabetical: true }]
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-if="x", v-bind:id="a", v-bind="b")</template>`,
+      code: `<template lang="pug">div(v-if="x", v-bind:id="a", v-bind="b")</template>`,
       options: [{ alphabetical: true }]
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-if="x", v-bind="b", v-bind:id="a")</template>`,
+      code: `<template lang="pug">div(v-if="x", v-bind="b", v-bind:id="a")</template>`,
       options: [{ alphabetical: true }]
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-if="x", v-bind="b", v-model="c", v-bind:value="a")</template>`
+      code: `<template lang="pug">div(v-if="x", v-bind="b", v-model="c", v-bind:value="a")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-if="x", v-model="c", v-bind="b", v-bind:value="a")</template>`
+      code: `<template lang="pug">div(v-if="x", v-model="c", v-bind="b", v-bind:value="a")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-if="x", v-bind="b", v-bind:id="a", v-model="c")</template>`
+      code: `<template lang="pug">div(v-if="x", v-bind="b", v-bind:id="a", v-model="c")</template>`
     },
 
     // omit order
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-for="a in items", v-if="a", attr="a")</template>`,
+      code: `<template lang="pug">div(v-for="a in items", v-if="a", attr="a")</template>`,
       options: [{ order: ['LIST_RENDERING', 'CONDITIONALS'] }]
     }
   ],
@@ -594,62 +584,48 @@ tester.run('attributes-order', rule, {
     // v-bind="..."
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-bind:id="a", v-bind="b", v-if="x")</template>`,
-      output: `
-      <template lang="pug">div(v-if="x", v-bind:id="a", v-bind="b")</template>`,
+      code: `<template lang="pug">div(v-bind:id="a", v-bind="b", v-if="x")</template>`,
+      output: `<template lang="pug">div(v-if="x", v-bind:id="a", v-bind="b")</template>`,
       errors: ['Attribute "v-if" should go before "v-bind:id".']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-bind:id="a", v-if="x", v-bind="b")</template>`,
-      output: `
-      <template lang="pug">div(v-if="x", v-bind:id="a", v-bind="b")</template>`,
+      code: `<template lang="pug">div(v-bind:id="a", v-if="x", v-bind="b")</template>`,
+      output: `<template lang="pug">div(v-if="x", v-bind:id="a", v-bind="b")</template>`,
       errors: ['Attribute "v-if" should go before "v-bind:id".']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-bind="b", v-bind:id="a", v-if="x")</template>`,
-      output: `
-      <template lang="pug">div(v-bind="b", v-if="x", v-bind:id="a")</template>`,
+      code: `<template lang="pug">div(v-bind="b", v-bind:id="a", v-if="x")</template>`,
+      output: `<template lang="pug">div(v-bind="b", v-if="x", v-bind:id="a")</template>`,
       errors: ['Attribute "v-if" should go before "v-bind:id".']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-on:click="x", v-bind:id="a", v-bind="b")</template>`,
+      code: `<template lang="pug">div(v-on:click="x", v-bind:id="a", v-bind="b")</template>`,
       options: [{ alphabetical: true }],
-      output: `
-      <template lang="pug">div(v-bind:id="a", v-on:click="x", v-bind="b")</template>`,
+      output: `<template lang="pug">div(v-bind:id="a", v-on:click="x", v-bind="b")</template>`,
       errors: ['Attribute "v-bind:id" should go before "v-on:click".']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-bind:id="a", v-on:click="x", v-bind="b")</template>`,
+      code: `<template lang="pug">div(v-bind:id="a", v-on:click="x", v-bind="b")</template>`,
       options: [{ alphabetical: true }],
-      output: `
-      <template lang="pug">div(v-bind:id="a", v-bind="b", v-on:click="x")</template>`,
+      output: `<template lang="pug">div(v-bind:id="a", v-bind="b", v-on:click="x")</template>`,
       errors: ['Attribute "v-bind" should go before "v-on:click".']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-on:click="x", v-bind="b", v-bind:id="a")</template>`,
+      code: `<template lang="pug">div(v-on:click="x", v-bind="b", v-bind:id="a")</template>`,
       options: [{ alphabetical: true }],
-      output: `
-      <template lang="pug">div(v-bind="b", v-bind:id="a", v-on:click="x")</template>`,
+      output: `<template lang="pug">div(v-bind="b", v-bind:id="a", v-on:click="x")</template>`,
       errors: ['Attribute "v-bind:id" should go before "v-on:click".']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-on:click="x", v-bind:a="x", v-bind="x", v-if="x")</template>`,
+      code: `<template lang="pug">div(v-on:click="x", v-bind:a="x", v-bind="x", v-if="x")</template>`,
       options: [{ alphabetical: true }],
-      output: `
-      <template lang="pug">div(v-bind:a="x", v-on:click="x", v-bind="x", v-if="x")</template>`,
+      output: `<template lang="pug">div(v-bind:a="x", v-on:click="x", v-bind="x", v-if="x")</template>`,
       errors: [
         'Attribute "v-bind:a" should go before "v-on:click".',
         'Attribute "v-if" should go before "v-on:click".'
@@ -657,11 +633,9 @@ tester.run('attributes-order', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-bind:a="x", v-on:click="x", v-bind="x", v-if="x")</template>`,
+      code: `<template lang="pug">div(v-bind:a="x", v-on:click="x", v-bind="x", v-if="x")</template>`,
       options: [{ alphabetical: true }],
-      output: `
-      <template lang="pug">div(v-bind:a="x", v-bind="x", v-on:click="x", v-if="x")</template>`,
+      output: `<template lang="pug">div(v-bind:a="x", v-bind="x", v-on:click="x", v-if="x")</template>`,
       errors: [
         'Attribute "v-bind" should go before "v-on:click".',
         'Attribute "v-if" should go before "v-on:click".'
@@ -669,20 +643,16 @@ tester.run('attributes-order', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(a="x", v-bind="x", v-if="x")</template>`,
+      code: `<template lang="pug">div(a="x", v-bind="x", v-if="x")</template>`,
       options: [{ alphabetical: true }],
-      output: `
-      <template lang="pug">div(v-if="x", a="x", v-bind="x")</template>`,
+      output: `<template lang="pug">div(v-if="x", a="x", v-bind="x")</template>`,
       errors: ['Attribute "v-if" should go before "a".']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-on:click="x", v-bind="x", v-if="x")</template>`,
+      code: `<template lang="pug">div(v-on:click="x", v-bind="x", v-if="x")</template>`,
       options: [{ alphabetical: true }],
-      output: `
-      <template lang="pug">div(v-bind="x", v-on:click="x", v-if="x")</template>`,
+      output: `<template lang="pug">div(v-bind="x", v-on:click="x", v-if="x")</template>`,
       errors: [
         'Attribute "v-bind" should go before "v-on:click".',
         'Attribute "v-if" should go before "v-on:click".'
@@ -690,38 +660,30 @@ tester.run('attributes-order', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-custom-directive="x", v-bind="b", v-model="c", v-bind:value="a")</template>`,
-      output: `
-      <template lang="pug">div(v-bind="b", v-model="c", v-custom-directive="x", v-bind:value="a")</template>`,
+      code: `<template lang="pug">div(v-custom-directive="x", v-bind="b", v-model="c", v-bind:value="a")</template>`,
+      output: `<template lang="pug">div(v-bind="b", v-model="c", v-custom-directive="x", v-bind:value="a")</template>`,
       errors: ['Attribute "v-model" should go before "v-custom-directive".']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-if="x", v-model="c", v-bind="b", v-bind:id="a")</template>`,
-      output: `
-      <template lang="pug">div(v-if="x", v-bind="b", v-bind:id="a", v-model="c")</template>`,
+      code: `<template lang="pug">div(v-if="x", v-model="c", v-bind="b", v-bind:id="a")</template>`,
+      output: `<template lang="pug">div(v-if="x", v-bind="b", v-bind:id="a", v-model="c")</template>`,
       errors: ['Attribute "v-bind:id" should go before "v-model".']
     },
 
     // omit order
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-if="a", attr="a", v-for="a in items")</template>`,
+      code: `<template lang="pug">div(v-if="a", attr="a", v-for="a in items")</template>`,
       options: [{ order: ['LIST_RENDERING', 'CONDITIONALS'] }],
-      output: `
-      <template lang="pug">div(v-for="a in items", v-if="a", attr="a")</template>`,
+      output: `<template lang="pug">div(v-for="a in items", v-if="a", attr="a")</template>`,
       errors: ['Attribute "v-for" should go before "v-if".']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(attr="a", v-if="a", v-for="a in items")</template>`,
+      code: `<template lang="pug">div(attr="a", v-if="a", v-for="a in items")</template>`,
       options: [{ order: ['LIST_RENDERING', 'CONDITIONALS'] }],
-      output: `
-      <template lang="pug">div(attr="a", v-for="a in items", v-if="a")</template>`,
+      output: `<template lang="pug">div(attr="a", v-for="a in items", v-if="a")</template>`,
       errors: ['Attribute "v-for" should go before "v-if".']
     },
 
@@ -788,10 +750,8 @@ tester.run('attributes-order', rule, {
 
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-bind="object", v-if="show", v-model="model", ref="ref", @click="handleClick")</template>`,
-      output: `
-      <template lang="pug">div(v-if="show", v-bind="object", ref="ref", v-model="model", @click="handleClick")</template>`,
+      code: `<template lang="pug">div(v-bind="object", v-if="show", v-model="model", ref="ref", @click="handleClick")</template>`,
+      output: `<template lang="pug">div(v-if="show", v-bind="object", ref="ref", v-model="model", @click="handleClick")</template>`,
       errors: [
         'Attribute "v-if" should go before "v-bind".',
         'Attribute "ref" should go before "v-model".'
@@ -800,39 +760,31 @@ tester.run('attributes-order', rule, {
 
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="handleClick", v-bind="object")</template>`,
-      output: `
-      <template lang="pug">div(v-bind="object", @click="handleClick")</template>`,
+      code: `<template lang="pug">div(@click="handleClick", v-bind="object")</template>`,
+      output: `<template lang="pug">div(v-bind="object", @click="handleClick")</template>`,
       errors: ['Attribute "v-bind" should go before "@click".']
     },
 
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(ref="ref", @click="handleClick", v-bind="object", @input="handleInput")</template>`,
-      output: `
-      <template lang="pug">div(ref="ref", v-bind="object", @click="handleClick", @input="handleInput")</template>`,
+      code: `<template lang="pug">div(ref="ref", @click="handleClick", v-bind="object", @input="handleInput")</template>`,
+      output: `<template lang="pug">div(ref="ref", v-bind="object", @click="handleClick", @input="handleInput")</template>`,
       errors: ['Attribute "v-bind" should go before "@click".']
     },
 
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(ref="ref", @click="handleClick", v-bind="object", @input="handleInput")</template>`,
+      code: `<template lang="pug">div(ref="ref", @click="handleClick", v-bind="object", @input="handleInput")</template>`,
       options: [{ order: ['UNIQUE', 'EVENTS', 'OTHER_ATTR'] }],
-      output: `
-      <template lang="pug">div(ref="ref", @click="handleClick", @input="handleInput", v-bind="object")</template>`,
+      output: `<template lang="pug">div(ref="ref", @click="handleClick", @input="handleInput", v-bind="object")</template>`,
       errors: ['Attribute "@input" should go before "v-bind".']
     },
 
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(v-bind="object", @click="handleClick", attr="foo")</template>`,
+      code: `<template lang="pug">div(v-bind="object", @click="handleClick", attr="foo")</template>`,
       options: [{ order: ['UNIQUE', 'EVENTS', 'OTHER_ATTR'] }],
-      output: `
-      <template lang="pug">div(@click="handleClick", v-bind="object", attr="foo")</template>`,
+      output: `<template lang="pug">div(@click="handleClick", v-bind="object", attr="foo")</template>`,
       errors: ['Attribute "@click" should go before "v-bind".']
     }
   ]

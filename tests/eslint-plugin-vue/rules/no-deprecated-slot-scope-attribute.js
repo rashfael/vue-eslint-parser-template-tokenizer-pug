@@ -51,14 +51,12 @@ LinkList
   ],
   invalid: [
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 LinkList
   template(slot-scope="{a}")
     a
 </template>`,
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 LinkList
   template(v-slot="{a}")
     a
@@ -66,19 +64,17 @@ LinkList
       errors: [
         {
           message: '`slot-scope` are deprecated.',
-          line: 4
+          line: 3
         }
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 LinkList
   template(slot-scope)
     a
 </template>`,
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 LinkList
   template(v-slot)
     a
@@ -86,14 +82,13 @@ LinkList
       errors: [
         {
           message: '`slot-scope` are deprecated.',
-          line: 4
+          line: 3
         }
       ]
     },
     // cannot fix
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 LinkList
   a(slot-scope="{a}")
 </template>`,
@@ -101,13 +96,12 @@ LinkList
       errors: [
         {
           message: '`slot-scope` are deprecated.',
-          line: 4
+          line: 3
         }
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 LinkList
   template(slot-scope="{a}", slot="foo")
     a
@@ -116,13 +110,12 @@ LinkList
       errors: [
         {
           message: '`slot-scope` are deprecated.',
-          line: 4
+          line: 3
         }
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 LinkList
   template(slot-scope="{a}", :slot="arg")
     a
@@ -131,28 +124,26 @@ LinkList
       errors: [
         {
           message: '`slot-scope` are deprecated.',
-          line: 4
+          line: 3
         }
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 my-component
   template(v-for="x in xs", slot-scope="{a}") {{a}}
 </template>`,
       output: null,
       errors: ['`slot-scope` are deprecated.']
     },
-    {
-      code: `
-      <template lang="pug">
-my-component
-  template(slot-scope="{a}") {{a}}
-  div
-</template>`,
-      output: null,
-      errors: ['`slot-scope` are deprecated.']
-    }
+//     {
+//       code: `<template lang="pug">
+// my-component
+//   template(slot-scope="{a}") {{a}}
+//   div
+// </template>`,
+//       output: null,
+//       errors: ['`slot-scope` are deprecated.']
+//     }
   ]
 })

@@ -14,29 +14,22 @@ const tester = new RuleTester({
 
 tester.run('v-on-event-hyphenation', rule, {
   valid: [
-    `
-    <template lang="pug">VueComponent(@custom-event="onEvent")</template>`,
-    `
-    <template lang="pug">VueComponent(:customEvent="onEvent")</template>`,
-    `
-    <template lang="pug">VueComponent(v-on="events")</template>`,
-    `
-    <template lang="pug">div(v-on:unknownEvent="onEvent")</template>`,
+    `<template lang="pug">VueComponent(@custom-event="onEvent")</template>`,
+    `<template lang="pug">VueComponent(:customEvent="onEvent")</template>`,
+    `<template lang="pug">VueComponent(v-on="events")</template>`,
+    `<template lang="pug">div(v-on:unknownEvent="onEvent")</template>`,
     {
-      code: `
-      <template lang="pug">VueComponent(v-on:customEvent="events")</template>`,
+      code: `<template lang="pug">VueComponent(v-on:customEvent="events")</template>`,
       options: ['never']
     },
     {
-      code: `
-      <template lang="pug">VueComponent(v-on:customEvent="events")</template>`,
+      code: `<template lang="pug">VueComponent(v-on:customEvent="events")</template>`,
       options: ['never', { ignore: ['custom'] }]
     }
   ],
   invalid: [
     {
-      code: `
-      <template lang="pug">VueComponent(@customEvent="onEvent")</template>`,
+      code: `<template lang="pug">VueComponent(@customEvent="onEvent")</template>`,
       output: null,
       errors: [
         {
@@ -49,11 +42,9 @@ tester.run('v-on-event-hyphenation', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">VueComponent(@customEvent="onEvent")</template>`,
+      code: `<template lang="pug">VueComponent(@customEvent="onEvent")</template>`,
       options: ['always', { autofix: true }],
-      output: `
-      <template lang="pug">VueComponent(@custom-event="onEvent")</template>`,
+      output: `<template lang="pug">VueComponent(@custom-event="onEvent")</template>`,
       errors: [
         {
           message: "v-on event '@customEvent' must be hyphenated.",
@@ -65,52 +56,44 @@ tester.run('v-on-event-hyphenation', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">VueComponent(v-on:custom-event="events")</template>`,
+      code: `<template lang="pug">VueComponent(v-on:custom-event="events")</template>`,
       options: ['never', { autofix: true }],
-      output: `
-      <template lang="pug">VueComponent(v-on:customEvent="events")</template>`,
+      output: `<template lang="pug">VueComponent(v-on:customEvent="events")</template>`,
       errors: ["v-on event 'v-on:custom-event' can't be hyphenated."]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 VueComponent(@update:modelValue="foo")
 VueComponent(@update:model-value="foo")
 </template>`,
       options: ['always', { autofix: true }],
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 VueComponent(@update:model-value="foo")
 VueComponent(@update:model-value="foo")
 </template>`,
       errors: ["v-on event '@update:modelValue' must be hyphenated."]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 VueComponent(@update:modelValue="foo")
 VueComponent(@update:model-value="foo")
 </template>`,
       options: ['never', { autofix: true }],
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 VueComponent(@update:modelValue="foo")
 VueComponent(@update:modelValue="foo")
 </template>`,
       errors: ["v-on event '@update:model-value' can't be hyphenated."]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 VueComponent(@upDate:modelValue="foo")
 VueComponent(@up-date:modelValue="foo")
 VueComponent(@upDate:model-value="foo")
 VueComponent(@up-date:model-value="foo")
 </template>`,
       options: ['always', { autofix: true }],
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 VueComponent(@up-date:model-value="foo")
 VueComponent(@up-date:model-value="foo")
 VueComponent(@up-date:model-value="foo")
@@ -123,16 +106,14 @@ VueComponent(@up-date:model-value="foo")
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 VueComponent(@upDate:modelValue="foo")
 VueComponent(@up-date:modelValue="foo")
 VueComponent(@upDate:model-value="foo")
 VueComponent(@up-date:model-value="foo")
 </template>`,
       options: ['never', { autofix: true }],
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 VueComponent(@upDate:modelValue="foo")
 VueComponent(@upDate:modelValue="foo")
 VueComponent(@upDate:modelValue="foo")

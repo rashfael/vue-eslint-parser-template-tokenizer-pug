@@ -21,8 +21,7 @@ tester.run('no-sparse-arrays', rule, {
   ],
   invalid: [
     {
-      code: `
-      <template lang="pug">div(:class="[, 'foo', 'bar']")</template>`,
+      code: `<template lang="pug">div(:class="[, 'foo', 'bar']")</template>`,
       errors: [
         {
           message: 'Unexpected comma in middle of array.',

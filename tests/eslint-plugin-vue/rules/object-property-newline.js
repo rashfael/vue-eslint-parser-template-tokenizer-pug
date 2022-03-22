@@ -15,30 +15,25 @@ const tester = new RuleTester({
 
 tester.run('object-property-newline', rule, {
   valid: [
-    `
-    <template lang="pug">
+    `<template lang="pug">
 div(:foo="{a: 1,
 b: [2, {a: 3,
   b: 4}]}")
 </template>`,
-    `
-    <template lang="pug">
+    `<template lang="pug">
 div(:foo="{a: 1,
 b: 2}")
 </template>`,
-    `
-    <template lang="pug">div(:[{a:1,b:2}]="value")</template>`,
+    `<template lang="pug">div(:[{a:1,b:2}]="value")</template>`,
     {
-      code: `
-      <template lang="pug">div(:foo="{a: 1, b: [2, {a: 3, b: 4}]}")</template>`,
+      code: `<template lang="pug">div(:foo="{a: 1, b: [2, {a: 3, b: 4}]}")</template>`,
       options: [{ allowAllPropertiesOnSameLine: true }]
     }
   ],
   invalid: [
     {
-      code: `
-      <template lang="pug">div(:foo="{a: 1, b: [2, {a: 3, b: 4}]}")</template>`,
-      output: `
+      code: `<template lang="pug">div(:foo="{a: 1, b: [2, {a: 3, b: 4}]}")</template>`,
+      output: `<template
       <template lang="pug">
 div(:foo="{a: 1,
 b: [2, {a: 3,
@@ -58,13 +53,11 @@ b: 4}]}")
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:foo="{a: 1, b: 2,
 c: 3}")
 </template>`,
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 div(:foo="{a: 1,
 b: 2,
           c: 3}")

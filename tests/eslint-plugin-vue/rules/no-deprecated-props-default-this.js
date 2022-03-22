@@ -98,8 +98,7 @@ ruleTester.run('no-deprecated-props-default-this', rule, {
     {
       // https://github.com/vuejs/eslint-plugin-vue/issues/1464
       filename: 'test.vue',
-      code: `
-      <template lang="pug">button(@click="printMessage") Print message</template>
+      code: `<template lang="pug">button(@click="printMessage") Print message</template>
 
       <script>
 

@@ -76,8 +76,7 @@ tester.run('v-on-function-call', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(@click="
   fn()
   fn()
@@ -87,20 +86,17 @@ div(@click="
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="{}")</template>`,
+      code: `<template lang="pug">div(@click="{}")</template>`,
       options: ['never']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="{return}")</template>`,
+      code: `<template lang="pug">div(@click="{return}")</template>`,
       options: ['never']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="fn() /* comment */")</template>`,
+      code: `<template lang="pug">div(@click="fn() /* comment */")</template>`,
       options: ['never', { ignoreIncludesComment: true }]
     },
     {
@@ -110,8 +106,7 @@ div(@click="
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="foo()")</template>
+      code: `<template lang="pug">div(@click="foo()")</template>
       <script>
       export default {
         methods: {
@@ -123,8 +118,7 @@ div(@click="
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(@click="foo()")
 div(@click="bar()")
 div(@click="baz()")
@@ -142,8 +136,7 @@ div(@click="baz()")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(@click="foo()")
 div(@click="bar()")
 div(@click="baz()")
@@ -199,8 +192,7 @@ div(@click="baz()")
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(@click="/*comment*/fn()")
 div(@click="fn()/*comment*/")
 div(@click=fn()/*comment*/)
@@ -218,10 +210,8 @@ div(@click="fn()// comment
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="fn();")</template>`,
-      output: `
-      <template lang="pug">div(@click="fn")</template>`,
+      code: `<template lang="pug">div(@click="fn();")</template>`,
+      output: `<template lang="pug">div(@click="fn")</template>`,
       errors: [
         "Method calls without arguments inside of 'v-on' directives must not have parentheses."
       ],
@@ -229,10 +219,8 @@ div(@click="fn()// comment
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click=fn();)</template>`,
-      output: `
-      <template lang="pug">div(@click=fn)</template>`,
+      code: `<template lang="pug">div(@click=fn();)</template>`,
+      output: `<template lang="pug">div(@click=fn)</template>`,
       errors: [
         "Method calls without arguments inside of 'v-on' directives must not have parentheses."
       ],
@@ -240,13 +228,11 @@ div(@click="fn()// comment
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(@click=" beforeSpace()")
 div(@click='afterSpace() ')
 </template>`,
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 div(@click="beforeSpace")
 div(@click='afterSpace')
 </template>`,
@@ -258,10 +244,8 @@ div(@click='afterSpace')
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click=" &#x66;oo ( ) ")</template>`,
-      output: `
-      <template lang="pug">div(@click="&#x66;oo")</template>`,
+      code: `<template lang="pug">div(@click=" &#x66;oo ( ) ")</template>`,
+      output: `<template lang="pug">div(@click="&#x66;oo")</template>`,
       errors: [
         "Method calls without arguments inside of 'v-on' directives must not have parentheses."
       ],
@@ -269,34 +253,31 @@ div(@click='afterSpace')
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="{(fn());;;}")</template>`,
-      output: `
-      <template lang="pug">div(@click="fn")</template>`,
+      code: `<template lang="pug">div(@click="{(fn());;;}")</template>`,
+      output: `<template lang="pug">div(@click="fn")</template>`,
       errors: [
         "Method calls without arguments inside of 'v-on' directives must not have parentheses."
       ],
       options: ['never']
     },
-//     {
-//       filename: 'test.vue',
-//       code: `<template lang="pug">
-// | \r\n
-// div\r\n@click="foo()"
-// </template>`,
-//       output: `<template lang="pug">
-// | \r\n
-// div\r\n@click="foo"
-// </template>`,
-//       errors: [
-//         "Method calls without arguments inside of 'v-on' directives must not have parentheses."
-//       ],
-//       options: ['never']
-//     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="foo()")</template>
+      code: `<template lang="pug">
+| \r\n
+div\r\n@click="foo()"
+</template>`,
+      output: `<template lang="pug">
+| \r\n
+div\r\n@click="foo"
+</template>`,
+      errors: [
+        "Method calls without arguments inside of 'v-on' directives must not have parentheses."
+      ],
+      options: ['never']
+    },
+    {
+      filename: 'test.vue',
+      code: `<template lang="pug">div(@click="foo()")</template>
       <script>
       export default {
         methods: {
@@ -304,8 +285,7 @@ div(@click='afterSpace')
         }
       }
       </script>`,
-      output: `
-      <template lang="pug">div(@click="foo")</template>
+      output: `<template lang="pug">div(@click="foo")</template>
       <script>
       export default {
         methods: {
@@ -320,8 +300,7 @@ div(@click='afterSpace')
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(@click="foo()")</template>
+      code: `<template lang="pug">div(@click="foo()")</template>
       <script>
       export default {
         methods: {
@@ -329,8 +308,7 @@ div(@click='afterSpace')
         }
       }
       </script>`,
-      output: `
-      <template lang="pug">div(@click="foo")</template>
+      output: `<template lang="pug">div(@click="foo")</template>
       <script>
       export default {
         methods: {

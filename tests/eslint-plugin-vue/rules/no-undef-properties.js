@@ -21,8 +21,7 @@ tester.run('no-undef-properties', rule, {
   valid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:attr="foo") {{ bar }}</template>
+      code: `<template lang="pug">div(:attr="foo") {{ bar }}</template>
       <script>
         export default {
           props: ['foo'],
@@ -42,8 +41,7 @@ tester.run('no-undef-properties', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:attr="foo") {{ bar }}</template>
+      code: `<template lang="pug">div(:attr="foo") {{ bar }}</template>
       <script>
         export default {
           inject: ['foo'],
@@ -65,8 +63,7 @@ tester.run('no-undef-properties', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div {{ foo }}</template>
+      code: `<template lang="pug">div {{ foo }}</template>
       <script>
         export default {
           asyncData() {
@@ -80,8 +77,7 @@ tester.run('no-undef-properties', rule, {
     //default ignores
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div {{ \$t(&apos;foo&apos;) }}</template>
+      code: `<template lang="pug">div {{ \$t(&apos;foo&apos;) }}</template>
       <script>
         export default {
           mounted() {
@@ -99,8 +95,7 @@ tester.run('no-undef-properties', rule, {
     {
       // global in template
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div {{ undefined }}</template>
+      code: `<template lang="pug">div {{ undefined }}</template>
       <script>
         export default {
         }
@@ -233,8 +228,7 @@ tester.run('no-undef-properties', rule, {
     // deep
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">| {{ foo.bar }}</template>
+      code: `<template lang="pug">| {{ foo.bar }}</template>
       <script>
         export default {
           data () {
@@ -249,8 +243,7 @@ tester.run('no-undef-properties', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">| {{ foo.bar.baz }}</template>
+      code: `<template lang="pug">| {{ foo.bar.baz }}</template>
       <script>
         export default {
           data () {
@@ -507,8 +500,7 @@ tester.run('no-undef-properties', rule, {
     // Vue2 functional component
     {
       filename: 'test.vue',
-      code: `
-      <template functional>
+      code: `<template functional>
         <div>{{props.a}} {{props.b}}</div>
       </template>
 
@@ -527,8 +519,7 @@ tester.run('no-undef-properties', rule, {
     // undef property
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:attr="foo2") {{ bar2 }}</template>
+      code: `<template lang="pug">div(:attr="foo2") {{ bar2 }}</template>
       <script>
         export default {
           props: ['foo'],
@@ -562,8 +553,7 @@ tester.run('no-undef-properties', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:attr="foo2") {{ bar2 }}</template>
+      code: `<template lang="pug">div(:attr="foo2") {{ bar2 }}</template>
       <script>
         export default {
           inject: ['foo'],
@@ -601,8 +591,7 @@ tester.run('no-undef-properties', rule, {
     // same names
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:attr="foo2") {{ foo2 }}</template>
+      code: `<template lang="pug">div(:attr="foo2") {{ foo2 }}</template>
       <script>
         export default {
           props: ['foo'],
@@ -780,8 +769,7 @@ tester.run('no-undef-properties', rule, {
     // deep
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">| {{ foo.baz }}</template>
+      code: `<template lang="pug">| {{ foo.baz }}</template>
       <script>
         export default {
           data () {
@@ -797,8 +785,7 @@ tester.run('no-undef-properties', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">| {{ foo.bar.baz2 }}</template>
+      code: `<template lang="pug">| {{ foo.bar.baz2 }}</template>
       <script>
         export default {
           data () {
@@ -1046,8 +1033,7 @@ tester.run('no-undef-properties', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 // ✓ GOOD
 div {{ name }}
   | :
@@ -1086,8 +1072,7 @@ div {{ label }}
     // Vue2 functional component
     {
       filename: 'test.vue',
-      code: `
-      <template functional>
+      code: `<template functional>
         <div>{{props.a}} {{props.b}} {{props.c}}</div>
       </template>
 

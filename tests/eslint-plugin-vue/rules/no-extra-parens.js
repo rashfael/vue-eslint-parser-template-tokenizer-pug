@@ -17,10 +17,10 @@ const tester = new RuleTester({
 tester.run('no-extra-parens', rule, {
   valid: [
     `<template lang="pug">
-button(:class="{
+button(:class=\`{
     a: b || c,
     [d + e]: f
-  }")
+  }\`)
 </template>`,
     `<template lang="pug">button(:class="a + b + c * d", :class="[a + b + c * d]")</template>`,
     `<template lang="pug">button(:[(a+b)+c]="foo")</template>`,
@@ -51,33 +51,31 @@ button(:class="{
       errors: [
         {
           messageId: 'unexpected',
-          line: 4
+          line: 1
         },
         {
           messageId: 'unexpected',
-          line: 5
+          line: 1
         }
       ]
     },
     {
-      code: `
-      <template lang="pug">
-button(:class="{
+      code: `<template lang="pug">
+button(:class=\`{
     a: (b || c),
     // [(d + e)]: f // valid in eslint v6.0
-  }")
+  }\`)
 </template>`,
-      output: `
-      <template lang="pug">
-button(:class="{
+      output: `<template lang="pug">
+button(:class=\`{
     a: b || c,
     // [(d + e)]: f // valid in eslint v6.0
-  }")
+  }\`)
 </template>`,
       errors: [
         {
           messageId: 'unexpected',
-          line: 5
+          line: 3
         }
         // valid in eslint v6.0
         // {
@@ -87,14 +85,12 @@ button(:class="{
       ]
     },
     {
-      code: `
-      <template lang="pug">button(:class="(a+b)+c")</template>`,
-      output: `
-      <template lang="pug">button(:class="a+b+c")</template>`,
+      code: `<template lang="pug">button(:class="(a+b)+c")</template>`,
+      output: `<template lang="pug">button(:class="a+b+c")</template>`,
       errors: [
         {
           messageId: 'unexpected',
-          line: 4
+          line: 1
         }
       ]
     },
@@ -104,7 +100,7 @@ button(:class="{
       errors: [
         {
           messageId: 'unexpected',
-          column: 27
+          column: 37
         }
       ]
     },
@@ -124,7 +120,7 @@ button(:class="{
       errors: [
         {
           messageId: 'unexpected',
-          column: 22
+          column: 32
         }
       ]
     },

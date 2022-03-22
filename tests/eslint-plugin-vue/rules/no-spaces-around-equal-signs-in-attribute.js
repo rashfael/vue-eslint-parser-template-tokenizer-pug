@@ -18,13 +18,14 @@ const RuleTester = require('eslint').RuleTester
 // ------------------------------------------------------------------------------
 
 const tester = new RuleTester({
-  parser: require.resolve('vue-eslint-parser')
+  parser: require.resolve('vue-eslint-parser'),
+  parserOptions: {  templateTokenizer: { pug: path.resolve(__dirname, '../../../')}}
 })
 
 tester.run('no-spaces-around-equal-signs-in-attribute', rule, {
   valid: [
     `<template lang="pug">div(attr="value")</template>`,
-    `<template lang="pug">div(attr=)</template>`,
+    // `<template lang="pug">div(attr=)</template>`,
     `<template lang="pug">div(attr="value")</template>`,
     `<template lang="pug">div(attr="value")</template>`,
     `<template lang="pug">div(attr)</template>`,
@@ -33,54 +34,41 @@ tester.run('no-spaces-around-equal-signs-in-attribute', rule, {
   ],
   invalid: [
     {
-      code: `<template lang="pug">div(attr="value")</template>`,
+      code: `<template lang="pug">div(attr = "value")</template>`,
       output: `<template lang="pug">div(attr="value")</template>`,
       errors: [
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 1,
-          column: 20,
+          column: 30,
           endLine: 1,
-          endColumn: 23
+          endColumn: 33
         }
       ]
     },
     {
-      code: `<template lang="pug">div(attr=)</template>`,
-      output: `<template lang="pug">div(attr=)</template>`,
+      code: `<template lang="pug">div(attr = 'value')</template>`,
+      output: `<template lang="pug">div(attr='value')</template>`,
       errors: [
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 1,
-          column: 20,
+          column: 30,
           endLine: 1,
-          endColumn: 23
+          endColumn: 33
         }
       ]
     },
     {
-      code: `<template lang="pug">div(attr="value")</template>`,
+      code: `<template lang="pug">div(attr \t = \t "value")</template>`,
       output: `<template lang="pug">div(attr="value")</template>`,
       errors: [
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 1,
-          column: 20,
+          column: 30,
           endLine: 1,
-          endColumn: 23
-        }
-      ]
-    },
-    {
-      code: `<template lang="pug">div(attr="value")</template>`,
-      output: `<template lang="pug">div(attr="value")</template>`,
-      errors: [
-        {
-          message: 'Unexpected spaces found around equal signs.',
-          line: 1,
-          column: 20,
-          endLine: 1,
-          endColumn: 23
+          endColumn: 37
         }
       ]
     },
@@ -91,104 +79,128 @@ tester.run('no-spaces-around-equal-signs-in-attribute', rule, {
     //     {
     //       message: 'Unexpected spaces found around equal signs.',
     //       line: 1,
-    //       column: 20,
+    //       column: 30,
     //       endLine: 3,
     //       endColumn: 2
     //     }
     //   ]
     // },
     {
-      code: `<template lang="pug">div(attr="value")</template>`,
+      code: `<template lang="pug">div(attr ="value")</template>`,
       output: `<template lang="pug">div(attr="value")</template>`,
       errors: [
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 1,
-          column: 20,
+          column: 30,
           endLine: 1,
-          endColumn: 22
+          endColumn: 32
         }
       ]
     },
     {
-      code: `<template lang="pug">div(attr="value")</template>`,
+      code: `<template lang="pug">div(attr= "value")</template>`,
       output: `<template lang="pug">div(attr="value")</template>`,
       errors: [
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 1,
-          column: 20,
+          column: 30,
           endLine: 1,
-          endColumn: 22
+          endColumn: 32
         }
       ]
     },
     {
-      code: `<template lang="pug">#uniqueID(is="header", v-for = "item in items", v-if = "!visible", v-once, ref="header", v-model = "headerData", myProp="prop", @click = "functionCall", v-text = "textContent")</template>`,
-      output: `<template lang="pug">#uniqueID(is="header", v-for="item in items", v-if="!visible", v-once, ref="header", v-model="headerData", myProp="prop", @click="functionCall", v-text="textContent")</template>`,
+      code: `<template lang="pug">
+div(
+  is = "header",
+  v-for = "item in items",
+  v-if = "!visible",
+  v-once,
+  id = "uniqueID",
+  ref = "header",
+  v-model = "headerData",
+  myProp = "prop",
+  @click = "functionCall",
+  v-text = "textContent"
+)</template>`,
+      output: `<template lang="pug">
+div(
+  is="header",
+  v-for="item in items",
+  v-if="!visible",
+  v-once,
+  id="uniqueID",
+  ref="header",
+  v-model="headerData",
+  myProp="prop",
+  @click="functionCall",
+  v-text="textContent"
+)</template>`,
       errors: [
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 3,
-          column: 15,
+          column: 5,
           endLine: 3,
-          endColumn: 18
+          endColumn: 8
         },
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 4,
-          column: 18,
+          column: 8,
           endLine: 4,
-          endColumn: 21
+          endColumn: 11
         },
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 5,
-          column: 17,
+          column: 7,
           endLine: 5,
-          endColumn: 20
+          endColumn: 10
         },
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 7,
-          column: 15,
+          column: 5,
           endLine: 7,
-          endColumn: 18
+          endColumn: 8
         },
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 8,
-          column: 16,
+          column: 6,
           endLine: 8,
-          endColumn: 19
+          endColumn: 9
         },
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 9,
-          column: 20,
+          column: 10,
           endLine: 9,
-          endColumn: 23
+          endColumn: 13
         },
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 10,
-          column: 19,
+          column: 9,
           endLine: 10,
-          endColumn: 22
+          endColumn: 12
         },
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 11,
-          column: 19,
+          column: 9,
           endLine: 11,
-          endColumn: 22
+          endColumn: 12
         },
         {
           message: 'Unexpected spaces found around equal signs.',
           line: 12,
-          column: 19,
+          column: 9,
           endLine: 12,
-          endColumn: 22
+          endColumn: 12
         }
       ]
     }

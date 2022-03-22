@@ -21,94 +21,77 @@ tester.run('prefer-true-attribute-shorthand', rule, {
   valid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(v-if="true")</template>`
+      code: `<template lang="pug">MyComp(v-if="true")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(v-bind="true")</template>`
+      code: `<template lang="pug">MyComp(v-bind="true")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(v-loading="true")</template>`
+      code: `<template lang="pug">MyComp(v-loading="true")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(show="true")</template>`
+      code: `<template lang="pug">MyComp(show="true")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(v-bind:show="value")</template>`
+      code: `<template lang="pug">MyComp(v-bind:show="value")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(:show="value")</template>`
+      code: `<template lang="pug">MyComp(:show="value")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(v-bind:show="false")</template>`
+      code: `<template lang="pug">MyComp(v-bind:show="false")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(:show="false")</template>`
+      code: `<template lang="pug">MyComp(:show="false")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(show)</template>`
+      code: `<template lang="pug">MyComp(show)</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(show)</template>`,
+      code: `<template lang="pug">MyComp(show)</template>`,
       options: ['always']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(:show="true")</template>`,
+      code: `<template lang="pug">MyComp(:show="true")</template>`,
       options: ['never']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(v-bind:show="true")</template>`,
+      code: `<template lang="pug">MyComp(v-bind:show="true")</template>`,
       options: ['never']
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(v-bind:checked="true")</template>`
+      code: `<template lang="pug">input(v-bind:checked="true")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(:checked="true")</template>`
+      code: `<template lang="pug">input(:checked="true")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(checked="checked")</template>`
+      code: `<template lang="pug">input(checked="checked")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">input(checked)</template>`,
+      code: `<template lang="pug">input(checked)</template>`,
       options: ['never']
     }
   ],
   invalid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(v-bind:show="true")</template>`,
+      code: `<template lang="pug">MyComp(v-bind:show="true")</template>`,
       errors: [
         {
           messageId: 'expectShort',
@@ -117,8 +100,7 @@ tester.run('prefer-true-attribute-shorthand', rule, {
           suggestions: [
             {
               messageId: 'rewriteIntoShort',
-              output: `
-      <template lang="pug">MyComp(show)</template>`
+              output: `<template lang="pug">MyComp(show)</template>`
             }
           ]
         }
@@ -127,8 +109,7 @@ tester.run('prefer-true-attribute-shorthand', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(:show="true")</template>`,
+      code: `<template lang="pug">MyComp(:show="true")</template>`,
       errors: [
         {
           messageId: 'expectShort',
@@ -137,8 +118,7 @@ tester.run('prefer-true-attribute-shorthand', rule, {
           suggestions: [
             {
               messageId: 'rewriteIntoShort',
-              output: `
-      <template lang="pug">MyComp(show)</template>`
+              output: `<template lang="pug">MyComp(show)</template>`
             }
           ]
         }
@@ -147,8 +127,7 @@ tester.run('prefer-true-attribute-shorthand', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(v-bind:show="true")</template>`,
+      code: `<template lang="pug">MyComp(v-bind:show="true")</template>`,
       options: ['always'],
       errors: [
         {
@@ -158,8 +137,7 @@ tester.run('prefer-true-attribute-shorthand', rule, {
           suggestions: [
             {
               messageId: 'rewriteIntoShort',
-              output: `
-      <template lang="pug">MyComp(show)</template>`
+              output: `<template lang="pug">MyComp(show)</template>`
             }
           ]
         }
@@ -168,8 +146,7 @@ tester.run('prefer-true-attribute-shorthand', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(:show="true")</template>`,
+      code: `<template lang="pug">MyComp(:show="true")</template>`,
       options: ['always'],
       errors: [
         {
@@ -179,8 +156,7 @@ tester.run('prefer-true-attribute-shorthand', rule, {
           suggestions: [
             {
               messageId: 'rewriteIntoShort',
-              output: `
-      <template lang="pug">MyComp(show)</template>`
+              output: `<template lang="pug">MyComp(show)</template>`
             }
           ]
         }
@@ -189,8 +165,7 @@ tester.run('prefer-true-attribute-shorthand', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">MyComp(show)</template>`,
+      code: `<template lang="pug">MyComp(show)</template>`,
       options: ['never'],
       errors: [
         {
@@ -199,12 +174,10 @@ tester.run('prefer-true-attribute-shorthand', rule, {
           column: 17,
           suggestions: [
             {
-              output: `
-      <template lang="pug">MyComp(:show="true")</template>`
+              output: `<template lang="pug">MyComp(:show="true")</template>`
             },
             {
-              output: `
-      <template lang="pug">MyComp(show="show")</template>`
+              output: `<template lang="pug">MyComp(show="show")</template>`
             }
           ]
         }

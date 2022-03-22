@@ -464,8 +464,7 @@ CustomComponentWithNamedSlots
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">TheModal</template>
+      code: `<template lang="pug">TheModal</template>
 
       <script setup>
       import TheModal from 'foo'

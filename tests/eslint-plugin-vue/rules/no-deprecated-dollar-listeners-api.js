@@ -78,7 +78,7 @@ div(v-on=\`() => {
   }
 }\`)
 div(v-for="$listeners in list")
-  <div(v-on="$listeners")
+  div(v-on="$listeners")
 VueComp
   template(v-slot="{$listeners}")
     div(v-on="$listeners")
@@ -126,17 +126,17 @@ export default {
         </script>`,
       errors: [
         {
-          line: 3,
-          column: 22,
+          line: 2,
+          column: 40,
           messageId: 'deprecated',
-          endLine: 3,
-          endColumn: 32
+          endLine: 2,
+          endColumn: 50
         },
         {
-          line: 9,
+          line: 7,
           column: 27,
           messageId: 'deprecated',
-          endLine: 9,
+          endLine: 7,
           endColumn: 37
         }
       ]
@@ -161,17 +161,17 @@ div(:foo="\$listeners")
       errors: [
         {
           line: 3,
-          column: 35,
+          column: 24,
           messageId: 'deprecated',
           endLine: 3,
-          endColumn: 45
+          endColumn: 34
         },
         {
           line: 4,
-          column: 22,
+          column: 11,
           messageId: 'deprecated',
           endLine: 4,
-          endColumn: 32
+          endColumn: 21
         },
         {
           line: 10,

@@ -15,40 +15,32 @@ const tester = new RuleTester({
 
 tester.run('operator-linebreak', rule, {
   valid: [
-    `
-    <template lang="pug">div(:foo="1 + 2")</template>`,
+    `<template lang="pug">div(:foo="1 + 2")</template>`,
     {
-      code: `
-      <template lang="pug">div(:foo="1 + 2")</template>`,
+      code: `<template lang="pug">div(:foo="1 + 2")</template>`,
       options: ['before']
     },
     {
-      code: `
-      <template lang="pug">div(:foo="1 + 2")</template>`,
+      code: `<template lang="pug">div(:foo="1 + 2")</template>`,
       options: ['none']
     },
-    `
-    <template lang="pug">div(:[foo+bar]="value")</template>`,
+    `<template lang="pug">div(:[foo+bar]="value")</template>`,
     {
-      code: `
-      <template lang="pug">div(:[foo+bar]="value")</template>`,
+      code: `<template lang="pug">div(:[foo+bar]="value")</template>`,
       options: ['before']
     },
     {
-      code: `
-      <template lang="pug">div(:[foo+bar]="value")</template>`,
+      code: `<template lang="pug">div(:[foo+bar]="value")</template>`,
       options: ['none']
     }
   ],
   invalid: [
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:foo="1
 + 2")
 </template>`,
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 div(:foo="1 +
 2")
 </template>`,
@@ -60,13 +52,11 @@ div(:foo="1 +
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:foo="1 +
 2")
 </template>`,
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 div(:foo="1
 + 2")
 </template>`,
@@ -79,15 +69,13 @@ div(:foo="1
       ]
     },
     {
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 div(:foo="1 +
   2")
 div(:foo="1
   + 2")
 </template>`,
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 div(:foo="1 +          2")
 div(:foo="1          + 2")
 </template>`,

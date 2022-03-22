@@ -29,15 +29,12 @@ tester.run('space-in-parens', rule, {
   valid: [
     `<template lang="pug">button(@click="foo(arg)")</template>`,
     {
-      code: `
-      <template lang="pug">button(@click="foo( arg )")</template>`,
+      code: `<template lang="pug">button(@click="foo( arg )")</template>`,
       options: ['always']
     },
-    `
-    <template lang="pug">button(:[foo(arg)]="foo(arg)")</template>`,
+    `<template lang="pug">button(:[foo(arg)]="foo(arg)")</template>`,
     {
-      code: `
-      <template lang="pug">button(:[foo(arg)]="foo( arg )")</template>`,
+      code: `<template lang="pug">button(:[foo(arg)]="foo( arg )")</template>`,
       options: ['always']
     },
     // CSS vars injection
@@ -50,10 +47,8 @@ tester.run('space-in-parens', rule, {
   ],
   invalid: [
     {
-      code: `
-      <template lang="pug">button(@click="foo( arg )")</template>`,
-      output: `
-      <template lang="pug">button(@click="foo(arg)")</template>`,
+      code: `<template lang="pug">button(@click="foo( arg )")</template>`,
+      output: `<template lang="pug">button(@click="foo(arg)")</template>`,
       errors: [
         errorMessage({
           messageId: 'rejectedOpeningSpace',
@@ -66,11 +61,9 @@ tester.run('space-in-parens', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">button(@click="foo(arg)")</template>`,
+      code: `<template lang="pug">button(@click="foo(arg)")</template>`,
       options: ['always'],
-      output: `
-      <template lang="pug">button(@click="foo( arg )")</template>`,
+      output: `<template lang="pug">button(@click="foo( arg )")</template>`,
       errors: [
         errorMessage({
           messageId: 'missingOpeningSpace',
@@ -83,10 +76,8 @@ tester.run('space-in-parens', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">input(:value="( 1 + 2 ) + 3")</template>`,
-      output: `
-      <template lang="pug">input(:value="(1 + 2) + 3")</template>`,
+      code: `<template lang="pug">input(:value="( 1 + 2 ) + 3")</template>`,
+      output: `<template lang="pug">input(:value="(1 + 2) + 3")</template>`,
       errors: [
         errorMessage({
           messageId: 'rejectedOpeningSpace',
@@ -99,11 +90,9 @@ tester.run('space-in-parens', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">input(:value="(1 + 2) + 3")</template>`,
+      code: `<template lang="pug">input(:value="(1 + 2) + 3")</template>`,
       options: ['always'],
-      output: `
-      <template lang="pug">input(:value="( 1 + 2 ) + 3")</template>`,
+      output: `<template lang="pug">input(:value="( 1 + 2 ) + 3")</template>`,
       errors: [
         errorMessage({
           messageId: 'missingOpeningSpace',
@@ -116,10 +105,8 @@ tester.run('space-in-parens', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">input(:[(1+2)]="( 1 + 2 ) + 3")</template>`,
-      output: `
-      <template lang="pug">input(:[(1+2)]="(1 + 2) + 3")</template>`,
+      code: `<template lang="pug">input(:[(1+2)]="( 1 + 2 ) + 3")</template>`,
+      output: `<template lang="pug">input(:[(1+2)]="(1 + 2) + 3")</template>`,
       errors: [
         errorMessage({
           messageId: 'rejectedOpeningSpace',
@@ -132,11 +119,9 @@ tester.run('space-in-parens', rule, {
       ]
     },
     {
-      code: `
-      <template lang="pug">input(:[(1+2)]="(1 + 2) + 3")</template>`,
+      code: `<template lang="pug">input(:[(1+2)]="(1 + 2) + 3")</template>`,
       options: ['always'],
-      output: `
-      <template lang="pug">input(:[(1+2)]="( 1 + 2 ) + 3")</template>`,
+      output: `<template lang="pug">input(:[(1+2)]="( 1 + 2 ) + 3")</template>`,
       errors: [
         errorMessage({
           messageId: 'missingOpeningSpace',

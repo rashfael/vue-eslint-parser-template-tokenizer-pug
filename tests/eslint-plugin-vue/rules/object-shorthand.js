@@ -21,22 +21,19 @@ tester.run('object-shorthand', rule, {
   valid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:style="{height}")</template>`
+      code: `<template lang="pug">div(:style="{height}")</template>`
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:style="{height: height}")</template>`,
+      code: `<template lang="pug">div(:style="{height: height}")</template>`,
       options: ['never']
     }
   ],
   invalid: [
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:style="{height: height}")</template>`,
-      output: `
+      code: `<template lang="pug">div(:style="{height: height}")</template>`,
+      output: `<template
       <template lang="pug">div(:style="{height}")</template>`,
       errors: [
         {
@@ -48,9 +45,8 @@ tester.run('object-shorthand', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(:style="{height}")</template>`,
-      output: `
+      code: `<template lang="pug">div(:style="{height}")</template>`,
+      output: `<template
       <template lang="pug">div(:style="{height: height}")</template>`,
       options: ['never'],
       errors: [

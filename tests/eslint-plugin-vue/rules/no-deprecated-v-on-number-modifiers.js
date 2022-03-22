@@ -215,8 +215,7 @@ ruleTester.run('no-deprecated-v-on-number-modifiers', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 input(@keydown.48='onKeydown')
 input(@keydown.57='onKeydown')
 input(@keydown.91='onKeydown')
@@ -238,16 +237,14 @@ input(@keydown.111='onKeydown')
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">
+      code: `<template lang="pug">
 input(@keydown.19='onKeydown')
 input(@keydown.37='onKeydown')
 input(@keydown.38='onKeydown')
 input(@keydown.39='onKeydown')
 input(@keydown.40='onKeydown')
 </template>`,
-      output: `
-      <template lang="pug">
+      output: `<template lang="pug">
 input(@keydown.pause='onKeydown')
 input(@keydown.arrow-left='onKeydown')
 input(@keydown.arrow-up='onKeydown')

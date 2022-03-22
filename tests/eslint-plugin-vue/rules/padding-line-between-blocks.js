@@ -15,8 +15,7 @@ const tester = new RuleTester({
 
 tester.run('padding-line-between-blocks', rule, {
   valid: [
-    `
-    <template></template>
+    `<template></template>
 
     <script></script>
 
@@ -28,16 +27,14 @@ tester.run('padding-line-between-blocks', rule, {
 
     <style></style>`,
     {
-      code: `
-      <template></template>
+      code: `<template></template>
       <script></script>
       <style></style>
       `,
       options: ['never']
     },
     // comments
-    `
-    <template></template>
+    `<template></template>
 
     <!-- comment -->
     <script></script>
@@ -50,8 +47,7 @@ tester.run('padding-line-between-blocks', rule, {
     <i18n></i18n>
     `,
     {
-      code: `
-      <template></template>
+      code: `<template></template>
       <!-- comment -->
       <script></script>
       <!-- comment -->
@@ -90,13 +86,11 @@ tester.run('padding-line-between-blocks', rule, {
   ],
   invalid: [
     {
-      code: `
-      <template></template>
+      code: `<template></template>
       <script></script>
       <style></style>
       `,
-      output: `
-      <template></template>
+      output: `<template></template>
 
       <script></script>
 
@@ -120,16 +114,14 @@ tester.run('padding-line-between-blocks', rule, {
       ]
     },
     {
-      code: `
-      <template></template>
+      code: `<template></template>
 
       <script></script>
 
       <style></style>
       `,
       options: ['never'],
-      output: `
-      <template></template>
+      output: `<template></template>
       <script></script>
       <style></style>
       `,
@@ -151,11 +143,9 @@ tester.run('padding-line-between-blocks', rule, {
       ]
     },
     {
-      code: `
-      <template></template><script></script><style></style>
+      code: `<template></template><script></script><style></style>
       `,
-      output: `
-      <template></template>
+      output: `<template></template>
 
 <script></script>
 
@@ -173,16 +163,14 @@ tester.run('padding-line-between-blocks', rule, {
       ]
     },
     {
-      code: `
-      <template></template>
+      code: `<template></template>
       <!-- comment -->
       <script></script>
       <!-- comment -->
       <!-- comment -->
       <style></style>
       `,
-      output: `
-      <template></template>
+      output: `<template></template>
 
       <!-- comment -->
       <script></script>
@@ -203,8 +191,7 @@ tester.run('padding-line-between-blocks', rule, {
       ]
     },
     {
-      code: `
-      <template></template>
+      code: `<template></template>
 
       <!-- comment -->
       <script></script>
@@ -217,8 +204,7 @@ tester.run('padding-line-between-blocks', rule, {
       <i18n></i18n>
       `,
       options: ['never'],
-      output: `
-      <template></template>
+      output: `<template></template>
       <!-- comment -->
       <script></script>
       <!-- comment -->
@@ -243,13 +229,11 @@ tester.run('padding-line-between-blocks', rule, {
       ]
     },
     {
-      code: `
-      <template></template>TEXT
+      code: `<template></template>TEXT
       <!-- comment --><script></script><!-- comment
       comment --><style></style>
       `,
-      output: `
-      <template></template>TEXT
+      output: `<template></template>TEXT
 
       <!-- comment --><script></script>
 

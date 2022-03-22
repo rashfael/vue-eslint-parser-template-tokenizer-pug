@@ -929,8 +929,7 @@ tester.run('no-unused-properties', rule, {
     // Vue.js 3.x Template Refs
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div(ref="root")</template>
+      code: `<template lang="pug">div(ref="root")</template>
 
       <script>
         import { ref, onMounted } from 'vue'
@@ -1345,8 +1344,7 @@ tester.run('no-unused-properties', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">div {{ obj.num.toLocaleString() }}</template>
+      code: `<template lang="pug">div {{ obj.num.toLocaleString() }}</template>
       <script>
       export default {
         data () {
@@ -1422,8 +1420,7 @@ tester.run('no-unused-properties', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template>
+      code: `<template>
       </template>
       <script>
       export default {
@@ -1469,8 +1466,7 @@ tester.run('no-unused-properties', rule, {
     // expose
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">| {{a}}</template>
+      code: `<template lang="pug">| {{a}}</template>
       <script>
       export default {
         expose: ['a', 'b', 'c', 'd'],
@@ -1527,8 +1523,7 @@ tester.run('no-unused-properties', rule, {
       parserOptions: { 
         parser: '@typescript-eslint/parser'
       , templateTokenizer: { pug: path.resolve(__dirname, '../../../')}},
-      code: `
-      <template lang="pug">span(v-for="(item, index) of pages", :key="index", @click="changePage(item)") {{ item }}</template>
+      code: `<template lang="pug">span(v-for="(item, index) of pages", :key="index", @click="changePage(item)") {{ item }}</template>
 
       <script setup lang="ts">
       import {
@@ -1583,8 +1578,7 @@ tester.run('no-unused-properties', rule, {
     // Vue2 functional component
     {
       filename: 'test.vue',
-      code: `
-      <template functional>
+      code: `<template functional>
         <div>{{props.a}} {{props.b}}</div>
       </template>
 
@@ -2373,8 +2367,7 @@ tester.run('no-unused-properties', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template>
+      code: `<template>
       </template>
       <script>
       export default {
@@ -2444,8 +2437,7 @@ tester.run('no-unused-properties', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template>
+      code: `<template>
       </template>
       <script>
       export default {
@@ -2472,8 +2464,7 @@ tester.run('no-unused-properties', rule, {
     },
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">| {{a}}</template>
+      code: `<template lang="pug">| {{a}}</template>
       <script setup>
       const props = defineProps(['a', 'b', 'c'])
       props.b
@@ -2484,8 +2475,7 @@ tester.run('no-unused-properties', rule, {
     // expose
     {
       filename: 'test.vue',
-      code: `
-      <template lang="pug">| {{a}}</template>
+      code: `<template lang="pug">| {{a}}</template>
       <script>
       export default {
         expose: ['a', 'c', 'e', 'g'],
@@ -2657,8 +2647,7 @@ tester.run('no-unused-properties', rule, {
     // Vue2 functional component
     {
       filename: 'test.vue',
-      code: `
-      <template functional>
+      code: `<template functional>
         <div>{{a}} {{b}} {{props.c}}</div>
       </template>
 
@@ -2707,8 +2696,7 @@ describe('`vue/no-unused-properties` and `vue/no-unused-components` should not c
   }
 
   it('should not be a false positive when using CSS v-bind().', () => {
-    const code = `
-      <template></template>
+    const code = `<template></template>
       <script>
         export default {
           props: ['a']

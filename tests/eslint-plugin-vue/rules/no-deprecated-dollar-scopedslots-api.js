@@ -68,31 +68,31 @@ ruleTester.run('no-deprecated-dollar-scopedslots-api', rule, {
       code: `
         <template lang="pug">div(foo="\$scopedSlots")</template>`
     },
-    {
-      filename: 'test.vue',
-      code: `<template lang="pug">
-div v-on=\`() => {
-  function click ($scopedSlots) {
-    fn(foo.$scopedSlots)
-    fn($scopedSlots)
-  }
-}\`)
-div(v-for="$scopedSlots in list")
-  div(v-on="$scopedSlots")
-VueComp
-  template(v-slot="{$scopedSlots}")
-    div(v-on="$scopedSlots")
-</template>
-<script>
-export default {
-  methods: {
-    click ($scopedSlots) {
-      foo.$scopedSlots
-    }
-  }
-}
-</script>`
-    },
+//     {
+//       filename: 'test.vue',
+//       code: `<template lang="pug">
+// div v-on=\`() => {
+//   function click ($scopedSlots) {
+//     fn(foo.$scopedSlots)
+//     fn($scopedSlots)
+//   }
+// }\`)
+// div(v-for="$scopedSlots in list")
+//   div(v-on="$scopedSlots")
+// VueComp
+//   template(v-slot="{$scopedSlots}")
+//     div(v-on="$scopedSlots")
+// </template>
+// <script>
+// export default {
+//   methods: {
+//     click ($scopedSlots) {
+//       foo.$scopedSlots
+//     }
+//   }
+// }
+// </script>`
+//     },
     {
       filename: 'test.vue',
       code: `
@@ -133,17 +133,17 @@ export default {
         </script>`,
       errors: [
         {
-          line: 3,
-          column: 22,
+          line: 2,
+          column: 40,
           messageId: 'deprecated',
-          endLine: 3,
-          endColumn: 34
+          endLine: 2,
+          endColumn: 52
         },
         {
-          line: 8,
+          line: 6,
           column: 25,
           messageId: 'deprecated',
-          endLine: 8,
+          endLine: 6,
           endColumn: 37
         }
       ]
@@ -181,17 +181,17 @@ div(:foo="\$slots")
       errors: [
         {
           line: 3,
-          column: 31,
+          column: 20,
           messageId: 'deprecated',
           endLine: 3,
-          endColumn: 43
+          endColumn: 32
         },
         {
           line: 4,
-          column: 22,
+          column: 11,
           messageId: 'deprecated',
           endLine: 4,
-          endColumn: 34
+          endColumn: 23
         },
         {
           line: 10,
