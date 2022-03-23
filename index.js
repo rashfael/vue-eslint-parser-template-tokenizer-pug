@@ -89,17 +89,65 @@ module.exports = class PugTokenizer {
 					)
 				)
 				break
-			case 'Text':
-				this.htmlTokens.push(
-					this.createTokenFromPugNode(
-						node,
-						'Text',
-						{
-							value: node.val
-						}
+			case 'Text': {
+				// resolve mustaches
+				const mustacheMatches = Array.from(node.val.matchAll(/{{(.*?)}}/g))
+
+				const nodeRange = this.getRangeFromPugLoc(node.loc)
+				let lastIndex = 0
+				for (const match of mustacheMatches) {
+					if (match.index > lastIndex) {
+						this.htmlTokens.push(
+							this.createTokenFromPugNode(
+								node,
+								'Text',
+								{
+									value: node.val.slice(lastIndex, match.index)
+								}, {
+									start: this.getLocFromOffset(nodeRange[0] + lastIndex),
+									end: this.getLocFromOffset(nodeRange[0] + match.index)
+								}
+							)
+						)
+					}
+					this.htmlTokens.push(
+						this.createTokenFromPugNode(
+							node,
+							'Mustache',
+							{
+								value: match[1].trim(),
+								// TODO completely generate tokens
+								startToken: {
+									range: [nodeRange[0] + match.index, nodeRange[0] + match.index + 2],
+								},
+								endToken: {
+									range: [nodeRange[0] + match.index + match[0].length - 2, nodeRange[0] + match.index + match[0].length],
+								}
+							}, {
+								start: this.getLocFromOffset(nodeRange[0] + match.index),
+								end: this.getLocFromOffset(nodeRange[0] + match.index + match[0].length)
+							}
+						)
 					)
-				)
+					lastIndex = match.index + match[0].length
+				}
+
+				if (lastIndex < node.val.length) {
+					this.htmlTokens.push(
+						this.createTokenFromPugNode(
+							node,
+							'Text',
+							{
+								value: node.val.slice(lastIndex, node.val.length)
+							}, {
+								start: this.getLocFromOffset(nodeRange[0] + lastIndex),
+								end: node.loc.end
+							}
+						)
+					)
+				}
 				break
+			}
 			case 'Comment':
 			case 'Block':
 				break
