@@ -309,7 +309,7 @@ module.exports = class PugTokenizer {
 
 		if (typeof attr.val === 'string') {
 			const value = attr.val.replace(/^['"`](.*)['"`]$/s, '$1')
-			const offset = this.text.indexOf(value, attribute.key.range[1])
+			const offset = !value ? attribute.key.range[1] + 1 + !!attr.val.match(/^['"`]/)?.length : this.text.indexOf(value, attribute.key.range[1])
 			const { line, column } = this.getLocFromOffset(offset)
 			attribute.value = this.createTokenFromPugNode(attr, 'VLiteral', {
 				parent: attribute,
