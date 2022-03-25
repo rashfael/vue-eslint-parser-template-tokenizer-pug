@@ -41,3 +41,7 @@ there are some rules relying on HTML* tokens, like `no-multi-spaces`.
 We're not adding `.class` and `#id` declarations to attributes to not break other rules, but then rules for classes, like `no-restricted-class` aren't working.
 
 ### Splitting low level mustache tokens
+
+### template attributes
+
+having both lang and src attributes on template, what does that even do?
