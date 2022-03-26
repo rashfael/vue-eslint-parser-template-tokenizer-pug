@@ -115,7 +115,7 @@ module.exports = class PugTokenizer {
 							node,
 							'Mustache',
 							{
-								value: match[1].trim(),
+								value: match[1],
 								// TODO completely generate tokens
 								startToken: {
 									range: [nodeRange[0] + match.index, nodeRange[0] + match.index + 2],
