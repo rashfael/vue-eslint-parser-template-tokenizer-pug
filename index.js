@@ -282,7 +282,8 @@ module.exports = class PugTokenizer {
 		// TODO generate distint lexer tokens? HTMLAssociation
 		const attribute = this.createTokenFromPugNode(attr, 'VAttribute', {
 			parent: DUMMY_PARENT,
-			directive: false
+			directive: false,
+			value: null
 		})
 
 		// include , in the range
