@@ -4,6 +4,11 @@ const pugWalk = require('pug-walk')
 
 const DUMMY_PARENT = Object.freeze({})
 
+const HTML_VOID_ELEMENT_TAGS = new Set([
+	'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta',
+	'param', 'source', 'track', 'wbr',
+])
+
 const LEXER_TOKEN_MAP = {
 	tag: 'PugTag',
 	':': 'PugBlockExpansion', // might mean something else?
@@ -83,7 +88,7 @@ module.exports = class PugTokenizer {
 						{
 							name: node.name,
 							rawName: node.name, // TODO öh?
-							selfClosing: node.selfClosing,
+							selfClosing: node.selfClosing || HTML_VOID_ELEMENT_TAGS.has(node.name),
 							attributes: node.attrs.map(this.createAttributeToken.bind(this))
 						}
 					)
@@ -161,7 +166,7 @@ module.exports = class PugTokenizer {
 	after (node) {
 		switch (node.type) {
 			case 'Tag':
-				if (!node.selfClosing) {
+				if (!node.selfClosing && !HTML_VOID_ELEMENT_TAGS.has(node.name)) {
 					this.htmlTokens.push(
 						this.createTokenFromPugNode(
 							node,
