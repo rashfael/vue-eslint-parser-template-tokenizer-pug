@@ -54,9 +54,8 @@ module.exports = class PugTokenizer {
 			pugWalk(ast, this.before.bind(this), this.after.bind(this))
 		} catch (error) {
 			if (!error.code?.startsWith('PUG:')) throw error
-			console.log(error)
 			this.errors.push({
-				code: error.code,
+				code: error.code.slice(4), // remove 'PUG:' prefix
 				message: error.msg,
 				index: this.lineToOffset[error.line - 1] + error.column - 1,
 				lineNumber: error.line,
@@ -86,8 +85,8 @@ module.exports = class PugTokenizer {
 						node,
 						'StartTag',
 						{
-							name: node.name,
-							rawName: node.name, // TODO öh?
+							name: node.name.toLowerCase(),
+							rawName: node.name,
 							selfClosing: node.selfClosing || HTML_VOID_ELEMENT_TAGS.has(node.name),
 							attributes: node.attrs.map(this.createAttributeToken.bind(this))
 						}
@@ -172,7 +171,7 @@ module.exports = class PugTokenizer {
 							node,
 							'EndTag',
 							{
-								name: node.name
+								name: node.name.toLowerCase()
 							}, {
 								start: node.loc.end,
 								end: node.loc.end,
