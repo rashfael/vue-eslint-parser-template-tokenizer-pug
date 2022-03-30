@@ -395,7 +395,7 @@ Parser.prototype = {
 						currentNode = {
 							type: 'Text',
 							val: text.val,
-							loc: tok.loc,
+							loc: text.loc,
 							isHtml: true,
 						}
 						nodes.push(currentNode)
