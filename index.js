@@ -22,7 +22,27 @@ const LEXER_TOKEN_MAP = {
 	id: 'PugId',
 	class: 'PugClass',
 	text: 'PugText',
-	comment: 'HTMLComment'
+	// https://pugjs.org/language/plain-text.html#block-in-a-tag
+	dot: 'PugDot',
+	'start-pipeless-text': 'PugStartPipelessText',
+	'end-pipeless-text': 'PugEndPipelessText',
+	code: 'PugCode',
+	if: 'PugIf',
+	else: 'PugElse',
+	'else-if': 'PugElseIf',
+	case: 'PugCase',
+	when: 'PugWhen',
+	each: 'PugEach',
+	while: 'PugWhile',
+	default: 'PugDefault',
+	include: 'PugInclude',
+	path: 'PugPath',
+	extends: 'PugExtends',
+	block: 'PugBlock',
+	'interpolated-code': 'PugInterpolatedCode',
+	mixin: 'PugMixin',
+	call: 'PugCall',
+	comment: 'HTMLComment',
 }
 
 module.exports = class PugTokenizer {
@@ -152,7 +172,19 @@ module.exports = class PugTokenizer {
 				}
 				break
 			}
+			case 'Code':
 			case 'Comment':
+			case 'Conditional':
+			case 'Case':
+			case 'When':
+			case 'Each':
+			case 'While':
+			case 'Default':
+			case 'Include':
+			case 'FileReference':
+			case 'Extends':
+			case 'NamedBlock':
+			case 'Mixin':
 			case 'Block':
 				break
 			default:
@@ -181,7 +213,19 @@ module.exports = class PugTokenizer {
 				}
 				break
 			case 'Text':
+			case 'Code':
 			case 'Comment':
+			case 'Conditional':
+			case 'Case':
+			case 'When':
+			case 'Each':
+			case 'While':
+			case 'Default':
+			case 'Include':
+			case 'FileReference':
+			case 'Extends':
+			case 'NamedBlock':
+			case 'Mixin':
 			case 'Block':
 				break
 			default:
