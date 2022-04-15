@@ -19,11 +19,13 @@
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-vue": "^8.5.0",
     "mocha": "^9.2.2",
-    "vue-eslint-parser": "github:rashfael/vue-eslint-parser#custom-template-tokenizers",
     "xhtml2pug": "^3.2.1"
   },
   "dependencies": {
     "pug-lexer": "^5.0.1",
     "pug-walk": "^2.0.0"
+  },
+  "peerDependencies": {
+    "vue-eslint-parser": ">=9.0.0-alpha.0"
   }
 }
