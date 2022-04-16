@@ -48,6 +48,7 @@ const LEXER_TOKEN_MAP = {
 module.exports = class PugTokenizer {
 	constructor (text, code, { startingLine, startingColumn }) {
 		this.text = code
+		// TODO take into account this flag when parsing
 		this.expressionEnabled = true
 		this.namespace = 'http://www.w3.org/1999/xhtml'
 		const lexer = new Lexer(text, {
@@ -115,60 +116,31 @@ module.exports = class PugTokenizer {
 				break
 			case 'Text': {
 				// resolve mustaches
-				const mustacheMatches = Array.from(node.val.matchAll(/{{(.*?)}}/g))
-
-				const nodeRange = this.getRangeFromPugLoc(node.loc)
-				let lastIndex = 0
-				for (const match of mustacheMatches) {
-					if (match.index > lastIndex) {
-						this.htmlTokens.push(
-							this.createTokenFromPugNode(
-								node,
-								'Text',
-								{
-									value: node.val.slice(lastIndex, match.index)
-								}, {
-									start: this.getLocFromOffset(nodeRange[0] + lastIndex),
-									end: this.getLocFromOffset(nodeRange[0] + match.index)
-								}
-							)
-						)
+				const mustacheTokens = this.findMustacheTokens(node)
+				let mustache = null
+				for (const token of mustacheTokens) {
+					if (token.type === 'VExpressionStart') {
+						mustache = {
+							type: 'Mustache',
+							value: '',
+							startToken: token,
+							range: token.range,
+							loc: token.loc,
+						}
+						continue
+					} else if (mustache && token.type === 'VExpressionEnd') {
+						mustache.endToken = token
+						mustache.range[1] = token.range[1]
+						mustache.loc.end = token.loc.end
+						this.htmlTokens.push(mustache)
+						mustache = null
+						continue
 					}
-					this.htmlTokens.push(
-						this.createTokenFromPugNode(
-							node,
-							'Mustache',
-							{
-								value: match[1],
-								// TODO completely generate tokens
-								startToken: {
-									range: [nodeRange[0] + match.index, nodeRange[0] + match.index + 2],
-								},
-								endToken: {
-									range: [nodeRange[0] + match.index + match[0].length - 2, nodeRange[0] + match.index + match[0].length],
-								}
-							}, {
-								start: this.getLocFromOffset(nodeRange[0] + match.index),
-								end: this.getLocFromOffset(nodeRange[0] + match.index + match[0].length)
-							}
-						)
-					)
-					lastIndex = match.index + match[0].length
-				}
-
-				if (lastIndex < node.val.length) {
-					this.htmlTokens.push(
-						this.createTokenFromPugNode(
-							node,
-							'Text',
-							{
-								value: node.val.slice(lastIndex, node.val.length)
-							}, {
-								start: this.getLocFromOffset(nodeRange[0] + lastIndex),
-								end: node.loc.end
-							}
-						)
-					)
+					if (mustache) {
+						mustache.value += token.value
+						continue
+					}
+					this.htmlTokens.push(Object.assign({}, token, {type: 'Text'}))
 				}
 				break
 			}
@@ -290,6 +262,10 @@ module.exports = class PugTokenizer {
 			}
 			return
 		}
+		if (token.type === 'text') {
+			this.tokens.push(...this.findMustacheTokens(token))
+			return
+		}
 		const tok = this.createTokenFromPugNode(token, LEXER_TOKEN_MAP[token.type], { value: token.val })
 		// newlines having no width bricks the parser
 		if (token.type === 'newline') {
@@ -390,5 +366,59 @@ module.exports = class PugTokenizer {
 			line,
 			column,
 		}
+	}
+
+	findMustacheTokens (token) {
+		const text = token.val
+		const mustacheMatches = Array.from(text.matchAll(/{{(.*?)}}/g))
+		if (mustacheMatches.length === 0) return [this.createTokenFromPugNode(token, 'PugText', {
+			value: text
+		})]
+		const tokenRange = this.getRangeFromPugLoc(token.loc)
+		const tokens = []
+		let lastIndex = 0
+		console.log(mustacheMatches)
+		for (const match of mustacheMatches) {
+			if (match.index > lastIndex) {
+				tokens.push(this.createTokenFromPugNode(token, 'PugText', {
+					value: text.slice(lastIndex, match.index)
+				}, {
+					start: this.getLocFromOffset(tokenRange[0] + lastIndex),
+					end: this.getLocFromOffset(tokenRange[0] + match.index)
+				}))
+			}
+			tokens.push(this.createTokenFromPugNode(token, 'VExpressionStart', {
+				value: '{{'
+			}, {
+				start: this.getLocFromOffset(tokenRange[0] + match.index),
+				end: this.getLocFromOffset(tokenRange[0] + match.index + 2)
+			}))
+
+			tokens.push(this.createTokenFromPugNode(token, 'PugText', {
+				value: match[1]
+			}, {
+				start: this.getLocFromOffset(tokenRange[0] + match.index + 2),
+				end: this.getLocFromOffset(tokenRange[0] + match[0].length - 2)
+			}))
+
+			tokens.push(this.createTokenFromPugNode(token, 'VExpressionEnd', {
+				value: '}}'
+			}, {
+				start: this.getLocFromOffset(tokenRange[0] + match.index + match[0].length - 2),
+				end: this.getLocFromOffset(tokenRange[0] + match.index + match[0].length)
+			}))
+
+			lastIndex = match.index + match[0].length
+		}
+
+		if (lastIndex < text.length) {
+			tokens.push(this.createTokenFromPugNode(token, 'PugText', {
+				value: text.slice(lastIndex, text.length)
+			}, {
+				start: this.getLocFromOffset(tokenRange[0] + lastIndex),
+				end: token.loc.end
+			}))
+		}
+		return tokens
 	}
 }
