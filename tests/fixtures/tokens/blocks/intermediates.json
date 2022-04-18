@@ -1,0 +1,381 @@
+[
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [],
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 21
+      },
+      "end": {
+        "line": 1,
+        "column": 25
+      }
+    },
+    "range": [
+      21,
+      25
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [],
+    "loc": {
+      "start": {
+        "line": 2,
+        "column": 1
+      },
+      "end": {
+        "line": 2,
+        "column": 11
+      }
+    },
+    "range": [
+      27,
+      37
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "a",
+    "rawName": "a",
+    "selfClosing": false,
+    "attributes": [
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": {
+          "type": "VLiteral",
+          "value": "#",
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 20
+            },
+            "end": {
+              "line": 2,
+              "column": 23
+            }
+          },
+          "range": [
+            46,
+            49
+          ]
+        },
+        "loc": {
+          "start": {
+            "line": 2,
+            "column": 15
+          },
+          "end": {
+            "line": 2,
+            "column": 23
+          }
+        },
+        "range": [
+          41,
+          49
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": "href",
+          "rawName": "href",
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 15
+            },
+            "end": {
+              "line": 2,
+              "column": 19
+            }
+          },
+          "range": [
+            41,
+            45
+          ]
+        }
+      }
+    ],
+    "loc": {
+      "start": {
+        "line": 2,
+        "column": 13
+      },
+      "end": {
+        "line": 2,
+        "column": 24
+      }
+    },
+    "range": [
+      39,
+      50
+    ]
+  },
+  {
+    "type": "Text",
+    "value": "foo",
+    "loc": {
+      "start": {
+        "line": 2,
+        "column": 25
+      },
+      "end": {
+        "line": 2,
+        "column": 28
+      }
+    },
+    "range": [
+      51,
+      54
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "a",
+    "loc": {
+      "start": {
+        "line": 2,
+        "column": 24
+      },
+      "end": {
+        "line": 2,
+        "column": 24
+      }
+    },
+    "range": [
+      50,
+      50
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 2,
+        "column": 11
+      },
+      "end": {
+        "line": 2,
+        "column": 11
+      }
+    },
+    "range": [
+      37,
+      37
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": {
+          "type": "VLiteral",
+          "value": "stuff",
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 12
+            },
+            "end": {
+              "line": 3,
+              "column": 19
+            }
+          },
+          "range": [
+            67,
+            74
+          ]
+        },
+        "loc": {
+          "start": {
+            "line": 3,
+            "column": 7
+          },
+          "end": {
+            "line": 3,
+            "column": 19
+          }
+        },
+        "range": [
+          62,
+          74
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": "v-if",
+          "rawName": "v-if",
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 7
+            },
+            "end": {
+              "line": 3,
+              "column": 11
+            }
+          },
+          "range": [
+            62,
+            66
+          ]
+        }
+      }
+    ],
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 1
+      },
+      "end": {
+        "line": 3,
+        "column": 20
+      }
+    },
+    "range": [
+      56,
+      75
+    ]
+  },
+  {
+    "type": "Text",
+    "value": "inline ",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 21
+      },
+      "end": {
+        "line": 3,
+        "column": 28
+      }
+    },
+    "range": [
+      76,
+      83
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "strong",
+    "rawName": "strong",
+    "selfClosing": false,
+    "attributes": [],
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 30
+      },
+      "end": {
+        "line": 3,
+        "column": 36
+      }
+    },
+    "range": [
+      85,
+      91
+    ]
+  },
+  {
+    "type": "Text",
+    "value": "interpolation",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 37
+      },
+      "end": {
+        "line": 3,
+        "column": 50
+      }
+    },
+    "range": [
+      92,
+      105
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "strong",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 36
+      },
+      "end": {
+        "line": 3,
+        "column": 36
+      }
+    },
+    "range": [
+      91,
+      91
+    ]
+  },
+  {
+    "type": "Text",
+    "value": "",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 51
+      },
+      "end": {
+        "line": 3,
+        "column": 51
+      }
+    },
+    "range": [
+      106,
+      106
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 20
+      },
+      "end": {
+        "line": 3,
+        "column": 20
+      }
+    },
+    "range": [
+      75,
+      75
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 25
+      },
+      "end": {
+        "line": 1,
+        "column": 25
+      }
+    },
+    "range": [
+      25,
+      25
+    ]
+  }
+]
