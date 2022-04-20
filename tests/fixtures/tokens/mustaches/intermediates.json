@@ -1,0 +1,203 @@
+[
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      21,
+      24
+    ],
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 21
+      },
+      "end": {
+        "line": 1,
+        "column": 24
+      }
+    }
+  },
+  {
+    "type": "Text",
+    "value": "some ",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 24
+      },
+      "end": {
+        "line": 1,
+        "column": 29
+      }
+    },
+    "range": [
+      24,
+      29
+    ]
+  },
+  {
+    "type": "Mustache",
+    "value": " mustaches ",
+    "startToken": {
+      "type": "VExpressionStart",
+      "value": "{{",
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 30
+        },
+        "end": {
+          "line": 1,
+          "column": 32
+        }
+      },
+      "range": [
+        30,
+        32
+      ]
+    },
+    "range": [
+      30,
+      45
+    ],
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 30
+      },
+      "end": {
+        "line": 1,
+        "column": 45
+      }
+    },
+    "endToken": {
+      "type": "VExpressionEnd",
+      "value": "}}",
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 43
+        },
+        "end": {
+          "line": 1,
+          "column": 45
+        }
+      },
+      "range": [
+        43,
+        45
+      ]
+    }
+  },
+  {
+    "type": "Text",
+    "value": " with ",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 44
+      },
+      "end": {
+        "line": 1,
+        "column": 50
+      }
+    },
+    "range": [
+      44,
+      50
+    ]
+  },
+  {
+    "type": "Mustache",
+    "value": " 3 + 4",
+    "startToken": {
+      "type": "VExpressionStart",
+      "value": "{{",
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 51
+        },
+        "end": {
+          "line": 1,
+          "column": 53
+        }
+      },
+      "range": [
+        51,
+        53
+      ]
+    },
+    "range": [
+      51,
+      61
+    ],
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 51
+      },
+      "end": {
+        "line": 1,
+        "column": 61
+      }
+    },
+    "endToken": {
+      "type": "VExpressionEnd",
+      "value": "}}",
+      "loc": {
+        "start": {
+          "line": 1,
+          "column": 59
+        },
+        "end": {
+          "line": 1,
+          "column": 61
+        }
+      },
+      "range": [
+        59,
+        61
+      ]
+    }
+  },
+  {
+    "type": "Text",
+    "value": " js in it.",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 60
+      },
+      "end": {
+        "line": 1,
+        "column": 71
+      }
+    },
+    "range": [
+      60,
+      71
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 71
+      },
+      "end": {
+        "line": 2,
+        "column": 0
+      }
+    },
+    "range": [
+      71,
+      72
+    ]
+  }
+]

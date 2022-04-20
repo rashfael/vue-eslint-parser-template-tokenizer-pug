@@ -1,0 +1,225 @@
+[
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": {
+          "type": "VLiteral",
+          "value": "foo",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 31
+            },
+            "end": {
+              "line": 1,
+              "column": 36
+            }
+          },
+          "range": [
+            31,
+            36
+          ]
+        },
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 25
+          },
+          "end": {
+            "line": 1,
+            "column": 36
+          }
+        },
+        "range": [
+          25,
+          36
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": "class",
+          "rawName": "class",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 25
+            },
+            "end": {
+              "line": 1,
+              "column": 30
+            }
+          },
+          "range": [
+            25,
+            30
+          ]
+        }
+      },
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": {
+          "type": "VLiteral",
+          "value": "foo",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 42
+            },
+            "end": {
+              "line": 1,
+              "column": 47
+            }
+          },
+          "range": [
+            42,
+            47
+          ]
+        },
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 38
+          },
+          "end": {
+            "line": 1,
+            "column": 47
+          }
+        },
+        "range": [
+          38,
+          47
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": ":id",
+          "rawName": ":id",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 38
+            },
+            "end": {
+              "line": 1,
+              "column": 41
+            }
+          },
+          "range": [
+            38,
+            41
+          ]
+        }
+      },
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": {
+          "type": "VLiteral",
+          "value": "baz",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 54
+            },
+            "end": {
+              "line": 1,
+              "column": 59
+            }
+          },
+          "range": [
+            54,
+            59
+          ]
+        },
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 49
+          },
+          "end": {
+            "line": 1,
+            "column": 59
+          }
+        },
+        "range": [
+          49,
+          59
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": "@bar",
+          "rawName": "@bar",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 49
+            },
+            "end": {
+              "line": 1,
+              "column": 53
+            }
+          },
+          "range": [
+            49,
+            53
+          ]
+        }
+      }
+    ],
+    "range": [
+      21,
+      60
+    ],
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 21
+      },
+      "end": {
+        "line": 1,
+        "column": 60
+      }
+    }
+  },
+  {
+    "type": "Text",
+    "value": "foo",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 61
+      },
+      "end": {
+        "line": 1,
+        "column": 64
+      }
+    },
+    "range": [
+      61,
+      64
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 64
+      },
+      "end": {
+        "line": 2,
+        "column": 0
+      }
+    },
+    "range": [
+      64,
+      65
+    ]
+  }
+]

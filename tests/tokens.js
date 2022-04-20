@@ -1,7 +1,7 @@
 const fs = require('fs')
 const path = require('path')
 const should = require('chai').should()
-const Tokenizer = require('../')
+const Tokenizer = require('..')
 
 const ROOT = path.join(__dirname, 'fixtures/tokens')
 const TARGETS = fs.readdirSync(ROOT)

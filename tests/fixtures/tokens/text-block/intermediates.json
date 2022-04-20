@@ -1,0 +1,134 @@
+[
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      21,
+      24
+    ],
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 21
+      },
+      "end": {
+        "line": 1,
+        "column": 24
+      }
+    }
+  },
+  {
+    "type": "Text",
+    "value": "A longer",
+    "loc": {
+      "start": {
+        "line": 2,
+        "column": 1
+      },
+      "end": {
+        "line": 2,
+        "column": 9
+      }
+    },
+    "range": [
+      27,
+      35
+    ]
+  },
+  {
+    "type": "Text",
+    "value": "text in a block with ",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 1
+      },
+      "end": {
+        "line": 3,
+        "column": 22
+      }
+    },
+    "range": [
+      37,
+      58
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "strong",
+    "rawName": "strong",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      60,
+      66
+    ],
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 24
+      },
+      "end": {
+        "line": 3,
+        "column": 30
+      }
+    }
+  },
+  {
+    "type": "Text",
+    "value": "interpolation",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 31
+      },
+      "end": {
+        "line": 3,
+        "column": 44
+      }
+    },
+    "range": [
+      67,
+      80
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "strong",
+    "loc": {
+      "start": {
+        "line": 2,
+        "column": 35
+      },
+      "end": {
+        "line": 3,
+        "column": 45
+      }
+    },
+    "range": [
+      79,
+      81
+    ]
+  },
+  {
+    "type": "Text",
+    "value": " and stuff.",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 45
+      },
+      "end": {
+        "line": 3,
+        "column": 56
+      }
+    },
+    "range": [
+      81,
+      92
+    ]
+  }
+]

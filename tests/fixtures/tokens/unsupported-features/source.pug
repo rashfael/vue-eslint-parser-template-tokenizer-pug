@@ -8,3 +8,38 @@ mixin foo(bar)
 - var foo = 'bar'
 if foo
 	.foo= foo
+else if bar
+	.bar= bar
+else
+	.baz
+
+case friends
+	when 0
+		p you have no friends
+	when 1
+		p you have a friend
+	default
+		p you have a lot of friends
+
+ul
+	each val in values
+		li= val
+	else
+		li There are no values
+ul
+	for val in values
+		li= val
+ul
+	while n < 4
+		li= n++
+
+div
+	include includes/head.pug
+
+extends layout.pug
+
+block scripts
+	script(src='/jquery.js')
+	script(src='/pets.js')
+
+p This is #{msg.toUpperCase()}

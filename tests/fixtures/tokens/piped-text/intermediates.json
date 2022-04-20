@@ -1,0 +1,95 @@
+[
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      21,
+      24
+    ],
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 21
+      },
+      "end": {
+        "line": 1,
+        "column": 24
+      }
+    }
+  },
+  {
+    "type": "Text",
+    "value": "Some",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 25
+      },
+      "end": {
+        "line": 1,
+        "column": 29
+      }
+    },
+    "range": [
+      25,
+      29
+    ]
+  },
+  {
+    "type": "Text",
+    "value": "piped",
+    "loc": {
+      "start": {
+        "line": 2,
+        "column": 3
+      },
+      "end": {
+        "line": 2,
+        "column": 8
+      }
+    },
+    "range": [
+      33,
+      38
+    ]
+  },
+  {
+    "type": "Text",
+    "value": "text",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 3
+      },
+      "end": {
+        "line": 3,
+        "column": 7
+      }
+    },
+    "range": [
+      42,
+      46
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 46
+      },
+      "end": {
+        "line": 4,
+        "column": 0
+      }
+    },
+    "range": [
+      46,
+      47
+    ]
+  }
+]

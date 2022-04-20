@@ -23,8 +23,7 @@
     "xhtml2pug": "^3.2.1"
   },
   "dependencies": {
-    "pug-lexer": "^5.0.1",
-    "pug-walk": "^2.0.0"
+    "pug-lexer": "^5.0.1"
   },
   "peerDependencies": {
     "vue-eslint-parser": ">=9.0.0-alpha.0"

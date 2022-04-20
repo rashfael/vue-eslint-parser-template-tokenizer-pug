@@ -1,13 +1,10 @@
 const { Lexer } = require('pug-lexer')
-const pugParse = require('./pug-parser')
-const pugWalk = require('pug-walk')
 
 const DUMMY_PARENT = Object.freeze({})
 
-const HTML_VOID_ELEMENT_TAGS = new Set([
-	'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta',
-	'param', 'source', 'track', 'wbr',
-])
+const HTML_VOID_ELEMENT_TAGS = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'param', 'source', 'track', 'wbr'])
+
+// TODO handle &attributes
 
 const LEXER_TOKEN_MAP = {
 	tag: 'PugTag',
@@ -26,6 +23,8 @@ const LEXER_TOKEN_MAP = {
 	dot: 'PugDot',
 	'start-pipeless-text': 'PugStartPipelessText',
 	'end-pipeless-text': 'PugEndPipelessText',
+	'start-pug-interpolation': 'PugStartTagInterpolation',
+	'end-pug-interpolation': 'PugEndTagInterpolation',
 	code: 'PugCode',
 	if: 'PugIf',
 	else: 'PugElse',
@@ -66,13 +65,14 @@ module.exports = class PugTokenizer {
 		this.tokens = []
 		this.comments = []
 		this.errors = []
-		this.htmlTokens = []
+
+		this.tokenBuffer = []
+		this.tagStack = []
+		this._nextIndex = 0
+		this._tokens = []
 
 		try {
-			const lexerTokens = lexer.getTokens()
-			lexerTokens.forEach(this.convertLexerToken.bind(this))
-			const ast = pugParse(lexerTokens)
-			pugWalk(ast, this.before.bind(this), this.after.bind(this))
+			this._tokens = lexer.getTokens()
 		} catch (error) {
 			if (!error.code?.startsWith('PUG:')) throw error
 			this.errors.push({
@@ -83,288 +83,334 @@ module.exports = class PugTokenizer {
 				column: error.column - 1
 			})
 		}
-		this.htmlTokenIterator = this.htmlTokens[Symbol.iterator]()
-		// for (const token of this.htmlTokens) {
-		// 	console.log(code.substring(token.range[0], token.range[1]), JSON.stringify(token, (key, value) => {
-		// 		if (key === 'parent') return
-		// 		if (key === 'loc') return value.start.line + ':' + value.start.column + '-' + value.end.line + ':' + value.end.column
-		// 		if (key === 'range') return value[0] + '-' + value[1]
-		// 		return value
-		// 	}, 2))
-		// }
 	}
 
 	nextToken () {
-		return this.htmlTokenIterator.next().value
-	}
+		if (this.tokenBuffer.length) return this.tokenBuffer.shift()
+		// TODO parse text-html
+		if (this.peek() === null) return
 
-	before (node) {
-		switch (node.type) {
-			case 'Tag':
-				this.htmlTokens.push(
-					this.createTokenFromPugNode(
-						node,
-						'StartTag',
-						{
-							name: node.name.toLowerCase(),
-							rawName: node.name,
-							selfClosing: node.selfClosing || HTML_VOID_ELEMENT_TAGS.has(node.name),
-							attributes: node.attrs.map(this.createAttributeToken.bind(this))
-						}
-					)
-				)
-				break
-			case 'Text': {
-				// resolve mustaches
-				const mustacheTokens = this.findMustacheTokens(node)
-				let mustache = null
-				for (const token of mustacheTokens) {
-					if (token.type === 'VExpressionStart') {
-						mustache = {
-							type: 'Mustache',
-							value: '',
-							startToken: token,
-							range: token.range,
+		while (this.tokenBuffer.length === 0) {
+			if (!this.peek()) return
+			switch (this.peek().type) {
+				case 'eos': return null
+				case 'id':
+				case 'class':
+				case 'tag': {
+					const tag = this.parseTag(this.peek().type === 'tag' ? null : 'div')
+					this.tagStack.unshift(tag)
+					return tag
+				}
+				case 'text': {
+					this.parseText()
+					break
+				}
+				case 'newline': {
+					const token = this.recordToken(this.next())
+					token.range[0] -= 1
+					token.loc.start.line -= 1
+					// actually find start of whitespace, pug-lexer only generates one newline token for multiple newlines
+					while (this.text[token.range[0] - 1] === '\n') {
+						token.range[0] -= 1
+						token.loc.start.line -= 1
+					}
+					token.loc.start.column = this.lineToOffset[token.loc.start.line] - 1
+					token.value = this.text.substring(token.range[0], token.range[1])
+					while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
+						const startTag = this.tagStack.shift()
+						this.tokenBuffer.push({
+							type: 'EndTag',
+							name: startTag.name.toLowerCase(),
 							loc: token.loc,
-						}
-						continue
-					} else if (mustache && token.type === 'VExpressionEnd') {
-						mustache.endToken = token
-						mustache.range[1] = token.range[1]
-						mustache.loc.end = token.loc.end
-						this.htmlTokens.push(mustache)
-						mustache = null
-						continue
+							range: token.range
+						})
 					}
-					if (mustache) {
-						mustache.value += token.value
-						continue
-					}
-					this.htmlTokens.push(Object.assign({}, token, {type: 'Text'}))
+					break
 				}
-				break
-			}
-			case 'Code':
-			case 'Comment':
-			case 'Conditional':
-			case 'Case':
-			case 'When':
-			case 'Each':
-			case 'While':
-			case 'Default':
-			case 'Include':
-			case 'FileReference':
-			case 'Extends':
-			case 'NamedBlock':
-			case 'Mixin':
-			case 'Block':
-				break
-			default:
-				console.log('UNHANDLED BEFORE NODE', node)
-				break
-		}
-		return true
-	}
-
-	after (node) {
-		switch (node.type) {
-			case 'Tag':
-				if (!node.selfClosing && !HTML_VOID_ELEMENT_TAGS.has(node.name)) {
-					this.htmlTokens.push(
-						this.createTokenFromPugNode(
-							node,
-							'EndTag',
-							{
-								name: node.name.toLowerCase()
-							}, {
-								start: node.loc.end,
-								end: node.loc.end,
-							},
-						),
+				case 'outdent':
+				case 'end-pug-interpolation': {
+					const token = this.recordToken(this.next())
+					token.range[0] -= 1
+					token.loc.start.line -= 1
+					// actually find start of whitespace, pug-lexer only generates one newline token for multiple newlines
+					while (this.text[token.range[0] - 1] === '\n') {
+						token.range[0] -= 1
+						token.loc.start.line -= 1
+					}
+					token.loc.start.column = this.lineToOffset[token.loc.start.line] - 1
+					token.value = this.text.substring(token.range[0], token.range[1])
+					while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
+						const startTag = this.tagStack.shift()
+						this.tokenBuffer.push({
+							type: 'EndTag',
+							name: startTag.name.toLowerCase(),
+							loc: token.loc,
+							range: token.range
+						})
+					}
+					const startTag = this.tagStack.shift()
+					this.tokenBuffer.push({
+						type: 'EndTag',
+						name: startTag.name.toLowerCase(),
+						loc: token.loc,
+						range: token.range
+					})
+					break
+				}
+				case 'indent':
+				case 'start-pug-interpolation':
+				case 'start-pipeless-text': // TODO concat pipeless text blocks?
+				case 'end-pipeless-text':
+					this.recordToken(this.next())
+					break
+				case 'comment':
+					this.comments.push(this.createTokenFromPugNode(this.next()))
+					break
+				// skip pug features we can't really lint
+				case 'mixin':
+				case 'call':
+				case 'code':
+				case 'if':
+				case 'else':
+				case 'else-if':
+				case 'case':
+				case 'when':
+				case 'default':
+				case 'each':
+				case 'while':
+				case 'include':
+				case 'path':
+				case 'extends':
+				case 'block':
+				case 'interpolated-code':
+					this.skipIndentLevel()
+					break
+				default:
+					this.error(
+						'INVALID_TOKEN',
+						'unexpected token "' + this.peek().type + '"',
+						this.peek(),
 					)
+					return
+			}
+		}
+		if (this.tokenBuffer.length) return this.tokenBuffer.shift()
+	}
+
+	// internal methods
+
+	next () {
+		if (this._nextIndex >= this._tokens.length) return null
+		return this._tokens[this._nextIndex++]
+	}
+
+	peek () {
+		if (this._nextIndex >= this._tokens.length) return null
+		return this._tokens[this._nextIndex]
+	}
+
+	expect (type) {
+		if (this.peek().type === type) {
+			return this.next()
+		} else {
+			this.error(
+				'INVALID_TOKEN',
+				'expected "' + type + '", but got "' + this.peek().type + '"',
+				this.peek(),
+			)
+		}
+	}
+
+	error (code, message, token) {
+		console.log('ERROR', code, message, token)
+		this.errors.push({
+			code,
+			message,
+			index: this.lineToOffset[token.loc.start.line - 1] + token.loc.start.column - 1,
+			lineNumber: token.loc.start.line,
+			column: token.loc.start.column - 1
+		})
+	}
+
+	recordToken (token) {
+		const transformedToken = this.createTokenFromPugNode(token)
+		this.tokens.push(transformedToken)
+		return transformedToken
+	}
+
+	parseTag (tagName) {
+		const token = this.recordToken(this.next())
+		tagName = tagName || token.value
+		const tag = {
+			type: 'StartTag',
+			name: tagName.toLowerCase(),
+			rawName: tagName,
+			selfClosing: HTML_VOID_ELEMENT_TAGS.has(tagName),
+			attributes: [],
+			range: token.range.slice(),
+			loc: Object.assign({}, token.loc)
+		}
+
+		return this.fillTag(tag)
+	}
+
+	fillTag (tag) {
+		// eslint-disable-next-line no-labels
+		out: while (true) {
+			switch (this.peek().type) {
+				case 'id':
+				case 'class': {
+					const token = this.recordToken(this.next())
+					tag.loc.end = token.loc.end
+					tag.range[1] = token.range[1]
+					continue
 				}
+				case 'start-attributes': {
+					this.recordToken(this.next())
+					while (this.peek().type === 'attribute') {
+						tag.attributes.push(this.parseAttribute(this.next()))
+					}
+					const endToken = this.recordToken(this.expect('end-attributes'))
+					tag.loc.end = endToken.loc.end
+					tag.range[1] = endToken.range[1]
+					continue
+				}
+				default:
+					// eslint-disable-next-line no-labels
+					break out
+			}
+		}
+
+		switch (this.peek().type) {
+			case 'dot':
+			case ':':
+				this.recordToken(this.next())
 				break
-			case 'Text':
-			case 'Code':
-			case 'Comment':
-			case 'Conditional':
-			case 'Case':
-			case 'When':
-			case 'Each':
-			case 'While':
-			case 'Default':
-			case 'Include':
-			case 'FileReference':
-			case 'Extends':
-			case 'NamedBlock':
-			case 'Mixin':
-			case 'Block':
+			case 'slash':
+				this.next()
+				tag.selfClosing = true
+				break
+			case 'text':
+			case 'interpolated-code':
+			case 'newline':
+			case 'indent':
+			case 'outdent':
+			case 'eos':
+			case 'start-pipeless-text':
+			case 'end-pug-interpolation':
 				break
 			default:
-				console.log('UNHANDLED AFTER NODE', node)
-				break
+				this.error(
+					'INVALID_TOKEN',
+					'Unexpected token `' +
+						this.peek().type +
+						'` expected `text`, `interpolated-code`, `code`, `:`, `slash`, `newline` or `eos`',
+					this.peek()
+				)
 		}
+		return tag
 	}
 
-	convertLexerToken (token) {
-		if (!LEXER_TOKEN_MAP[token.type]) {
-			console.log('UNHANDLED TOKEN TYPE', token)
-		}
-		if (token.type === 'attribute') {
-			const identifier = this.createTokenFromPugNode(token, 'PugIdentifier', {
-				value: token.name
-			}, {
-				start: {
-					line: token.loc.start.line,
-					column: token.loc.start.column
-				},
-				end: {
-					line: token.loc.start.line,
-					column:
-						token.loc.start.column +
-						token.name.length
-				},
-			})
-			// include , in the range
-			// if (this.text[identifier.range[1]] === ',') identifier.range[1] += 1
-			this.tokens.push(identifier)
-			this.tokens.push(this.createTokenFromPugNode(token, 'PugAssociation', {
-				value: '='
-			}, {
-				start: {
-					line: token.loc.start.line,
-					column: token.loc.start.column + token.name.length
-				},
-				end: {
-					line: token.loc.start.line,
-					column:
-						token.loc.start.column +
-						token.name.length + 1
-				},
-			}))
-			if (typeof token.val === 'string') {
-				const value = token.val.replace(/^['"`](.*)['"`]$/s, '$1')
-				const offset = this.text.indexOf(value, identifier.range[1])
-				const { line, column } = this.getLocFromOffset(offset)
-				const literal = this.createTokenFromPugNode(token, 'PugLiteral', {
-					value,
-				}, {
-					start: {
-						line,
-						column: column +
-							token.val.includes('\n') // WHY?!
-					},
-					end: token.loc.end,
-				})
-				// include , in the range
-				// if (this.text[literal.range[1]] === ',') literal.range[1] += 1
-				this.tokens.push(literal)
-			}
-			return
-		}
-		if (token.type === 'text') {
-			this.tokens.push(...this.findMustacheTokens(token))
-			return
-		}
-		const tok = this.createTokenFromPugNode(token, LEXER_TOKEN_MAP[token.type], { value: token.val })
-		// newlines having no width bricks the parser
-		if (token.type === 'newline') {
-			tok.range[0] -= 1
-			tok.value = '\n'
-		}
-		if (token.type === 'comment') {
-			this.comments.push(tok)
-		} else {
-			this.tokens.push(tok)
-		}
-	}
-
-	createTokenFromPugNode (
-		token,
-		type,
-		content,
-		loc = token.loc,
-	) {
-		return {
-			type,
-			...content,
-			loc: {
-				start: {
-					line: loc.start.line,
-					column: loc.start.column - 1,
-				},
-				end: {
-					line: loc.end.line,
-					column: loc.end.column - 1,
-				},
+	parseAttribute (token) {
+		const identifier = this.createTokenFromPugNode(token, 'PugIdentifier', {
+			value: token.name
+		}, {
+			start: {
+				line: token.loc.start.line,
+				column: token.loc.start.column
 			},
-			range: this.getRangeFromPugLoc(loc),
-		}
-	}
+			end: {
+				line: token.loc.start.line,
+				column:
+					token.loc.start.column +
+					token.name.length
+			},
+		})
 
-	createAttributeToken (attr) {
-		// TODO generate distint lexer tokens? HTMLAssociation
-		const attribute = this.createTokenFromPugNode(attr, 'VAttribute', {
+		const attribute = this.createTokenFromPugNode(token, 'VAttribute', {
 			parent: DUMMY_PARENT,
 			directive: false,
 			value: null
 		})
 
-		// include , in the range
-		// if (this.text[attribute.range[1]] === ',') attribute.range[1] += 1
-
-		attribute.key = this.createTokenFromPugNode(attr, 'VIdentifier', {
+		attribute.key = {
+			type: 'VIdentifier',
 			parent: attribute,
-			name: attr.name,
-			rawName: attr.name,
+			name: token.name,
+			rawName: token.name,
+			loc: identifier.loc,
+			range: identifier.range
+		}
+
+		this.tokens.push(identifier)
+		this.tokens.push(this.createTokenFromPugNode(token, 'PugAssociation', {
+			value: '='
 		}, {
 			start: {
-				line: attr.loc.start.line,
-				column: attr.loc.start.column
+				line: token.loc.start.line,
+				column: token.loc.start.column + token.name.length
 			},
 			end: {
-				line: attr.loc.start.line,
+				line: token.loc.start.line,
 				column:
-					attr.loc.start.column +
-					attr.name.length
+					token.loc.start.column +
+					token.name.length + 1
 			},
-		})
-		// ignore =
-		// unquoted values are parsed as js by pug
-
-		if (typeof attr.val === 'string') {
-			const value = attr.val.replace(/^['"`](.*)['"`]$/s, '$1')
-			const offset = !value ? attribute.key.range[1] + 1 + !!attr.val.match(/^['"`]/)?.length : this.text.indexOf(value, attribute.key.range[1])
+		}))
+		if (typeof token.val === 'string') {
+			const value = token.val.replace(/^['"`](.*)['"`]$/s, '$1')
+			const offset = !value ? identifier.range[1] + 1 + !!token.val.match(/^['"`]/)?.length : this.text.indexOf(value, identifier.range[1])
 			const { line, column } = this.getLocFromOffset(offset)
-			attribute.value = this.createTokenFromPugNode(attr, 'VLiteral', {
-				parent: attribute,
-				value
+			const literal = this.createTokenFromPugNode(token, 'PugLiteral', {
+				value,
 			}, {
-				// include quotes in loc
 				start: {
 					line,
 					column: column +
-						attr.val.includes('\n') // WHY?!
+						token.val.includes('\n') // WHY?!
 				},
-				end: attr.loc.end,
+				end: token.loc.end,
 			})
+			this.tokens.push(literal)
+			attribute.value = {
+				type: 'VLiteral',
+				parent: attribute,
+				value,
+				loc: literal.loc,
+				range: literal.range
+			}
 		}
 		return attribute
 	}
 
-	getRangeFromPugLoc (loc) {
-		return [
-			this.lineToOffset[loc.start.line - 1] + loc.start.column - 1,
-			this.lineToOffset[loc.end.line - 1] + loc.end.column - 1,
-		]
-	}
-
-	getLocFromOffset (offset) {
-		const line = this.text.slice(0, offset).split('\n').length
-		const column = offset - this.lineToOffset[line - 1]
-		return {
-			line,
-			column,
+	parseText () {
+		const token = this.next()
+		const mustacheTokens = this.findMustacheTokens(token)
+		this.tokens.push(...mustacheTokens)
+		let mustache = null
+		for (const token of mustacheTokens) {
+			if (token.type === 'VExpressionStart') {
+				mustache = {
+					type: 'Mustache',
+					value: '',
+					startToken: token,
+					range: token.range.slice(),
+					loc: Object.assign({}, token.loc),
+				}
+				continue
+			} else if (mustache && token.type === 'VExpressionEnd') {
+				mustache.endToken = token
+				mustache.range[1] = token.range[1]
+				mustache.loc.end = token.loc.end
+				this.tokenBuffer.push(mustache)
+				mustache = null
+				continue
+			}
+			if (mustache) {
+				mustache.value += token.value
+				continue
+			}
+			this.tokenBuffer.push(Object.assign({}, token, { type: 'Text' }))
 		}
 	}
 
@@ -377,7 +423,6 @@ module.exports = class PugTokenizer {
 		const tokenRange = this.getRangeFromPugLoc(token.loc)
 		const tokens = []
 		let lastIndex = 0
-		console.log(mustacheMatches)
 		for (const match of mustacheMatches) {
 			if (match.index > lastIndex) {
 				tokens.push(this.createTokenFromPugNode(token, 'PugText', {
@@ -390,22 +435,22 @@ module.exports = class PugTokenizer {
 			tokens.push(this.createTokenFromPugNode(token, 'VExpressionStart', {
 				value: '{{'
 			}, {
-				start: this.getLocFromOffset(tokenRange[0] + match.index),
-				end: this.getLocFromOffset(tokenRange[0] + match.index + 2)
+				start: this.getLocFromOffset(tokenRange[0] + match.index + 1),
+				end: this.getLocFromOffset(tokenRange[0] + match.index + 3)
 			}))
 
 			tokens.push(this.createTokenFromPugNode(token, 'PugText', {
 				value: match[1]
 			}, {
-				start: this.getLocFromOffset(tokenRange[0] + match.index + 2),
-				end: this.getLocFromOffset(tokenRange[0] + match[0].length - 2)
+				start: this.getLocFromOffset(tokenRange[0] + match.index + 3),
+				end: this.getLocFromOffset(tokenRange[0] + match[0].length - 1)
 			}))
 
 			tokens.push(this.createTokenFromPugNode(token, 'VExpressionEnd', {
 				value: '}}'
 			}, {
-				start: this.getLocFromOffset(tokenRange[0] + match.index + match[0].length - 2),
-				end: this.getLocFromOffset(tokenRange[0] + match.index + match[0].length)
+				start: this.getLocFromOffset(tokenRange[0] + match.index + match[0].length - 1),
+				end: this.getLocFromOffset(tokenRange[0] + match.index + match[0].length + 1)
 			}))
 
 			lastIndex = match.index + match[0].length
@@ -420,5 +465,68 @@ module.exports = class PugTokenizer {
 			}))
 		}
 		return tokens
+	}
+
+	skipIndentLevel () {
+		// skip tokens until we match indents with outdents
+		let indentLevel = 0
+		while (true) {
+			let token = this.next()
+			if (!token || token.type === 'eos') return
+			token = this.recordToken(token)
+			if (token.type === 'PugIndent') indentLevel++
+			else if (token.type === 'PugOutdent') {
+				if (indentLevel === 0) break
+				indentLevel--
+			} else if (token.type === 'PugNewline') {
+				if (indentLevel === 0) break
+			}
+		}
+	}
+
+	// utils
+
+	createTokenFromPugNode (
+		token,
+		type = LEXER_TOKEN_MAP[token.type],
+		content = { value: token.val },
+		loc = token.loc,
+	) {
+		return {
+			type,
+			...content,
+			loc: this.pugLocToEslintLoc(loc),
+			range: this.getRangeFromPugLoc(loc),
+		}
+	}
+
+	pugLocToEslintLoc (loc) {
+		return {
+			start: {
+				line: loc.start.line,
+				column: loc.start.column - 1,
+			},
+			end: {
+				line: loc.end.line,
+				column: loc.end.column - 1,
+			},
+		}
+	}
+
+	getRangeFromPugLoc (loc) {
+		return [
+			this.lineToOffset[loc.start.line - 1] + loc.start.column - 1,
+			this.lineToOffset[loc.end.line - 1] + loc.end.column - 1,
+		]
+	}
+
+	getLocFromOffset (offset) {
+		// TODO make less inefficient
+		const line = this.text.slice(0, offset).split('\n').length
+		const column = offset - this.lineToOffset[line - 1]
+		return {
+			line,
+			column,
+		}
 	}
 }
