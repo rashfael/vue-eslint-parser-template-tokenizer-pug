@@ -222,7 +222,6 @@ module.exports = class PugTokenizer {
 	}
 
 	error (code, message, token) {
-		console.log('ERROR', code, message, token)
 		this.errors.push({
 			code,
 			message,
