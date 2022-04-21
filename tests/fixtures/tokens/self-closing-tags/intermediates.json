@@ -1,0 +1,100 @@
+[
+  {
+    "type": "StartTag",
+    "name": "br",
+    "rawName": "br",
+    "selfClosing": true,
+    "attributes": [],
+    "range": [
+      21,
+      23
+    ],
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 21
+      },
+      "end": {
+        "line": 1,
+        "column": 23
+      }
+    }
+  },
+  {
+    "type": "StartTag",
+    "name": "img",
+    "rawName": "img",
+    "selfClosing": true,
+    "attributes": [
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": {
+          "type": "VLiteral",
+          "value": "@/assets/logo.png",
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 8
+            },
+            "end": {
+              "line": 2,
+              "column": 27
+            }
+          },
+          "range": [
+            32,
+            51
+          ]
+        },
+        "loc": {
+          "start": {
+            "line": 2,
+            "column": 4
+          },
+          "end": {
+            "line": 2,
+            "column": 27
+          }
+        },
+        "range": [
+          28,
+          51
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": "src",
+          "rawName": "src",
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 4
+            },
+            "end": {
+              "line": 2,
+              "column": 7
+            }
+          },
+          "range": [
+            28,
+            31
+          ]
+        }
+      }
+    ],
+    "range": [
+      24,
+      52
+    ],
+    "loc": {
+      "start": {
+        "line": 2,
+        "column": 0
+      },
+      "end": {
+        "line": 2,
+        "column": 28
+      }
+    }
+  }
+]

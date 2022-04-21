@@ -118,6 +118,7 @@ module.exports = class PugTokenizer {
 					token.value = this.text.substring(token.range[0], token.range[1])
 					while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
 						const startTag = this.tagStack.shift()
+						if (startTag.selfClosing) continue
 						this.tokenBuffer.push({
 							type: 'EndTag',
 							name: startTag.name.toLowerCase(),
@@ -141,6 +142,7 @@ module.exports = class PugTokenizer {
 					token.value = this.text.substring(token.range[0], token.range[1])
 					while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
 						const startTag = this.tagStack.shift()
+						if (startTag.selfClosing) continue
 						this.tokenBuffer.push({
 							type: 'EndTag',
 							name: startTag.name.toLowerCase(),
