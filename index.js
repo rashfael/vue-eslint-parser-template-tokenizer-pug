@@ -25,6 +25,7 @@ const LEXER_TOKEN_MAP = {
 	'end-pipeless-text': 'PugEndPipelessText',
 	'start-pug-interpolation': 'PugStartTagInterpolation',
 	'end-pug-interpolation': 'PugEndTagInterpolation',
+	filter: 'PugFilter',
 	code: 'PugCode',
 	if: 'PugIf',
 	else: 'PugElse',
@@ -118,7 +119,7 @@ module.exports = class PugTokenizer {
 					token.value = this.text.substring(token.range[0], token.range[1])
 					while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
 						const startTag = this.tagStack.shift()
-						if (startTag.selfClosing) continue
+						if (startTag.type === 'filter' || startTag.selfClosing) continue
 						this.tokenBuffer.push({
 							type: 'EndTag',
 							name: startTag.name.toLowerCase(),
@@ -142,7 +143,7 @@ module.exports = class PugTokenizer {
 					token.value = this.text.substring(token.range[0], token.range[1])
 					while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
 						const startTag = this.tagStack.shift()
-						if (startTag.selfClosing) continue
+						if (startTag.type === 'filter' || startTag.selfClosing) continue
 						this.tokenBuffer.push({
 							type: 'EndTag',
 							name: startTag.name.toLowerCase(),
@@ -165,6 +166,11 @@ module.exports = class PugTokenizer {
 				case 'end-pipeless-text':
 					this.recordToken(this.next())
 					break
+				case 'filter': {
+					const token = this.recordToken(this.next())
+					this.tagStack.unshift(token)
+					break
+				}
 				case 'comment':
 					this.comments.push(this.createTokenFromPugNode(this.next()))
 					break
