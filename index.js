@@ -483,8 +483,8 @@ module.exports = class PugTokenizer {
 			token = this.recordToken(token)
 			if (token.type === 'PugIndent') indentLevel++
 			else if (token.type === 'PugOutdent') {
-				if (indentLevel === 0) break
 				indentLevel--
+				if (indentLevel === 0) break
 			} else if (token.type === 'PugNewline') {
 				if (indentLevel === 0) break
 			}

@@ -1,1 +1,331 @@
-[]
+[
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      59,
+      62
+    ],
+    "loc": {
+      "start": {
+        "line": 5,
+        "column": 0
+      },
+      "end": {
+        "line": 5,
+        "column": 3
+      }
+    }
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 5,
+        "column": 62
+      },
+      "end": {
+        "line": 7,
+        "column": 0
+      }
+    },
+    "range": [
+      62,
+      64
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "ul",
+    "rawName": "ul",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      275,
+      277
+    ],
+    "loc": {
+      "start": {
+        "line": 26,
+        "column": 0
+      },
+      "end": {
+        "line": 26,
+        "column": 2
+      }
+    }
+  },
+  {
+    "type": "EndTag",
+    "name": "ul",
+    "loc": {
+      "start": {
+        "line": 30,
+        "column": 338
+      },
+      "end": {
+        "line": 31,
+        "column": 0
+      }
+    },
+    "range": [
+      338,
+      339
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "ul",
+    "rawName": "ul",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      339,
+      341
+    ],
+    "loc": {
+      "start": {
+        "line": 31,
+        "column": 0
+      },
+      "end": {
+        "line": 31,
+        "column": 2
+      }
+    }
+  },
+  {
+    "type": "EndTag",
+    "name": "ul",
+    "loc": {
+      "start": {
+        "line": 33,
+        "column": 370
+      },
+      "end": {
+        "line": 34,
+        "column": 0
+      }
+    },
+    "range": [
+      370,
+      371
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "ul",
+    "rawName": "ul",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      371,
+      373
+    ],
+    "loc": {
+      "start": {
+        "line": 34,
+        "column": 0
+      },
+      "end": {
+        "line": 34,
+        "column": 2
+      }
+    }
+  },
+  {
+    "type": "EndTag",
+    "name": "ul",
+    "loc": {
+      "start": {
+        "line": 36,
+        "column": 396
+      },
+      "end": {
+        "line": 38,
+        "column": 0
+      }
+    },
+    "range": [
+      396,
+      398
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      398,
+      401
+    ],
+    "loc": {
+      "start": {
+        "line": 38,
+        "column": 0
+      },
+      "end": {
+        "line": 38,
+        "column": 3
+      }
+    }
+  },
+  {
+    "type": "StartTag",
+    "name": "script",
+    "rawName": "script",
+    "selfClosing": false,
+    "attributes": [
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": {
+          "type": "VLiteral",
+          "value": "/pets.js",
+          "loc": {
+            "start": {
+              "line": 45,
+              "column": 12
+            },
+            "end": {
+              "line": 45,
+              "column": 22
+            }
+          },
+          "range": [
+            502,
+            512
+          ]
+        },
+        "loc": {
+          "start": {
+            "line": 45,
+            "column": 8
+          },
+          "end": {
+            "line": 45,
+            "column": 22
+          }
+        },
+        "range": [
+          498,
+          512
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": "src",
+          "rawName": "src",
+          "loc": {
+            "start": {
+              "line": 45,
+              "column": 8
+            },
+            "end": {
+              "line": 45,
+              "column": 11
+            }
+          },
+          "range": [
+            498,
+            501
+          ]
+        }
+      }
+    ],
+    "range": [
+      491,
+      513
+    ],
+    "loc": {
+      "start": {
+        "line": 45,
+        "column": 1
+      },
+      "end": {
+        "line": 45,
+        "column": 23
+      }
+    }
+  },
+  {
+    "type": "EndTag",
+    "name": "script",
+    "loc": {
+      "start": {
+        "line": 45,
+        "column": 513
+      },
+      "end": {
+        "line": 47,
+        "column": 0
+      }
+    },
+    "range": [
+      513,
+      515
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 45,
+        "column": 513
+      },
+      "end": {
+        "line": 47,
+        "column": 0
+      }
+    },
+    "range": [
+      513,
+      515
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "p",
+    "rawName": "p",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      515,
+      516
+    ],
+    "loc": {
+      "start": {
+        "line": 47,
+        "column": 0
+      },
+      "end": {
+        "line": 47,
+        "column": 1
+      }
+    }
+  },
+  {
+    "type": "Text",
+    "value": "This is ",
+    "loc": {
+      "start": {
+        "line": 47,
+        "column": 2
+      },
+      "end": {
+        "line": 47,
+        "column": 10
+      }
+    },
+    "range": [
+      517,
+      525
+    ]
+  }
+]
