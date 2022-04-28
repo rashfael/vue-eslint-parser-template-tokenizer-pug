@@ -106,13 +106,13 @@ module.exports = class PugTokenizer {
 					this.parseText()
 					break
 				}
-				case 'newline': {
+				case 'newline':
+				case 'end-pug-interpolation': {
 					const token = this.recordToken(this.next())
 					this.closeTagsOnSameLine(token)
 					break
 				}
 				case 'outdent':
-				case 'end-pug-interpolation':
 				case 'end-pipeless-text': {
 					const token = this.recordToken(this.next())
 					this.closeTagsOnSameLine(token)

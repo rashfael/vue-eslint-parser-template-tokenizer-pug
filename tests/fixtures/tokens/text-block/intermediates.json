@@ -114,24 +114,6 @@
     ]
   },
   {
-    "type": "EndTag",
-    "name": "div",
-    "loc": {
-      "start": {
-        "line": 3,
-        "column": 43
-      },
-      "end": {
-        "line": 3,
-        "column": 45
-      }
-    },
-    "range": [
-      79,
-      81
-    ]
-  },
-  {
     "type": "Text",
     "value": " and stuff.",
     "loc": {
@@ -147,6 +129,24 @@
     "range": [
       81,
       92
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 56
+      },
+      "end": {
+        "line": 4,
+        "column": 0
+      }
+    },
+    "range": [
+      92,
+      93
     ]
   }
 ]
