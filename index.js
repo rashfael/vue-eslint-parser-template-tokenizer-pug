@@ -108,50 +108,16 @@ module.exports = class PugTokenizer {
 				}
 				case 'newline': {
 					const token = this.recordToken(this.next())
-					token.range[0] -= 1
-					token.loc.start.line -= 1
-					// actually find start of whitespace, pug-lexer only generates one newline token for multiple newlines
-					while (this.text[token.range[0] - 1] === '\n') {
-						token.range[0] -= 1
-						token.loc.start.line -= 1
-					}
-					token.loc.start.column = this.lineToOffset[token.loc.start.line] - 1
-					token.value = this.text.substring(token.range[0], token.range[1])
-					while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
-						const startTag = this.tagStack.shift()
-						if (startTag.type === 'filter' || startTag.selfClosing) continue
-						this.tokenBuffer.push({
-							type: 'EndTag',
-							name: startTag.name.toLowerCase(),
-							loc: token.loc,
-							range: token.range
-						})
-					}
+					this.closeTagsOnSameLine(token)
 					break
 				}
 				case 'outdent':
-				case 'end-pug-interpolation': {
+				case 'end-pug-interpolation':
+				case 'end-pipeless-text': {
 					const token = this.recordToken(this.next())
-					token.range[0] -= 1
-					token.loc.start.line -= 1
-					// actually find start of whitespace, pug-lexer only generates one newline token for multiple newlines
-					while (this.text[token.range[0] - 1] === '\n') {
-						token.range[0] -= 1
-						token.loc.start.line -= 1
-					}
-					token.loc.start.column = this.lineToOffset[token.loc.start.line] - 1
-					token.value = this.text.substring(token.range[0], token.range[1])
-					while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
-						const startTag = this.tagStack.shift()
-						if (startTag.type === 'filter' || startTag.selfClosing) continue
-						this.tokenBuffer.push({
-							type: 'EndTag',
-							name: startTag.name.toLowerCase(),
-							loc: token.loc,
-							range: token.range
-						})
-					}
+					this.closeTagsOnSameLine(token)
 					const startTag = this.tagStack.shift()
+					if (!startTag) break
 					this.tokenBuffer.push({
 						type: 'EndTag',
 						name: startTag.name.toLowerCase(),
@@ -163,12 +129,12 @@ module.exports = class PugTokenizer {
 				case 'indent':
 				case 'start-pug-interpolation':
 				case 'start-pipeless-text': // TODO concat pipeless text blocks?
-				case 'end-pipeless-text':
 					this.recordToken(this.next())
 					break
 				case 'filter': {
 					const token = this.recordToken(this.next())
-					this.tagStack.unshift(token)
+					this.closeTagsOnSameLine(token)
+					this.skipIndentLevel(false) // eslint seems to segfault if we record filter content?
 					break
 				}
 				case 'comment':
@@ -229,6 +195,17 @@ module.exports = class PugTokenizer {
 		}
 	}
 
+	isEOS () {
+		let token = this._tokens[this._nextIndex]
+		let i = 0
+		while (token && token.type !== 'eos') {
+			if (token.type !== 'outdent') return false
+			i++
+			token = this._tokens[this._nextIndex + i]
+		}
+		return true
+	}
+
 	error (code, message, token) {
 		this.errors.push({
 			code,
@@ -241,6 +218,21 @@ module.exports = class PugTokenizer {
 
 	recordToken (token) {
 		const transformedToken = this.createTokenFromPugNode(token)
+		if (['newline', 'indent', 'outdent', 'end-pug-interpolation', 'end-pipeless-text'].includes(token.type)) {
+			// if there only are outdents and eos left, positions are different
+			if (!this.isEOS()) {
+				transformedToken.range[0] -= 1
+			} else if (['outdent', 'end-pug-interpolation', 'end-pipeless-text'].includes(token.type) && this.text[transformedToken.range[0]] === '\n') {
+				transformedToken.range[1] += 1
+			}
+			// actually find start of whitespace, pug-lexer only generates one newline token for multiple newlines
+			while (this.text[transformedToken.range[0] - 1] === '\n') {
+				transformedToken.range[0] -= 1
+			}
+			transformedToken.loc.start = this.getLocFromOffset(transformedToken.range[0])
+			transformedToken.loc.end = this.getLocFromOffset(transformedToken.range[1])
+			transformedToken.value = this.text.substring(transformedToken.range[0], transformedToken.range[1])
+		}
 		this.tokens.push(transformedToken)
 		return transformedToken
 	}
@@ -474,15 +466,16 @@ module.exports = class PugTokenizer {
 		return tokens
 	}
 
-	skipIndentLevel () {
+	skipIndentLevel (recordContent = true) {
 		// skip tokens until we match indents with outdents
 		let indentLevel = 0
 		while (true) {
 			let token = this.next()
 			if (!token || token.type === 'eos') return
 			token = this.recordToken(token)
-			if (token.type === 'PugIndent') indentLevel++
-			else if (token.type === 'PugOutdent') {
+			if (!recordContent) this.tokens.pop() // HACK
+			if (token.type === 'PugIndent' || token.type === 'PugStartPipelessText') indentLevel++
+			else if (token.type === 'PugOutdent' || token.type === 'PugEndPipelessText') {
 				indentLevel--
 				if (indentLevel === 0) break
 			} else if (token.type === 'PugNewline') {
@@ -491,7 +484,18 @@ module.exports = class PugTokenizer {
 		}
 	}
 
-	// utils
+	closeTagsOnSameLine (token) {
+		while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
+			const startTag = this.tagStack.shift()
+			if (startTag.selfClosing) continue
+			this.tokenBuffer.push({
+				type: 'EndTag',
+				name: startTag.name.toLowerCase(),
+				loc: token.loc,
+				range: token.range
+			})
+		}
+	}
 
 	createTokenFromPugNode (
 		token,

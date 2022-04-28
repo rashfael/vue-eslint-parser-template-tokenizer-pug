@@ -100,8 +100,26 @@
     "name": "strong",
     "loc": {
       "start": {
-        "line": 2,
-        "column": 35
+        "line": 3,
+        "column": 43
+      },
+      "end": {
+        "line": 3,
+        "column": 45
+      }
+    },
+    "range": [
+      79,
+      81
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 43
       },
       "end": {
         "line": 3,
