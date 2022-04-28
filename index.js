@@ -267,7 +267,11 @@ module.exports = class PugTokenizer {
 				case 'start-attributes': {
 					this.recordToken(this.next())
 					while (this.peek().type === 'attribute') {
-						tag.attributes.push(this.parseAttribute(this.next()))
+						const attrToken = this.next()
+						// drop empty attr
+						// TODO expose this somehow to lint this?
+						if (!attrToken.name) continue
+						tag.attributes.push(this.parseAttribute(attrToken))
 					}
 					const endToken = this.recordToken(this.expect('end-attributes'))
 					tag.loc.end = endToken.loc.end
