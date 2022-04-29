@@ -127,9 +127,11 @@ module.exports = class PugTokenizer {
 					break
 				}
 				case 'indent':
-				case 'start-pug-interpolation':
 				case 'start-pipeless-text': // TODO concat pipeless text blocks?
 					this.recordToken(this.next())
+					break
+				case 'start-pug-interpolation':
+					this.tagStack.unshift(this.recordToken(this.next()))
 					break
 				case 'filter': {
 					const token = this.recordToken(this.next())
@@ -491,6 +493,7 @@ module.exports = class PugTokenizer {
 	closeTagsOnSameLine (token) {
 		while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
 			const startTag = this.tagStack.shift()
+			if (startTag.type === 'PugStartTagInterpolation') return
 			if (startTag.selfClosing) continue
 			this.tokenBuffer.push({
 				type: 'EndTag',

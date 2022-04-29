@@ -196,34 +196,16 @@
     "loc": {
       "start": {
         "line": 1,
-        "column": 88
+        "column": 89
       },
       "end": {
         "line": 1,
-        "column": 90
+        "column": 91
       }
     },
     "range": [
-      88,
-      90
-    ]
-  },
-  {
-    "type": "EndTag",
-    "name": "div",
-    "loc": {
-      "start": {
-        "line": 1,
-        "column": 88
-      },
-      "end": {
-        "line": 1,
-        "column": 90
-      }
-    },
-    "range": [
-      88,
-      90
+      89,
+      91
     ]
   },
   {
@@ -242,6 +224,24 @@
     "range": [
       91,
       93
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 93
+      },
+      "end": {
+        "line": 2,
+        "column": 0
+      }
+    },
+    "range": [
+      93,
+      94
     ]
   }
 ]
