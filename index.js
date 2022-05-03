@@ -140,7 +140,7 @@ module.exports = class PugTokenizer {
 					break
 				}
 				case 'comment':
-					this.comments.push(this.createTokenFromPugNode(this.next()))
+					this.comments.push(this.parseComment())
 					break
 				// skip pug features we can't really lint
 				case 'mixin':
@@ -470,6 +470,20 @@ module.exports = class PugTokenizer {
 			}))
 		}
 		return tokens
+	}
+
+	parseComment () {
+		const comment = this.next()
+		if (this.peek()?.type === 'start-pipeless-text') {
+			this.next()
+			while (this.peek()?.type !== 'end-pipeless-text') {
+				this.next()
+			}
+			const lastToken = this.next()
+			comment.val += this.text.substring(this.getRangeFromPugLoc(comment.loc)[1], this.getRangeFromPugLoc(lastToken.loc)[1])
+			comment.loc.end = lastToken.loc.end
+		}
+		return this.createTokenFromPugNode(comment)
 	}
 
 	skipIndentLevel (recordContent = true) {
