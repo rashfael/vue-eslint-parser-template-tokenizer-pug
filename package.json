@@ -26,6 +26,6 @@
     "pug-lexer": "^5.0.1"
   },
   "peerDependencies": {
-    "vue-eslint-parser": ">=9.0.0-alpha.0"
+    "vue-eslint-parser": "^9.0.0"
   }
 }
