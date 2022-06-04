@@ -259,5 +259,266 @@
       74,
       75
     ]
+  },
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": {
+          "type": "VLiteral",
+          "value": "foo",
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 10
+            },
+            "end": {
+              "line": 2,
+              "column": 15
+            }
+          },
+          "range": [
+            85,
+            90
+          ]
+        },
+        "loc": {
+          "start": {
+            "line": 2,
+            "column": 4
+          },
+          "end": {
+            "line": 2,
+            "column": 15
+          }
+        },
+        "range": [
+          79,
+          90
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": "class",
+          "rawName": "class",
+          "loc": {
+            "start": {
+              "line": 2,
+              "column": 4
+            },
+            "end": {
+              "line": 2,
+              "column": 9
+            }
+          },
+          "range": [
+            79,
+            84
+          ]
+        }
+      },
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": {
+          "type": "VLiteral",
+          "value": "\"foo\"\n\t",
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 5
+            },
+            "end": {
+              "line": 4,
+              "column": 1
+            }
+          },
+          "range": [
+            97,
+            104
+          ]
+        },
+        "loc": {
+          "start": {
+            "line": 3,
+            "column": 1
+          },
+          "end": {
+            "line": 4,
+            "column": 1
+          }
+        },
+        "range": [
+          93,
+          104
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": ":id",
+          "rawName": ":id",
+          "loc": {
+            "start": {
+              "line": 3,
+              "column": 1
+            },
+            "end": {
+              "line": 3,
+              "column": 4
+            }
+          },
+          "range": [
+            93,
+            96
+          ]
+        }
+      },
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": {
+          "type": "VLiteral",
+          "value": "baz",
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 8
+            },
+            "end": {
+              "line": 4,
+              "column": 13
+            }
+          },
+          "range": [
+            111,
+            116
+          ]
+        },
+        "loc": {
+          "start": {
+            "line": 4,
+            "column": 3
+          },
+          "end": {
+            "line": 4,
+            "column": 13
+          }
+        },
+        "range": [
+          106,
+          116
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": "@bar",
+          "rawName": "@bar",
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 3
+            },
+            "end": {
+              "line": 4,
+              "column": 7
+            }
+          },
+          "range": [
+            106,
+            110
+          ]
+        }
+      },
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": null,
+        "loc": {
+          "start": {
+            "line": 4,
+            "column": 15
+          },
+          "end": {
+            "line": 4,
+            "column": 23
+          }
+        },
+        "range": [
+          118,
+          126
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": "no-value",
+          "rawName": "no-value",
+          "loc": {
+            "start": {
+              "line": 4,
+              "column": 15
+            },
+            "end": {
+              "line": 4,
+              "column": 23
+            }
+          },
+          "range": [
+            118,
+            126
+          ]
+        }
+      }
+    ],
+    "range": [
+      75,
+      127
+    ],
+    "loc": {
+      "start": {
+        "line": 2,
+        "column": 0
+      },
+      "end": {
+        "line": 4,
+        "column": 24
+      }
+    }
+  },
+  {
+    "type": "Text",
+    "value": "foo",
+    "loc": {
+      "start": {
+        "line": 4,
+        "column": 25
+      },
+      "end": {
+        "line": 4,
+        "column": 28
+      }
+    },
+    "range": [
+      128,
+      131
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 4,
+        "column": 28
+      },
+      "end": {
+        "line": 5,
+        "column": 0
+      }
+    },
+    "range": [
+      131,
+      132
+    ]
   }
 ]

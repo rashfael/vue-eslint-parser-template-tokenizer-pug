@@ -274,6 +274,19 @@ module.exports = class PugTokenizer {
 						// TODO expose this somehow to lint this?
 						if (!attrToken.name) continue
 						tag.attributes.push(this.parseAttribute(attrToken))
+						// generate attribute delimiter token ,
+						const tokenRange = this.getRangeFromPugLoc(attrToken.loc)
+						if (this.text[tokenRange[1]] === ',') {
+							this.tokens.push({
+								type: 'PugAttributeSeparator',
+								value: ',',
+								range: [tokenRange[1], tokenRange[1] + 1],
+								loc: {
+									start: this.getLocFromOffset(tokenRange[1]),
+									end: this.getLocFromOffset(tokenRange[1] + 1)
+								}
+							})
+						}
 					}
 					const endToken = this.recordToken(this.expect('end-attributes'))
 					tag.loc.end = endToken.loc.end
