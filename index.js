@@ -348,21 +348,21 @@ module.exports = class PugTokenizer {
 		}
 
 		this.tokens.push(identifier)
-		this.tokens.push(this.createTokenFromPugNode(token, 'PugAssociation', {
-			value: '='
-		}, {
-			start: {
-				line: token.loc.start.line,
-				column: token.loc.start.column + token.name.length
-			},
-			end: {
-				line: token.loc.start.line,
-				column:
-					token.loc.start.column +
-					token.name.length + 1
-			},
-		}))
 		if (typeof token.val === 'string') {
+			this.tokens.push(this.createTokenFromPugNode(token, 'PugAssociation', {
+				value: '='
+			}, {
+				start: {
+					line: token.loc.start.line,
+					column: token.loc.start.column + token.name.length
+				},
+				end: {
+					line: token.loc.start.line,
+					column:
+						token.loc.start.column +
+						token.name.length + 1
+				},
+			}))
 			const value = token.val.replace(/^['"`](.*)['"`]$/s, '$1')
 			const offset = !value ? identifier.range[1] + 1 + !!token.val.match(/^['"`]/)?.length : this.text.indexOf(value, identifier.range[1])
 			const { line, column } = this.getLocFromOffset(offset)
