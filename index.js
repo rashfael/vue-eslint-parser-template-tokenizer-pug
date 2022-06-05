@@ -94,7 +94,11 @@ module.exports = class PugTokenizer {
 		while (this.tokenBuffer.length === 0) {
 			if (!this.peek()) return
 			switch (this.peek().type) {
-				case 'eos': return null
+				case 'eos':{
+					const token = this.recordToken(this.next())
+					this.closeTagsOnSameLine(token)
+					break
+				}
 				case 'id':
 				case 'class':
 				case 'tag': {
