@@ -29,13 +29,91 @@
         "column": 9
       },
       "end": {
-        "line": 7,
+        "line": 8,
         "column": 0
       }
     },
     "range": [
       84,
-      85
+      86
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      86,
+      89
+    ],
+    "loc": {
+      "start": {
+        "line": 8,
+        "column": 0
+      },
+      "end": {
+        "line": 8,
+        "column": 3
+      }
+    }
+  },
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      127,
+      130
+    ],
+    "loc": {
+      "start": {
+        "line": 10,
+        "column": 1
+      },
+      "end": {
+        "line": 10,
+        "column": 4
+      }
+    }
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 10,
+        "column": 4
+      },
+      "end": {
+        "line": 11,
+        "column": 0
+      }
+    },
+    "range": [
+      130,
+      131
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 10,
+        "column": 4
+      },
+      "end": {
+        "line": 11,
+        "column": 0
+      }
+    },
+    "range": [
+      130,
+      131
     ]
   }
 ]

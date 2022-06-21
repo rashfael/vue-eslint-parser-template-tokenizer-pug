@@ -96,14 +96,13 @@ module.exports = class PugTokenizer {
 			switch (this.peek().type) {
 				case 'eos':{
 					const token = this.createTokenFromPugNode(this.next())
-					this.closeTagsOnSameLine(token)
+					this.closeAllTagsOnSameLevel(token)
 					break
 				}
 				case 'id':
 				case 'class':
 				case 'tag': {
 					const tag = this.parseTag(this.peek().type === 'tag' ? null : 'div')
-					this.tagStack.unshift(tag)
 					return tag
 				}
 				case 'text': {
@@ -113,39 +112,51 @@ module.exports = class PugTokenizer {
 				case 'newline':
 				case 'end-pug-interpolation': {
 					const token = this.recordToken(this.next())
-					this.closeTagsOnSameLine(token)
+					this.closeAllTagsOnSameLevel(token)
+					// pipes don't close tags
+					if (token.type === 'PugNewline' && this.peek().type === 'text') {
+						this.tagStack.unshift(this.createTokenFromPugNode(this.peek()))
+					}
+					this.tagStack.unshift([])
 					break
 				}
-				case 'outdent':
-				case 'end-pipeless-text': {
+				case 'end-pipeless-text':
+				case 'outdent': {
 					const token = this.recordToken(this.next())
-					this.closeTagsOnSameLine(token)
-					const startTag = this.tagStack.shift()
-					if (!startTag) break
-					this.tokenBuffer.push({
-						type: 'EndTag',
-						name: startTag.name.toLowerCase(),
-						loc: token.loc,
-						range: token.range
-					})
+					this.closeAllTagsOnSameLevel(token, { clearGuard: token.type === 'PugEndPipelessText' })
+					// last outdent in chain closes two levels
+					if (this.peek().type !== 'outdent') {
+						this.closeAllTagsOnSameLevel(token, { clearGuard: token.type === 'PugEndPipelessText' })
+					}
 					break
 				}
 				case 'indent':
+					this.recordToken(this.next())
+					if (this.peek().type === 'text') {
+						this.tagStack.unshift(this.createTokenFromPugNode(this.peek()))
+					}
+					this.tagStack.unshift([])
+					break
 				case 'start-pipeless-text': // TODO concat pipeless text blocks?
 					this.recordToken(this.next())
+					this.tagStack.unshift({ guard: 'pipeless' })
 					break
 				case 'start-pug-interpolation':
-					this.tagStack.unshift(this.recordToken(this.next()))
+					this.tagStack.unshift([])
+					this.addTagToStack(this.recordToken(this.next()))
 					break
 				case 'filter': {
 					const token = this.recordToken(this.next())
-					this.closeTagsOnSameLine(token)
+					this.closeAllTagsOnSameLevel(token)
 					this.skipIndentLevel(false) // eslint seems to segfault if we record filter content?
 					break
 				}
-				case 'comment':
-					this.comments.push(this.parseComment())
+				case 'comment': {
+					const token = this.parseComment()
+					this.comments.push(token)
+					this.tagStack.unshift(token)
 					break
+				}
 				// skip pug features we can't really lint
 				case 'mixin':
 				case 'call':
@@ -255,7 +266,7 @@ module.exports = class PugTokenizer {
 			range: token.range.slice(),
 			loc: Object.assign({}, token.loc)
 		}
-
+		this.addTagToStack(tag)
 		return this.fillTag(tag)
 	}
 
@@ -307,6 +318,9 @@ module.exports = class PugTokenizer {
 			case 'dot':
 			case ':':
 				this.recordToken(this.next())
+				if (!(this.tagStack[0] instanceof Array)) {
+					this.tagStack[0] = [this.tagStack[0]]
+				}
 				break
 			case 'slash':
 				this.next()
@@ -514,17 +528,37 @@ module.exports = class PugTokenizer {
 			if (token.type === 'PugIndent' || token.type === 'PugStartPipelessText') indentLevel++
 			else if (token.type === 'PugOutdent' || token.type === 'PugEndPipelessText') {
 				indentLevel--
-				if (indentLevel === 0) break
+				if (indentLevel <= 0) {
+					// HACK not sure this actually covers all use cases
+					this.closeAllTagsOnSameLevel(token)
+					this.closeAllTagsOnSameLevel(token)
+					break
+				}
 			} else if (token.type === 'PugNewline') {
-				if (indentLevel === 0) break
+				if (indentLevel <= 0) break
 			}
 		}
 	}
 
-	closeTagsOnSameLine (token) {
-		while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
-			const startTag = this.tagStack.shift()
-			if (startTag.type === 'PugStartTagInterpolation') return
+	addTagToStack (tag) {
+		if (this.tagStack[0] instanceof Array) {
+			this.tagStack[0].unshift(tag)
+		} else {
+			this.tagStack.unshift(tag)
+		}
+	}
+
+	closeAllTagsOnSameLevel (token, { clearGuard } = {}) {
+		while (this.tagStack[0] instanceof Array && this.tagStack[0].length === 0) {
+			this.tagStack.shift()
+		}
+		if (clearGuard && this.tagStack[0].guard) {
+			this.tagStack.shift()
+		}
+		if (this.tagStack.length < 1 || this.tagStack[0].guard) return
+		const startTags = this.tagStack[0] instanceof Array ? this.tagStack.shift() : [this.tagStack.shift()]
+		for (const startTag of startTags) {
+			if (['PugText', 'PugStartTagInterpolation', 'HTMLComment'].includes(startTag.type)) return
 			if (startTag.selfClosing) continue
 			this.tokenBuffer.push({
 				type: 'EndTag',
@@ -534,6 +568,20 @@ module.exports = class PugTokenizer {
 			})
 		}
 	}
+
+	// closeTagsOnSameLine (token) {
+	// 	while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
+	// 		const startTag = this.tagStack.shift()
+	// 		if (startTag.type === 'PugStartTagInterpolation') return
+	// 		if (startTag.selfClosing) continue
+	// 		this.tokenBuffer.push({
+	// 			type: 'EndTag',
+	// 			name: startTag.name.toLowerCase(),
+	// 			loc: token.loc,
+	// 			range: token.range
+	// 		})
+	// 	}
+	// }
 
 	createTokenFromPugNode (
 		token,

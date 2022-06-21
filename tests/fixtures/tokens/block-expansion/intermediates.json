@@ -1,0 +1,505 @@
+[
+  {
+    "type": "StartTag",
+    "name": "span",
+    "rawName": "span",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      21,
+      29
+    ],
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 21
+      },
+      "end": {
+        "line": 1,
+        "column": 29
+      }
+    }
+  },
+  {
+    "type": "StartTag",
+    "name": "a",
+    "rawName": "a",
+    "selfClosing": false,
+    "attributes": [
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": {
+          "type": "VLiteral",
+          "value": "http://example.com",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 38
+            },
+            "end": {
+              "line": 1,
+              "column": 58
+            }
+          },
+          "range": [
+            38,
+            58
+          ]
+        },
+        "loc": {
+          "start": {
+            "line": 1,
+            "column": 33
+          },
+          "end": {
+            "line": 1,
+            "column": 58
+          }
+        },
+        "range": [
+          33,
+          58
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": "href",
+          "rawName": "href",
+          "loc": {
+            "start": {
+              "line": 1,
+              "column": 33
+            },
+            "end": {
+              "line": 1,
+              "column": 37
+            }
+          },
+          "range": [
+            33,
+            37
+          ]
+        }
+      }
+    ],
+    "range": [
+      31,
+      59
+    ],
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 31
+      },
+      "end": {
+        "line": 1,
+        "column": 59
+      }
+    }
+  },
+  {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      61,
+      65
+    ],
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 61
+      },
+      "end": {
+        "line": 1,
+        "column": 65
+      }
+    }
+  },
+  {
+    "type": "Text",
+    "value": "bar",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 66
+      },
+      "end": {
+        "line": 1,
+        "column": 69
+      }
+    },
+    "range": [
+      66,
+      69
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 69
+      },
+      "end": {
+        "line": 3,
+        "column": 0
+      }
+    },
+    "range": [
+      69,
+      71
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "a",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 69
+      },
+      "end": {
+        "line": 3,
+        "column": 0
+      }
+    },
+    "range": [
+      69,
+      71
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "span",
+    "loc": {
+      "start": {
+        "line": 1,
+        "column": 69
+      },
+      "end": {
+        "line": 3,
+        "column": 0
+      }
+    },
+    "range": [
+      69,
+      71
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "foo",
+    "rawName": "foo",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      71,
+      74
+    ],
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 0
+      },
+      "end": {
+        "line": 3,
+        "column": 3
+      }
+    }
+  },
+  {
+    "type": "StartTag",
+    "name": "bar",
+    "rawName": "bar",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      76,
+      79
+    ],
+    "loc": {
+      "start": {
+        "line": 4,
+        "column": 1
+      },
+      "end": {
+        "line": 4,
+        "column": 4
+      }
+    }
+  },
+  {
+    "type": "StartTag",
+    "name": "span",
+    "rawName": "span",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      81,
+      85
+    ],
+    "loc": {
+      "start": {
+        "line": 4,
+        "column": 6
+      },
+      "end": {
+        "line": 4,
+        "column": 10
+      }
+    }
+  },
+  {
+    "type": "StartTag",
+    "name": "baz",
+    "rawName": "baz",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      88,
+      91
+    ],
+    "loc": {
+      "start": {
+        "line": 5,
+        "column": 2
+      },
+      "end": {
+        "line": 5,
+        "column": 5
+      }
+    }
+  },
+  {
+    "type": "StartTag",
+    "name": "span",
+    "rawName": "span",
+    "selfClosing": false,
+    "attributes": [
+      {
+        "type": "VAttribute",
+        "directive": false,
+        "value": null,
+        "loc": {
+          "start": {
+            "line": 6,
+            "column": 3
+          },
+          "end": {
+            "line": 6,
+            "column": 7
+          }
+        },
+        "range": [
+          102,
+          106
+        ],
+        "key": {
+          "type": "VIdentifier",
+          "name": "attr",
+          "rawName": "attr",
+          "loc": {
+            "start": {
+              "line": 6,
+              "column": 3
+            },
+            "end": {
+              "line": 6,
+              "column": 7
+            }
+          },
+          "range": [
+            102,
+            106
+          ]
+        }
+      }
+    ],
+    "range": [
+      93,
+      110
+    ],
+    "loc": {
+      "start": {
+        "line": 5,
+        "column": 7
+      },
+      "end": {
+        "line": 7,
+        "column": 3
+      }
+    }
+  },
+  {
+    "type": "EndTag",
+    "name": "span",
+    "loc": {
+      "start": {
+        "line": 7,
+        "column": 3
+      },
+      "end": {
+        "line": 8,
+        "column": 2
+      }
+    },
+    "range": [
+      110,
+      113
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "baz",
+    "loc": {
+      "start": {
+        "line": 7,
+        "column": 3
+      },
+      "end": {
+        "line": 8,
+        "column": 2
+      }
+    },
+    "range": [
+      110,
+      113
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "baz",
+    "rawName": "baz",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      113,
+      116
+    ],
+    "loc": {
+      "start": {
+        "line": 8,
+        "column": 2
+      },
+      "end": {
+        "line": 8,
+        "column": 5
+      }
+    }
+  },
+  {
+    "type": "EndTag",
+    "name": "baz",
+    "loc": {
+      "start": {
+        "line": 8,
+        "column": 5
+      },
+      "end": {
+        "line": 9,
+        "column": 1
+      }
+    },
+    "range": [
+      116,
+      118
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "span",
+    "loc": {
+      "start": {
+        "line": 8,
+        "column": 5
+      },
+      "end": {
+        "line": 9,
+        "column": 1
+      }
+    },
+    "range": [
+      116,
+      118
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "bar",
+    "loc": {
+      "start": {
+        "line": 8,
+        "column": 5
+      },
+      "end": {
+        "line": 9,
+        "column": 1
+      }
+    },
+    "range": [
+      116,
+      118
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "bar",
+    "rawName": "bar",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      118,
+      121
+    ],
+    "loc": {
+      "start": {
+        "line": 9,
+        "column": 1
+      },
+      "end": {
+        "line": 9,
+        "column": 4
+      }
+    }
+  },
+  {
+    "type": "EndTag",
+    "name": "bar",
+    "loc": {
+      "start": {
+        "line": 9,
+        "column": 4
+      },
+      "end": {
+        "line": 10,
+        "column": 0
+      }
+    },
+    "range": [
+      121,
+      122
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "foo",
+    "loc": {
+      "start": {
+        "line": 9,
+        "column": 4
+      },
+      "end": {
+        "line": 10,
+        "column": 0
+      }
+    },
+    "range": [
+      121,
+      122
+    ]
+  }
+]

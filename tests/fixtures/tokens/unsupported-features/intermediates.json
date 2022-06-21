@@ -64,17 +64,17 @@
     "name": "ul",
     "loc": {
       "start": {
-        "line": 30,
-        "column": 24
+        "line": 28,
+        "column": 9
       },
       "end": {
-        "line": 31,
-        "column": 0
+        "line": 29,
+        "column": 1
       }
     },
     "range": [
-      338,
-      339
+      307,
+      309
     ]
   },
   {
@@ -177,116 +177,60 @@
     }
   },
   {
-    "type": "StartTag",
-    "name": "script",
-    "rawName": "script",
-    "selfClosing": false,
-    "attributes": [
-      {
-        "type": "VAttribute",
-        "directive": false,
-        "value": {
-          "type": "VLiteral",
-          "value": "/pets.js",
-          "loc": {
-            "start": {
-              "line": 45,
-              "column": 12
-            },
-            "end": {
-              "line": 45,
-              "column": 22
-            }
-          },
-          "range": [
-            502,
-            512
-          ]
-        },
-        "loc": {
-          "start": {
-            "line": 45,
-            "column": 8
-          },
-          "end": {
-            "line": 45,
-            "column": 22
-          }
-        },
-        "range": [
-          498,
-          512
-        ],
-        "key": {
-          "type": "VIdentifier",
-          "name": "src",
-          "rawName": "src",
-          "loc": {
-            "start": {
-              "line": 45,
-              "column": 8
-            },
-            "end": {
-              "line": 45,
-              "column": 11
-            }
-          },
-          "range": [
-            498,
-            501
-          ]
-        }
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 39,
+        "column": 26
+      },
+      "end": {
+        "line": 41,
+        "column": 0
       }
-    ],
+    },
     "range": [
-      491,
-      513
+      428,
+      430
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "close-div-plx",
+    "rawName": "close-div-plx",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      430,
+      443
     ],
     "loc": {
       "start": {
-        "line": 45,
-        "column": 1
+        "line": 41,
+        "column": 0
       },
       "end": {
-        "line": 45,
-        "column": 23
+        "line": 41,
+        "column": 13
       }
     }
   },
   {
     "type": "EndTag",
-    "name": "script",
+    "name": "close-div-plx",
     "loc": {
       "start": {
-        "line": 45,
-        "column": 23
+        "line": 41,
+        "column": 13
       },
       "end": {
-        "line": 47,
+        "line": 43,
         "column": 0
       }
     },
     "range": [
-      513,
-      515
-    ]
-  },
-  {
-    "type": "EndTag",
-    "name": "div",
-    "loc": {
-      "start": {
-        "line": 45,
-        "column": 23
-      },
-      "end": {
-        "line": 47,
-        "column": 0
-      }
-    },
-    "range": [
-      513,
-      515
+      443,
+      445
     ]
   },
   {
@@ -296,16 +240,16 @@
     "selfClosing": false,
     "attributes": [],
     "range": [
-      515,
-      516
+      530,
+      531
     ],
     "loc": {
       "start": {
-        "line": 47,
+        "line": 49,
         "column": 0
       },
       "end": {
-        "line": 47,
+        "line": 49,
         "column": 1
       }
     }
@@ -315,17 +259,35 @@
     "value": "This is ",
     "loc": {
       "start": {
-        "line": 47,
+        "line": 49,
         "column": 2
       },
       "end": {
-        "line": 47,
+        "line": 49,
         "column": 10
       }
     },
     "range": [
-      517,
-      525
+      532,
+      540
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "p",
+    "loc": {
+      "start": {
+        "line": 50,
+        "column": 0
+      },
+      "end": {
+        "line": 50,
+        "column": 0
+      }
+    },
+    "range": [
+      561,
+      561
     ]
   }
 ]
