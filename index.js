@@ -128,6 +128,7 @@ module.exports = class PugTokenizer {
 					if (this.peek().type !== 'outdent') {
 						this.closeAllTagsOnSameLevel(token, { clearGuard: token.type === 'PugEndPipelessText' })
 					}
+					this.tagStack.unshift([])
 					break
 				}
 				case 'indent':
@@ -568,20 +569,6 @@ module.exports = class PugTokenizer {
 			})
 		}
 	}
-
-	// closeTagsOnSameLine (token) {
-	// 	while (this.tagStack[0]?.loc.end.line === token.loc.start.line) {
-	// 		const startTag = this.tagStack.shift()
-	// 		if (startTag.type === 'PugStartTagInterpolation') return
-	// 		if (startTag.selfClosing) continue
-	// 		this.tokenBuffer.push({
-	// 			type: 'EndTag',
-	// 			name: startTag.name.toLowerCase(),
-	// 			loc: token.loc,
-	// 			range: token.range
-	// 		})
-	// 	}
-	// }
 
 	createTokenFromPugNode (
 		token,
