@@ -147,9 +147,20 @@ module.exports = class PugTokenizer {
 					this.addTagToStack(this.recordToken(this.next()))
 					break
 				case 'filter': {
-					const token = this.recordToken(this.next())
-					this.closeAllTagsOnSameLevel(token)
-					this.skipIndentLevel(false) // eslint seems to segfault if we record filter content?
+					this.recordToken(this.next())
+					if (this.peek().type !== 'start-pipeless-text') this.error(
+						'INVALID_TOKEN',
+						'unexpected token "' + this.peek().type + '" after filter',
+						this.peek(),
+					)
+					// assume there is nothing but text in a filter, skip to end of pipeless text
+					while (this.next().type !== 'end-pipeless-text');
+					if (this.peek().type === 'outdent') {
+						const token = this.recordToken(this.next())
+						if (this.peek().type !== 'outdent') {
+							this.closeAllTagsOnSameLevel(token)
+						}
+					}
 					break
 				}
 				case 'comment': {
@@ -176,6 +187,7 @@ module.exports = class PugTokenizer {
 				case 'block':
 				case 'interpolated-code':
 					this.skipIndentLevel()
+					this.tagStack.unshift([])
 					break
 				default:
 					this.error(
@@ -518,21 +530,24 @@ module.exports = class PugTokenizer {
 		return this.createTokenFromPugNode(comment)
 	}
 
-	skipIndentLevel (recordContent = true) {
+	skipIndentLevel () {
 		// skip tokens until we match indents with outdents
 		let indentLevel = 0
 		while (true) {
 			let token = this.next()
 			if (!token || token.type === 'eos') return
 			token = this.recordToken(token)
-			if (!recordContent) this.tokens.pop() // HACK
 			if (token.type === 'PugIndent' || token.type === 'PugStartPipelessText') indentLevel++
 			else if (token.type === 'PugOutdent' || token.type === 'PugEndPipelessText') {
 				indentLevel--
 				if (indentLevel <= 0) {
-					// HACK not sure this actually covers all use cases
-					this.closeAllTagsOnSameLevel(token)
-					this.closeAllTagsOnSameLevel(token)
+					// if the unsupported token was on a block expansion, close it
+					if ((this.tagStack[0] instanceof Array && this.tagStack[0].length > 0)) {
+						this.closeAllTagsOnSameLevel(token)
+					}
+					if (this.peek().type !== 'outdent') {
+						this.closeAllTagsOnSameLevel(token)
+					}
 					break
 				}
 			} else if (token.type === 'PugNewline') {
@@ -550,6 +565,7 @@ module.exports = class PugTokenizer {
 	}
 
 	closeAllTagsOnSameLevel (token, { clearGuard } = {}) {
+		if (this.tagStack.length === 0) return
 		while (this.tagStack[0] instanceof Array && this.tagStack[0].length === 0) {
 			this.tagStack.shift()
 		}

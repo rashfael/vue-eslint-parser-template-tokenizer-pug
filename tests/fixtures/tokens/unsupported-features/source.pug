@@ -40,6 +40,25 @@ div
 
 close-div-plx
 
+nested-1
+	nested-1-1
+		include ./assets/cross.svg
+	nested-1-2
+
+nested-1
+	nested-1-1
+		nested-1-1-1: include ./assets/cross.svg
+	nested-1-2
+
+newline-nested-1
+	nested-1-1
+		nested-1-1-1
+			+foo('bar')
+		nested-1-1-2
+			+foo('bar')
+			+foo('baz')
+	nested-1-2
+
 extends layout.pug
 
 block scripts
