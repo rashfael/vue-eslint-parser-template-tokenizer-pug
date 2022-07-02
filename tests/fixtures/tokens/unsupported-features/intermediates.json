@@ -423,12 +423,51 @@
       },
       "end": {
         "line": 51,
-        "column": 1
+        "column": 2
       }
     },
     "range": [
       571,
-      573
+      574
+    ]
+  },
+  {
+    "type": "StartTag",
+    "name": "nested-1-1-2",
+    "rawName": "nested-1-1-2",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      574,
+      586
+    ],
+    "loc": {
+      "start": {
+        "line": 51,
+        "column": 2
+      },
+      "end": {
+        "line": 51,
+        "column": 14
+      }
+    }
+  },
+  {
+    "type": "EndTag",
+    "name": "nested-1-1-2",
+    "loc": {
+      "start": {
+        "line": 51,
+        "column": 14
+      },
+      "end": {
+        "line": 52,
+        "column": 1
+      }
+    },
+    "range": [
+      586,
+      588
     ]
   },
   {
@@ -436,17 +475,17 @@
     "name": "nested-1-1",
     "loc": {
       "start": {
-        "line": 50,
-        "column": 42
+        "line": 51,
+        "column": 14
       },
       "end": {
-        "line": 51,
+        "line": 52,
         "column": 1
       }
     },
     "range": [
-      571,
-      573
+      586,
+      588
     ]
   },
   {
@@ -456,16 +495,16 @@
     "selfClosing": false,
     "attributes": [],
     "range": [
-      573,
-      583
+      588,
+      598
     ],
     "loc": {
       "start": {
-        "line": 51,
+        "line": 52,
         "column": 1
       },
       "end": {
-        "line": 51,
+        "line": 52,
         "column": 11
       }
     }
@@ -475,17 +514,17 @@
     "name": "nested-1-2",
     "loc": {
       "start": {
-        "line": 51,
+        "line": 52,
         "column": 11
       },
       "end": {
-        "line": 53,
+        "line": 54,
         "column": 0
       }
     },
     "range": [
-      583,
-      585
+      598,
+      600
     ]
   },
   {
@@ -493,17 +532,17 @@
     "name": "nested-1",
     "loc": {
       "start": {
-        "line": 51,
+        "line": 52,
         "column": 11
       },
       "end": {
-        "line": 53,
+        "line": 54,
         "column": 0
       }
     },
     "range": [
-      583,
-      585
+      598,
+      600
     ]
   },
   {
@@ -513,16 +552,16 @@
     "selfClosing": false,
     "attributes": [],
     "range": [
-      585,
-      601
+      600,
+      616
     ],
     "loc": {
       "start": {
-        "line": 53,
+        "line": 54,
         "column": 0
       },
       "end": {
-        "line": 53,
+        "line": 54,
         "column": 16
       }
     }
@@ -534,16 +573,16 @@
     "selfClosing": false,
     "attributes": [],
     "range": [
-      603,
-      613
+      618,
+      628
     ],
     "loc": {
       "start": {
-        "line": 54,
+        "line": 55,
         "column": 1
       },
       "end": {
-        "line": 54,
+        "line": 55,
         "column": 11
       }
     }
@@ -555,16 +594,16 @@
     "selfClosing": false,
     "attributes": [],
     "range": [
-      616,
-      628
+      631,
+      643
     ],
     "loc": {
       "start": {
-        "line": 55,
+        "line": 56,
         "column": 2
       },
       "end": {
-        "line": 55,
+        "line": 56,
         "column": 14
       }
     }
@@ -574,17 +613,17 @@
     "name": "nested-1-1-1",
     "loc": {
       "start": {
-        "line": 56,
+        "line": 57,
         "column": 14
       },
       "end": {
-        "line": 57,
+        "line": 58,
         "column": 2
       }
     },
     "range": [
-      643,
-      646
+      658,
+      661
     ]
   },
   {
@@ -594,16 +633,16 @@
     "selfClosing": false,
     "attributes": [],
     "range": [
-      646,
-      658
+      661,
+      673
     ],
     "loc": {
       "start": {
-        "line": 57,
+        "line": 58,
         "column": 2
       },
       "end": {
-        "line": 57,
+        "line": 58,
         "column": 14
       }
     }
@@ -613,17 +652,17 @@
     "name": "nested-1-1-2",
     "loc": {
       "start": {
-        "line": 59,
+        "line": 60,
         "column": 14
       },
       "end": {
-        "line": 60,
+        "line": 61,
         "column": 1
       }
     },
     "range": [
-      688,
-      690
+      703,
+      705
     ]
   },
   {
@@ -631,17 +670,17 @@
     "name": "nested-1-1",
     "loc": {
       "start": {
-        "line": 59,
+        "line": 60,
         "column": 14
       },
       "end": {
-        "line": 60,
+        "line": 61,
         "column": 1
       }
     },
     "range": [
-      688,
-      690
+      703,
+      705
     ]
   },
   {
@@ -651,16 +690,16 @@
     "selfClosing": false,
     "attributes": [],
     "range": [
-      690,
-      700
+      705,
+      715
     ],
     "loc": {
       "start": {
-        "line": 60,
+        "line": 61,
         "column": 1
       },
       "end": {
-        "line": 60,
+        "line": 61,
         "column": 11
       }
     }
@@ -670,17 +709,17 @@
     "name": "nested-1-2",
     "loc": {
       "start": {
-        "line": 60,
+        "line": 61,
         "column": 11
       },
       "end": {
-        "line": 62,
+        "line": 63,
         "column": 0
       }
     },
     "range": [
-      700,
-      702
+      715,
+      717
     ]
   },
   {
@@ -688,17 +727,17 @@
     "name": "newline-nested-1",
     "loc": {
       "start": {
-        "line": 60,
+        "line": 61,
         "column": 11
       },
       "end": {
-        "line": 62,
+        "line": 63,
         "column": 0
       }
     },
     "range": [
-      700,
-      702
+      715,
+      717
     ]
   },
   {
@@ -708,16 +747,16 @@
     "selfClosing": false,
     "attributes": [],
     "range": [
-      787,
-      788
+      802,
+      803
     ],
     "loc": {
       "start": {
-        "line": 68,
+        "line": 69,
         "column": 0
       },
       "end": {
-        "line": 68,
+        "line": 69,
         "column": 1
       }
     }
@@ -727,17 +766,17 @@
     "value": "This is ",
     "loc": {
       "start": {
-        "line": 68,
+        "line": 69,
         "column": 2
       },
       "end": {
-        "line": 68,
+        "line": 69,
         "column": 10
       }
     },
     "range": [
-      789,
-      797
+      804,
+      812
     ]
   },
   {
@@ -746,16 +785,16 @@
     "loc": {
       "start": {
         "line": 69,
-        "column": 0
+        "column": 30
       },
       "end": {
-        "line": 69,
+        "line": 70,
         "column": 0
       }
     },
     "range": [
-      818,
-      818
+      832,
+      833
     ]
   }
 ]

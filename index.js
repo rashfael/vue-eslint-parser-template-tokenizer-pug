@@ -551,7 +551,13 @@ module.exports = class PugTokenizer {
 					break
 				}
 			} else if (token.type === 'PugNewline') {
-				if (indentLevel <= 0) break
+				if (indentLevel <= 0) {
+					// if the unsupported token was on a block expansion, close it
+					if ((this.tagStack[0] instanceof Array && this.tagStack[0].length > 0)) {
+						this.closeAllTagsOnSameLevel(token)
+					}
+					break
+				}
 			}
 		}
 	}
