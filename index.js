@@ -492,7 +492,7 @@ module.exports = class PugTokenizer {
 				value: match[1]
 			}, {
 				start: this.getLocFromOffset(tokenRange[0] + match.index + 3),
-				end: this.getLocFromOffset(tokenRange[0] + match[0].length - 1)
+				end: this.getLocFromOffset(tokenRange[0] + match.index + match[0].length - 1)
 			}))
 
 			tokens.push(this.createTokenFromPugNode(token, 'VExpressionEnd', {
