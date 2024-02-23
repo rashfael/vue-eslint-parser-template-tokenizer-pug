@@ -7,8 +7,7 @@ const Tokenizer = require('..')
 // ------------------------------------------------------------------------------
 
 const ROOT = path.join(__dirname, '../tests/fixtures/tokens')
-const TARGETS = fs.readdirSync(ROOT)
-
+const TARGETS = process.argv[2] ? [process.argv[2]] : fs.readdirSync(ROOT)
 function replacer (key, value) {
 	if (key === 'parent') return
 	return value
