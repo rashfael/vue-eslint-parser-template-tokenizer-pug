@@ -39,21 +39,78 @@
     ]
   },
   {
+    "type": "StartTag",
+    "name": "div",
+    "rawName": "div",
+    "selfClosing": false,
+    "attributes": [],
+    "range": [
+      31,
+      34
+    ],
+    "loc": {
+      "start": {
+        "line": 2,
+        "column": 1
+      },
+      "end": {
+        "line": 2,
+        "column": 4
+      }
+    }
+  },
+  {
+    "type": "Text",
+    "value": "nested",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 4
+      },
+      "end": {
+        "line": 3,
+        "column": 10
+      }
+    },
+    "range": [
+      39,
+      45
+    ]
+  },
+  {
+    "type": "EndTag",
+    "name": "div",
+    "loc": {
+      "start": {
+        "line": 3,
+        "column": 10
+      },
+      "end": {
+        "line": 4,
+        "column": 1
+      }
+    },
+    "range": [
+      45,
+      47
+    ]
+  },
+  {
     "type": "Text",
     "value": "piped",
     "loc": {
       "start": {
-        "line": 2,
+        "line": 4,
         "column": 3
       },
       "end": {
-        "line": 2,
+        "line": 4,
         "column": 8
       }
     },
     "range": [
-      33,
-      38
+      49,
+      54
     ]
   },
   {
@@ -63,16 +120,16 @@
     "selfClosing": false,
     "attributes": [],
     "range": [
-      40,
-      44
+      56,
+      60
     ],
     "loc": {
       "start": {
-        "line": 3,
+        "line": 5,
         "column": 1
       },
       "end": {
-        "line": 3,
+        "line": 5,
         "column": 5
       }
     }
@@ -82,17 +139,17 @@
     "value": "fancy",
     "loc": {
       "start": {
-        "line": 3,
+        "line": 5,
         "column": 6
       },
       "end": {
-        "line": 3,
+        "line": 5,
         "column": 11
       }
     },
     "range": [
-      45,
-      50
+      61,
+      66
     ]
   },
   {
@@ -100,17 +157,17 @@
     "name": "span",
     "loc": {
       "start": {
-        "line": 3,
+        "line": 5,
         "column": 11
       },
       "end": {
-        "line": 4,
+        "line": 6,
         "column": 1
       }
     },
     "range": [
-      50,
-      52
+      66,
+      68
     ]
   },
   {
@@ -118,17 +175,17 @@
     "value": "text",
     "loc": {
       "start": {
-        "line": 4,
+        "line": 6,
         "column": 3
       },
       "end": {
-        "line": 4,
+        "line": 6,
         "column": 7
       }
     },
     "range": [
-      54,
-      58
+      70,
+      74
     ]
   },
   {
@@ -136,17 +193,17 @@
     "name": "div",
     "loc": {
       "start": {
-        "line": 4,
+        "line": 6,
         "column": 7
       },
       "end": {
-        "line": 5,
+        "line": 7,
         "column": 0
       }
     },
     "range": [
-      58,
-      59
+      74,
+      75
     ]
   }
 ]

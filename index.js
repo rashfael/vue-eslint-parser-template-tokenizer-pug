@@ -128,6 +128,10 @@ module.exports = class PugTokenizer {
 					if (this.peek().type !== 'outdent') {
 						this.closeAllTagsOnSameLevel(token, { clearGuard: token.type === 'PugEndPipelessText' })
 					}
+					// pipes don't close tags
+					if (token.type === 'PugOutdent' && this.peek().type === 'text') {
+						this.tagStack.unshift(this.createTokenFromPugNode(this.peek()))
+					}
 					this.tagStack.unshift([])
 					break
 				}
